@@ -1,0 +1,81 @@
+{
+  "UrlId": "800042B6-1426871926",
+  "CustomerId": "80000A28-1702050018",
+  "CompanyName": "ALCUS MARINE TECHNICAL",
+  "Email": "alcusmt@aol.com",
+  "Phone": "631-874-1000",
+  "ContactName": "RON ALCUS",
+  "Address": "ALCUS MARINE TECHNICAL<br>36 D SAWGRASS DRIVE<br><br><br><br>BELLPORT, NY 11713 ",
+  "BigfootCustomer": false,
+  "State": "NY",
+  "date": "06/05/2025",
+  "data": [
+    {
+      "Sku": "PAR076",
+      "TimesPurchased": 1,
+      "Quantity": 20
+    }
+  ],
+  "recommendations": [
+    {
+      "Sku": "PAR006"
+    },
+    {
+      "Sku": "PAR324"
+    },
+    {
+      "Sku": "IHP_BOWD192"
+    },
+    {
+      "Sku": "PAR078"
+    },
+    {
+      "Sku": "IHP_NAVALM2"
+    },
+    {
+      "Sku": "IHP_CNAV"
+    },
+    {
+      "Sku": "IHP_BOWD191"
+    },
+    {
+      "Sku": "IHP_BD24V2"
+    },
+    {
+      "Sku": "SHP302"
+    },
+    {
+      "Sku": "IHP_NAVALM1"
+    },
+    {
+      "Sku": "STR048"
+    },
+    {
+      "Sku": "IMR199"
+    },
+    {
+      "Sku": "STR037"
+    },
+    {
+      "Sku": "STR044"
+    },
+    {
+      "Sku": "MPS163"
+    },
+    {
+      "Sku": "INT283"
+    },
+    {
+      "Sku": "INT443"
+    },
+    {
+      "Sku": "IHP_FLASH"
+    },
+    {
+      "Sku": "IHP_AIDS"
+    },
+    {
+      "Sku": "IHP_NAVQ"
+    }
+  ]
+}

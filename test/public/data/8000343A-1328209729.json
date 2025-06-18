@@ -1,0 +1,103 @@
+{
+  "UrlId": "8000343A-1328209729",
+  "CustomerId": "80000951-1702049782",
+  "CompanyName": "ADAMS MARINE SEMINARS",
+  "Email": "info@adamsmarine.com",
+  "Phone": "877-447-1950",
+  "ContactName": "MARIE ADAMS",
+  "Address": "ADAMS MARINE SEMINARS<br>12659 WEST FOSS GROVE PATH<br><br><br><br>INGLIS, FL 34449 ",
+  "BigfootCustomer": false,
+  "State": "NJ",
+  "date": "06/05/2025",
+  "data": [
+    {
+      "Sku": "PAR222",
+      "TimesPurchased": 64,
+      "Quantity": 2255
+    },
+    {
+      "Sku": "PAR064",
+      "TimesPurchased": 41,
+      "Quantity": 759
+    },
+    {
+      "Sku": "PAR016",
+      "TimesPurchased": 3,
+      "Quantity": 401
+    },
+    {
+      "Sku": "PAR063",
+      "TimesPurchased": 13,
+      "Quantity": 280
+    },
+    {
+      "Sku": "PAR076",
+      "TimesPurchased": 11,
+      "Quantity": 273
+    },
+    {
+      "Sku": "PAR062",
+      "TimesPurchased": 10,
+      "Quantity": 176
+    },
+    {
+      "Sku": "IHP_MMTTC",
+      "TimesPurchased": 1,
+      "Quantity": 1
+    },
+    {
+      "Sku": "CMP005",
+      "TimesPurchased": 1,
+      "Quantity": 1
+    },
+    {
+      "Sku": "WPC095",
+      "TimesPurchased": 1,
+      "Quantity": 1
+    }
+  ],
+  "recommendations": [
+    {
+      "Sku": "PAR058"
+    },
+    {
+      "Sku": "PAR323"
+    },
+    {
+      "Sku": "CEL013"
+    },
+    {
+      "Sku": "CEL012"
+    },
+    {
+      "Sku": "IHP_1981"
+    },
+    {
+      "Sku": "CEL014"
+    },
+    {
+      "Sku": "IHP_MMCPLL"
+    },
+    {
+      "Sku": "IHP_FLASH"
+    },
+    {
+      "Sku": "IHP_MMCOMP"
+    },
+    {
+      "Sku": "IHP_BOWD192"
+    },
+    {
+      "Sku": "PAR078"
+    },
+    {
+      "Sku": "POD017"
+    },
+    {
+      "Sku": "PAR231"
+    },
+    {
+      "Sku": "STR042"
+    }
+  ]
+}

@@ -12,9 +12,9 @@ const props = defineProps({
 
 // --- Reactive State for Main Order Form ---
 const customerData = ref(null);
-const orderItems = ref([]); 
+const orderItems = ref([]); // This array will hold ALL orderable items with their currentQuantity
 const notes = ref('');
-const isLoading = ref(true); 
+const isLoading = ref(true); // Tracks customerData fetch
 const error = ref(null);
 const showConfirmationModal = ref(false);
 const submissionStatus = ref('');
@@ -27,24 +27,69 @@ const productCatalogError = ref(null);
 const fetchedStickers = ref([]);
 const isLoadingStickers = ref(true);
 const stickerLoadingError = ref(null);
-const stickerQuantities = ref({}); 
-const stickerPrice = ref(3.50); 
+const stickerQuantities = ref({}); // Manages quantities for stickers specifically
+const stickerPrice = ref(3.50);
 const stickerItemWidth = ref('192px'); // Approx w-48 (12rem). Card width.
 
-// --- Lifecycle Hooks ---
-onMounted(async () => {
-  await fetchProductCatalog(); 
-  await loadStickers();       
+// --- Reactive State for Pinned Bigfoot Recommendations ---
+const pinnedBigfootRecs = ref([]);
+const isLoadingPinnedRecs = ref(true);
+const pinnedRecsError = ref(null);
 
+// --- Computed Properties ---
+
+// Overall loading indicator for the entire form
+const overallLoading = computed(() => {
+  // If customerId is present, we are loading until customerData and product catalog are fetched
   if (props.customerId) {
-    console.log('Order Form will load for customer:', props.customerId);
+    return isLoading.value || !allProductsCatalog.value;
   } else {
-    console.log('General Order Form loaded (no customerId).');
-    isLoading.value = false; 
+    // If no customerId (general form), we are loading if stickers or product catalog are still loading
+    return isLoadingStickers.value || !allProductsCatalog.value;
   }
 });
 
-// --- Data Fetching for Main Form ---
+const totalQuantity = computed(() => {
+  return orderItems.value.reduce((sum, item) => sum + Number(item.currentQuantity || 0), 0);
+});
+
+const totalPrice = computed(() => {
+  const total = orderItems.value.reduce((sum, item) => {
+    const price = parseFloat(item.price || 0);
+    const quantity = Number(item.currentQuantity || 0);
+    return sum + (price * quantity);
+  }, 0);
+  return total.toFixed(2);
+});
+
+// Filter orderItems to display only history items
+const historyItems = computed(() => orderItems.value.filter(item => item.type === 'history'));
+// Filter orderItems to display only manually added items
+const manuallyAddedItems = computed(() => orderItems.value.filter(item => item.type === 'manual'));
+// Filter orderItems to display only recommendation items (which now include pinned ones)
+const recommendationItems = computed(() => orderItems.value.filter(item => item.type === 'recommendation'));
+// Filter orderItems to display only sticker items (for internal use, main display is different)
+const selectedStickerItemsForDisplay = computed(() => orderItems.value.filter(item => item.type === 'sticker'));
+
+
+// --- Lifecycle Hooks ---
+onMounted(async () => {
+  // Fetch static data first (catalog, stickers, pinned recs)
+  await fetchProductCatalog();
+  await loadStickers();
+  await fetchPinnedBigfootRecommendations();
+
+  // Then fetch customer-specific data if customerId is provided
+  if (props.customerId) {
+    await fetchData(props.customerId);
+  } else {
+    console.log('General Order Form loaded (no customerId).');
+    isLoading.value = false; // Mark main loading as false for general form
+    // initializeOrderItems will be called by the watch effect on overallLoading
+  }
+});
+
+// --- Data Fetching Functions ---
 async function fetchData(id) {
   console.log(`Fetching data for customer: ${id}`);
   isLoading.value = true;
@@ -53,16 +98,28 @@ async function fetchData(id) {
   notes.value = '';
 
   try {
+    console.log(`Attempting to fetch: /data/${id}.json`);
     const response = await axios.get(`/data/${id}.json`);
+    console.log("Raw response data:", response.data); // Log raw response
     customerData.value = response.data;
+    // Set BigfootCustomer based on the fetched data, default to false if not present
+    // Ensure response.data is an object before trying to access properties
+    if (typeof response.data === 'object' && response.data !== null) {
+        customerData.value.BigfootCustomer = response.data.BigfootCustomer || false;
+    } else {
+        console.error("Received non-object data, cannot set BigfootCustomer:", response.data);
+        // Handle this case, perhaps by setting a default or throwing an error
+        customerData.value = { BigfootCustomer: false }; // Provide a default structure
+    }
     console.log("Customer data fetched successfully:", customerData.value);
-    initializeOrderItems(); 
+    // initializeOrderItems will be called by the watch effect on overallLoading
   } catch (err) {
     console.error("Error fetching customer data:", err);
     if (err.response && err.response.status === 404) {
-       error.value = `Error: Could not find data file for customer ID: ${id}. Please check the ID.`;
+        error.value = `Customer ID Not Found: The customer ID entered in the URL was not found. Please contact order@paracay.com to confirm your ID.`;
+        customerData.value = null; // Ensure customerData is null to hide the form
     } else {
-       error.value = `An error occurred while loading customer data. Please try again later.`;
+        error.value = `An error occurred while loading customer data. Please try again later.`;
     }
     customerData.value = null;
   } finally {
@@ -71,12 +128,18 @@ async function fetchData(id) {
 }
 
 async function fetchProductCatalog() {
-  if (allProductsCatalog.value) return;
+  if (allProductsCatalog.value) return; // Prevent refetching if already loaded
   console.log("Fetching product catalog (productdata.json)...");
   productCatalogError.value = null;
   try {
-    const response = await axios.get('/productdata.json'); 
-    allProductsCatalog.value = response.data;
+    const response = await axios.get('/productdata.json');
+    if (Array.isArray(response.data)) {
+      allProductsCatalog.value = response.data;
+    } else {
+      console.error('Product catalog JSON is not an array:', response.data);
+      productCatalogError.value = 'Invalid product catalog data format.';
+      allProductsCatalog.value = []; // Ensure it's an empty array if malformed
+    }
     console.log("Product catalog fetched successfully.");
   } catch (err) {
     console.error("Error fetching product catalog:", err);
@@ -84,12 +147,11 @@ async function fetchProductCatalog() {
   }
 }
 
-// --- Sticker Data Fetching & Processing ---
 async function loadStickers() {
   isLoadingStickers.value = true;
   stickerLoadingError.value = null;
   try {
-    const response = await axios.get('/stickers.json'); 
+    const response = await axios.get('/stickers.json');
     if (Array.isArray(response.data)) {
       fetchedStickers.value = response.data.filter(s => s && typeof s.sku === 'string' && s.sku.trim() !== '' && s.img);
       fetchedStickers.value.forEach(sticker => {
@@ -111,35 +173,101 @@ async function loadStickers() {
   }
 }
 
-const displayStickers = computed(() => {
-  return fetchedStickers.value;
-});
-
-
-// --- Initialize Order State ---
-function initializeOrderItems() {
-  if (!customerData.value && !props.customerId) { 
-      orderItems.value = orderItems.value.filter(item => item.type === 'sticker');
-      return;
-  }
-  if (!customerData.value && props.customerId) return; 
-
-  const nonStickerProducts = [
-    ...(customerData.value.data || []).map(item => ({ ...item, type: 'history', currentQuantity: 0 })),
-    ...(customerData.value.recommendations || []).map(item => ({ ...item, type: 'recommendation', currentQuantity: 0 })),
-  ];
-
-  const uniqueNonStickerProducts = new Map();
-  nonStickerProducts.forEach(item => {
-    if (item.SKU && !uniqueNonStickerProducts.has(item.SKU)) { 
-      uniqueNonStickerProducts.set(item.SKU, item);
+async function fetchPinnedBigfootRecommendations() {
+  isLoadingPinnedRecs.value = true;
+  pinnedRecsError.value = null;
+  try {
+    const response = await axios.get('/bigfootPinnedRecommendations.json');
+    if (Array.isArray(response.data)) {
+      pinnedBigfootRecs.value = response.data;
+      console.log("Pinned Bigfoot recommendations fetched successfully.");
+    } else {
+      console.error('Pinned recommendations JSON is not an array:', response.data);
+      pinnedRecsError.value = 'Invalid pinned recommendation data format.';
+      pinnedBigfootRecs.value = [];
     }
-  });
-  
-  const existingStickersInOrder = orderItems.value.filter(item => item.type === 'sticker');
-  orderItems.value = [...existingStickersInOrder, ...Array.from(uniqueNonStickerProducts.values())];
+  } catch (error) {
+    console.error('Failed to load pinned Bigfoot recommendations:', error);
+    pinnedRecsError.value = `Could not fetch pinned recommendations. ${error.message}`;
+    pinnedBigfootRecs.value = [];
+  } finally {
+    isLoadingPinnedRecs.value = false;
+  }
+}
 
-  console.log("Initialized non-sticker order items:", orderItems.value);
+// --- Initialize Order State: Centralized logic for populating orderItems ---
+function initializeOrderItems() {
+  // Create a temporary map to build up unique items and manage their currentQuantity
+  const tempOrderMap = new Map(); // Key: SKU, Value: item object
+
+  // 1. Add existing manually added items (if any, to preserve user input)
+  orderItems.value.filter(item => item.type === 'manual').forEach(item => {
+    tempOrderMap.set(item.Sku, { ...item }); // Clone to avoid direct mutation issues during reinitialization
+  });
+
+  // 2. Add existing sticker items (to preserve user input)
+  orderItems.value.filter(item => item.type === 'sticker').forEach(item => {
+    tempOrderMap.set(item.Sku, { ...item });
+  });
+
+  // 3. Add history items if customerData is available
+  if (customerData.value?.data) {
+    (customerData.value.data || []).forEach(item => {
+      if (!tempOrderMap.has(item.Sku)) { // Only add if not already present (e.g., manually added)
+        const details = fetchProductDetails(item.Sku);
+        if (details) {
+          tempOrderMap.set(item.Sku, { ...details, ...item, type: 'history', currentQuantity: 0 });
+        } else {
+          console.warn(`Product details not found for history item SKU: ${item.Sku}`);
+          tempOrderMap.set(item.Sku, { ...item, type: 'history', currentQuantity: 0, image_url: "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image", product_url: "#" });
+        }
+      }
+    });
+  }
+
+  // 4. Add recommendations (both pinned and standard) if customerData is available AND product catalog is loaded
+  if (customerData.value && allProductsCatalog.value) { // Added check for allProductsCatalog.value
+    const potentialRecs = [];
+
+    // Add pinned Bigfoot recommendations first if BigfootCustomer
+    if (customerData.value.BigfootCustomer && pinnedBigfootRecs.value.length > 0) {
+      pinnedBigfootRecs.value.forEach(pinnedItem => {
+        const details = fetchProductDetails(pinnedItem.Sku);
+        if (details) {
+          potentialRecs.push({ ...details, type: 'recommendation' });
+        }
+      });
+    }
+
+    // Add standard recommendations from customerData
+    if (customerData.value.recommendations) {
+      customerData.value.recommendations.forEach(recItem => {
+        const details = fetchProductDetails(recItem.Sku);
+        if (details) {
+          potentialRecs.push({ ...details, type: 'recommendation' });
+        }
+      });
+    }
+
+    // Now add these potential recommendations to the map, avoiding duplicates and history items
+    potentialRecs.forEach(recItem => {
+      // Ensure it's not already in history or manually added, and not already added as another rec
+      if (!tempOrderMap.has(recItem.Sku) || tempOrderMap.get(recItem.Sku).type === 'history') {
+        // If it's a history item that's also a recommendation, we'll keep it as history.
+        // Otherwise, add as a recommendation.
+        if (tempOrderMap.has(recItem.Sku) && tempOrderMap.get(recItem.Sku).type === 'history') {
+            // Do nothing, history takes precedence for display type
+        } else {
+            tempOrderMap.set(recItem.Sku, { ...recItem, currentQuantity: 0 });
+        }
+      }
+    });
+  }
+
+  // Convert the map values back to an array for orderItems
+  orderItems.value = Array.from(tempOrderMap.values());
+
+  console.log("Initialized order items:", JSON.parse(JSON.stringify(orderItems.value)));
 }
 
 
@@ -158,23 +286,26 @@ function updateStickerQuantity(sku, eventValue) {
   const value = parseInt(eventValue, 10);
   if (!isNaN(value) && value >= 0) {
     stickerQuantities.value[sku] = value;
-  } else if (eventValue === "") { 
+  } else if (eventValue === "") {
     stickerQuantities.value[sku] = 0;
   }
 }
 
 // --- Sync Sticker Selections to Main Order Items ---
 function syncStickersToOrder() {
-  orderItems.value = orderItems.value.filter(item => item.type !== 'sticker');
+  // Remove all existing sticker items from orderItems to re-add them based on current quantities
+  const nonStickerOrderItems = orderItems.value.filter(item => item.type !== 'sticker');
+  let updatedStickerItems = [];
+
   for (const sku in stickerQuantities.value) {
     if (stickerQuantities.value[sku] > 0) {
       const stickerData = fetchedStickers.value.find(s => s.sku === sku);
       if (stickerData) {
-        orderItems.value.push({
-          SKU: stickerData.sku,
-          Title: `Sticker - ${stickerData.sku}`, 
+        updatedStickerItems.push({
+          Sku: stickerData.sku,
+          ItemTitle: `Sticker - ${stickerData.sku}`,
           image_url: stickerData.img,
-          product_url: '#', 
+          product_url: '#',
           description: `Sticker: ${stickerData.sku}`,
           price: stickerPrice.value,
           currentQuantity: stickerQuantities.value[sku],
@@ -183,42 +314,66 @@ function syncStickersToOrder() {
       }
     }
   }
+  orderItems.value = [...nonStickerOrderItems, ...updatedStickerItems];
   console.log("Order items after sticker sync:", JSON.parse(JSON.stringify(orderItems.value)));
 }
 
+// Watch stickerQuantities for changes and sync to main orderItems
 watch(stickerQuantities, () => {
   syncStickersToOrder();
 }, { deep: true });
 
 
-// --- Computed Properties for Totals ---
-const totalQuantity = computed(() => {
-  return orderItems.value.reduce((sum, item) => sum + Number(item.currentQuantity || 0), 0);
-});
-
-const totalPrice = computed(() => {
-  const total = orderItems.value.reduce((sum, item) => {
-    const price = parseFloat(item.price || 0);
-    const quantity = Number(item.currentQuantity || 0);
-    return sum + (price * quantity);
-  }, 0);
-  return total.toFixed(2);
-});
-
-const historyItems = computed(() => orderItems.value.filter(item => item.type === 'history'));
-const recommendationItems = computed(() => orderItems.value.filter(item => item.type === 'recommendation'));
-const selectedStickerItemsForDisplay = computed(() => orderItems.value.filter(item => item.type === 'sticker'));
-const manuallyAddedItems = computed(() => orderItems.value.filter(item => item.type === 'manual'));
-
 // --- Methods (Add SKU, Submit, CSV, Print, Image Preview) ---
+function fetchProductDetails(sku) {
+    if (productCatalogError.value) {
+        console.error(`Product catalog is unavailable. Cannot fetch details for SKU ${sku}.`);
+        return null;
+    }
+    if (!allProductsCatalog.value) {
+        console.warn("Product catalog is still loading when trying to fetch details for", sku);
+        return null;
+    }
+    const product = allProductsCatalog.value.find(p => p.sku && p.sku.toUpperCase() === sku.toUpperCase());
+    if (product) {
+        return {
+            image_url: product.image_url || "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image",
+            product_url: product.product_url || "#", ItemTitle: product.Title, Sku: product.sku,
+            description: stripHtml(product.description || "No description available."), price: product.WholesalePrice
+        };
+    }
+    return null; // Product not found in catalog
+}
+
 async function addSkuItem(sku) {
   if (!sku) return;
-  const details = fetchProductDetails(sku); 
+
+  if (productCatalogError.value) {
+      alert(`Product catalog is unavailable. Cannot add SKU ${sku}.`);
+      return;
+  }
+  if (!allProductsCatalog.value) {
+      alert("Product catalog is still loading. Please try again.");
+      return;
+  }
+
+  const details = fetchProductDetails(sku);
   if (details) {
-    const existingItem = orderItems.value.find(item => item.SKU === details.SKU && item.type === 'manual');
-    if (existingItem) {
-      alert(`Item ${sku} is already in your manually added list.`);
+    // Check if the item already exists in orderItems (regardless of type)
+    const existingItemIndex = orderItems.value.findIndex(item => item.Sku === details.Sku);
+
+    if (existingItemIndex > -1) {
+      // If it exists, update its type to 'manual' and set quantity to 1 if it was 0
+      const existingItem = orderItems.value[existingItemIndex];
+      if (existingItem.type !== 'manual') { // Only change type if not already manual
+          existingItem.type = 'manual';
+      }
+      if (existingItem.currentQuantity === 0) {
+          existingItem.currentQuantity = 1;
+      }
+      alert(`Item ${sku} is already in your list. Quantity updated to 1 if it was 0.`);
     } else {
+      // If it doesn't exist, add it as a new manual item
       orderItems.value.push({ ...details, currentQuantity: 1, type: 'manual' });
     }
   } else {
@@ -226,40 +381,20 @@ async function addSkuItem(sku) {
   }
 }
 
-function fetchProductDetails(sku) {
-    if (productCatalogError.value) {
-        alert(`Product catalog is unavailable. Cannot add SKU ${sku}.`);
-        return null;
-    }
-    if (!allProductsCatalog.value) {
-        alert("Product catalog is still loading. Please try again.");
-        return null;
-    }
-    const product = allProductsCatalog.value.find(p => p.sku && p.sku.toUpperCase() === sku.toUpperCase());
-    if (product) {
-        return {
-            image_url: product.image_url || "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image",
-            product_url: product.product_url || "#", Title: product.Title, SKU: product.sku,
-            description: product.description || "No description available.", price: product.WholesalePrice 
-        };
-    }
-    return null;
-}
-
 async function submitOrder() {
-  isLoading.value = true; 
-  submissionStatus.value = ''; error.value = null; 
+  isLoading.value = true;
+  submissionStatus.value = ''; error.value = null;
   const orderData = {
     customerId: props.customerId,
-    customerInfo: { 
-      name: customerData.value?.Name, company: customerData.value?.Company,
+    customerInfo: {
+      contactName: customerData.value?.ContactName, companyName: customerData.value?.CompanyName,
       email: customerData.value?.Email, phone: customerData.value?.Phone,
       address: customerData.value?.Address
     },
     notes: notes.value,
-    items: orderItems.value.filter(item => item.currentQuantity > 0) 
-      .map(item => ({ 
-        SKU: item.SKU, Title: item.Title, quantity: item.currentQuantity,
+    items: orderItems.value.filter(item => item.currentQuantity > 0)
+      .map(item => ({
+        Sku: item.Sku, ItemTitle: item.ItemTitle, quantity: item.currentQuantity,
         price: item.price, rowTotal: (parseFloat(item.price || 0) * Number(item.currentQuantity || 0)).toFixed(2)
       })),
     totalQuantity: totalQuantity.value, totalPrice: totalPrice.value,
@@ -267,7 +402,7 @@ async function submitOrder() {
   };
   const formData = new URLSearchParams();
   formData.append('realemail', orderData.customerInfo.email || '');
-  formData.append('company_name', orderData.customerInfo.company || 'N/A');
+  formData.append('company_name', orderData.customerInfo.companyName || 'N/A');
   formData.append('url_link', window.location.href);
   formData.append('order_details', formatOrderDetailsForEmail(orderData));
   try {
@@ -276,10 +411,10 @@ async function submitOrder() {
     });
     if (response.data && response.data.success) {
       submissionStatus.value = response.data.message || "Order submitted successfully!";
-      showConfirmationModal.value = true; 
+      showConfirmationModal.value = true;
     } else {
       submissionStatus.value = response.data.message || "Failed to submit order.";
-      error.value = submissionStatus.value; 
+      error.value = submissionStatus.value;
     }
   } catch (err) {
     submissionStatus.value = "An error occurred while submitting your order.";
@@ -295,13 +430,13 @@ async function submitOrder() {
     }
     error.value = submissionStatus.value;
   } finally {
-    isLoading.value = false; 
+    isLoading.value = false;
   }
 }
 
 function formatOrderDetailsForEmail(orderData) {
-  let detailsString = `Customer Name: ${orderData.customerInfo.name || 'N/A'}\n`;
-  detailsString += `Company: ${orderData.customerInfo.company || 'N/A'}\n`;
+  let detailsString = `Customer Name: ${orderData.customerInfo.contactName || 'N/A'}\n`;
+  detailsString += `Company: ${orderData.customerInfo.companyName || 'N/A'}\n`;
   detailsString += `Email: ${orderData.customerInfo.email || 'N/A'}\n`;
   detailsString += `Phone: ${orderData.customerInfo.phone || 'N/A'}\n`;
   if (orderData.customerInfo.address) {
@@ -309,7 +444,7 @@ function formatOrderDetailsForEmail(orderData) {
   }
   detailsString += `\n--- ITEMS ORDERED ---\n`;
   orderData.items.forEach(item => {
-    detailsString += `${item.Title} (SKU: ${item.SKU}) - Qty: ${item.quantity}, Price: $${item.price}, Total: $${item.rowTotal}\n`;
+    detailsString += `${item.ItemTitle} (Sku: ${item.Sku}) - Qty: ${item.quantity}, Price: $${item.price}, Total: $${item.rowTotal}\n`;
   });
   detailsString += `\n--- TOTALS ---\n`;
   detailsString += `Total Quantity: ${orderData.totalQuantity}\n`;
@@ -326,19 +461,19 @@ function downloadCSV() {
       alert("No customer-specific order history available to download.");
       return;
   }
-  const headers = ['Title', 'SKU', 'Price', 'Quantity Purchased', 'Times Purchased'];
+  const headers = ['ItemTitle', 'Sku', 'Price', 'Quantity', 'TimesPurchased'];
   const rows = customerData.value.data.map(item => ({
-      Title: item.Title, SKU: item.SKU, Price: item.price,
-      QuantityPurchased: item.Quantity, TimesPurchased: item.Times
+      ItemTitle: item.ItemTitle, Sku: item.Sku, Price: item.price,
+      Quantity: item.Quantity, TimesPurchased: item.TimesPurchased
   }));
   const contactInfo = customerData.value;
   const headerRows = [
       ["Paradise Cay Publications /// orders@paracay.com /// (707) 822-9063"],
-      [`${contactInfo.Company} /// ${contactInfo.Name} /// ${contactInfo.Phone} /// ${contactInfo.Email}`],
+      [`${contactInfo.CompanyName} /// ${contactInfo.ContactName} /// ${contactInfo.Phone} /// ${contactInfo.Email}`],
       [`Shipping Address: ${contactInfo.Address.replace(/<br>/g, ' ')}`],
       [], headers
   ];
-  const csvData = headerRows.concat(rows.map(row => headers.map(header => row[header.replace(/ /g, '')])));
+  const csvData = headerRows.concat(rows.map(row => headers.map(header => row[header])));
   const csvContent = "data:text/csv;charset=utf-8,"
       + csvData.map(e => e.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
   const encodedUri = encodeURI(csvContent);
@@ -358,7 +493,7 @@ function onImageError(event) {
   }
 }
 function onStickerImageError(event) {
-   if (!event.target.src.includes('placehold.co')) {
+    if (!event.target.src.includes('placehold.co')) {
     event.target.src = 'https://placehold.co/144x144/cccccc/ffffff?text=No+Sticker'; // Adjusted placeholder size
   }
 }
@@ -370,12 +505,19 @@ function hidePreview() {
     showLargeImage.value = false; largeImageUrl.value = '';
 }
 
-watch(() => props.customerId, (newId, oldId) => {
+watch([() => props.customerId, overallLoading], ([newId, newOverallLoading], [oldId, oldOverallLoading]) => {
+  // Only re-fetch customer data if customerId changes and is not null
   if (newId && newId !== oldId) {
     fetchData(newId);
-  } else if (!newId) { 
+  } else if (!newId && oldId) { // If customerId becomes null from a previous value
     customerData.value = null;
-    initializeOrderItems(); 
+  }
+
+  // Initialize order items only when overall loading is complete
+  // This ensures all necessary data (customer, catalog, stickers, pinned recs) is available
+  if (!newOverallLoading && oldOverallLoading) {
+    console.log("Overall loading complete, initializing order items.");
+    initializeOrderItems();
   }
 }, { immediate: true });
 
@@ -385,20 +527,31 @@ function handleAddSku() {
     skuToAdd.value = '';
 }
 
+// Utility function to strip HTML tags
+function stripHtml(html) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  return doc.body.textContent || "";
+}
+
 </script>
 
 <template>
   <div class="order-form-container">
-    <div v-if="isLoading && !customerData && !(!props.customerId && !isLoadingStickers) " class="loading-overlay">Loading data...</div>
+    <div class="logo-container">
+      <img src="https://paracay.com/orderform/logo.png" alt="Paradise Cay Publications Logo" class="logo">
+    </div>
+
+    <div v-if="overallLoading" class="loading-overlay">Loading data...</div>
     <div v-if="error" class="error-message">
       <p>Error:</p>
       <p>{{ error }}</p>
     </div>
 
-    <div v-if="props.customerId && customerData && !isLoading && !error">
+    <div v-if="props.customerId && customerData && !overallLoading && !error">
       <header class="form-header">
         <div class="customer-info">
-          <p><strong>Contact:</strong> {{ customerData.Name }} ({{ customerData.Email }}, {{ customerData.Phone }})</p>
+          <p><strong>Contact:</strong> {{ customerData.ContactName }} ({{ customerData.Email }}, {{ customerData.Phone }})</p>
+          <p><strong>Company:</strong> {{ customerData.CompanyName }}</p>
           <p><strong>Default Shipping Address:</strong></p>
           <div v-html="customerData.Address" class="address"></div>
           <p><small>Order Form Updated: {{ customerData.date }}</small></p>
@@ -408,96 +561,42 @@ function handleAddSku() {
         <p class="info-message">Annual publications or discontinued items may not appear below. Use the Notes field for inquiries.</p>
       </header>
     </div>
-    <div v-if="!props.customerId && !isLoading && !error" class="form-header">
+    <div v-if="!props.customerId && !overallLoading && !error" class="form-header">
         <p class="info-message text-lg">General Order Form. Add items by SKU or select from available stickers.</p>
     </div>
 
-    <section class="sticker-section"> 
-      <h2 class="text-xl font-semibold mb-4 text-slate-700">Stickers</h2>
-      <div v-if="isLoadingStickers" class="text-center text-slate-500">Loading stickers...</div>
-      <div v-else-if="stickerLoadingError" class="text-center text-red-500">{{ stickerLoadingError }}</div>
-      <div v-else-if="displayStickers.length === 0" class="text-center text-slate-500">No stickers available.</div>
-      
-      <div v-else 
-           :style="{ 
-             display: 'flex !important', 
-             overflowX: 'auto !important', 
-             paddingBottom: '1rem !important', /* Increased padding for scrollbar visibility */
-             border: '2px solid red !important' /* DEBUG BORDER */
-           }" 
-           class="custom-scrollbar">
-        
-        <div v-for="sticker in displayStickers" :key="sticker.sku" 
-             :style="{ 
-                flexShrink: '0 !important', 
-                width: stickerItemWidth, /* '192px' by default */
-                marginRight: '1rem !important',
-                border: '1px solid blue !important', /* DEBUG BORDER */
-                padding: '0.75rem !important', /* p-3 */
-                textAlign: 'center !important',
-                backgroundColor: 'white !important'
-             }"
-             class="sticker-item-debug rounded-lg shadow-md"> 
-          
-          <div 
-            :style="{
-              width: '144px !important', /* w-36 */
-              height: '144px !important', /* h-36 */
-              margin: '0 auto 0.5rem auto !important', /* mx-auto mb-2 */
-              border: '1px solid #e2e8f0 !important', /* border-gray-200 */
-              borderRadius: '0.25rem !important', /* rounded */
-              overflow: 'hidden !important',
-              display: 'flex !important',
-              alignItems: 'center !important',
-              justifyContent: 'center !important',
-              backgroundColor: '#f8fafc !important' /* bg-gray-50 */
-            }"
-            class="image-container-debug">
-            <img :src="sticker.img" :alt="`Sticker ${sticker.sku}`" 
-                 :style="{ 
-                    maxWidth: '100% !important', 
-                    maxHeight: '100% !important', 
-                    objectFit: 'contain !important' 
-                 }"
-                 @error="onStickerImageError"/>
+    <!-- Conditional rendering for Sticker Section based on customerData.BigfootCustomer -->
+    <section v-if="customerData && customerData.BigfootCustomer" class="sticker-section-container">
+      <h2 class="sticker-section-header">
+        <svg xmlns="http://www.w3.org/2000/svg" class="header-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+        </svg>
+        Stickers
+      </h2>
+      <div v-if="isLoadingStickers" class="message-text">Loading stickers...</div>
+      <div v-else-if="stickerLoadingError" class="message-text error-message">{{ stickerLoadingError }}</div>
+      <div v-else-if="fetchedStickers.length === 0" class="message-text">No stickers available.</div>
+
+      <div v-else class="sticker-list-wrapper custom-scrollbar">
+        <div v-for="sticker in fetchedStickers" :key="sticker.sku"
+              class="sticker-card"
+              :style="{ minWidth: stickerItemWidth, maxWidth: stickerItemWidth }">
+
+          <div class="image-wrapper">
+            <img :src="sticker.img" :alt="`Sticker ${sticker.sku}`"
+                  @error="onStickerImageError"/>
           </div>
 
-          <p 
-            :style="{ 
-                fontSize: '0.75rem !important', /* text-xs */
-                color: '#4b5563 !important', /* text-gray-600 */
-                overflow: 'hidden !important',
-                textOverflow: 'ellipsis !important',
-                whiteSpace: 'nowrap !important', /* Helps with truncate */
-                height: '2rem !important', /* h-8, for 2 lines if needed, or adjust */
-                lineHeight: '1rem !important', /* leading-tight */
-                marginBottom: '0.25rem !important' /* my-1 for spacing around price */
-            }"
-            :title="sticker.sku">SKU: {{ sticker.sku }}
-          </p>
-          <p 
-            :style="{
-                fontSize: '0.875rem !important', /* text-sm */
-                fontWeight: '600 !important', /* font-semibold */
-                color: '#4f46e5 !important', /* text-indigo-600 */
-                margin: '0.25rem 0 !important' /* my-1 */
-            }">
-            ${{ stickerPrice.toFixed(2) }}
-          </p>
-          <div 
-            :style="{
-                display: 'flex !important',
-                justifyContent: 'center !important',
-                alignItems: 'center !important',
-                marginTop: '0.5rem !important' /* mt-2 */
-            }"
-            class="quantity-controls-debug space-x-1">
-            <button @click="decrementStickerQuantity(sticker.sku)" class="qty-btn" :style="{ marginRight: '0.25rem !important' }">-</button>
-            <input type="number" 
-                   :value="stickerQuantities[sticker.sku] || 0" 
-                   @input="updateStickerQuantity(sticker.sku, $event.target.value)"
-                   min="0" class="qty-input w-12 text-center"/> 
-            <button @click="incrementStickerQuantity(sticker.sku)" class="qty-btn" :style="{ marginLeft: '0.25rem !important' }">+</button>
+          <p class="sticker-sku" :title="sticker.sku">SKU: {{ sticker.sku }}</p>
+          <p class="sticker-price">${{ stickerPrice.toFixed(2) }}</p>
+
+          <div class="quantity-controls">
+            <button @click="decrementStickerQuantity(sticker.sku)" class="qty-btn">-</button>
+            <input type="number"
+                  :value="stickerQuantities[sticker.sku] || 0"
+                  @input="updateStickerQuantity(sticker.sku, $event.target.value)"
+                  min="0" class="qty-input"/>
+            <button @click="incrementStickerQuantity(sticker.sku)" class="qty-btn">+</button>
           </div>
         </div>
       </div>
@@ -515,18 +614,18 @@ function handleAddSku() {
         </thead>
         <tbody>
           <tr v-if="historyItems.length === 0"><td colspan="7">No order history found.</td></tr>
-          <tr v-for="item in historyItems" :key="item.SKU">
+          <tr v-for="item in historyItems" :key="item.Sku">
             <td>
-              <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.Title"
+              <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.ItemTitle"
                    class="product-image" @error="onImageError" @mouseover="showPreview(item.image_url)" @mouseout="hidePreview">
             </td>
             <td class="product-details">
-              <a :href="item.product_url" target="_blank" rel="noopener noreferrer">{{ item.Title }} - {{ item.SKU }}</a>
+              <a :href="item.product_url" target="_blank" rel="noopener noreferrer">{{ item.ItemTitle }} - {{ item.Sku }}</a>
               <p class="description">{{ item.description }}</p>
             </td>
             <td>${{ item.price }}</td>
             <td class="center-align">{{ item.Quantity }}</td>
-            <td class="center-align">{{ item.Times }}</td>
+            <td class="center-align">{{ item.TimesPurchased }}</td>
             <td><input type="number" v-model.number="item.currentQuantity" min="0" class="quantity-input"></td>
             <td class="right-align">${{ (parseFloat(item.price || 0) * Number(item.currentQuantity || 0)).toFixed(2) }}</td>
           </tr>
@@ -536,17 +635,19 @@ function handleAddSku() {
 
     <section v-if="props.customerId && customerData" class="table-section">
       <h2>We Think You Might Like</h2>
+      <div v-if="isLoadingPinnedRecs" class="message-text">Loading special recommendations...</div>
+      <div v-else-if="pinnedRecsError" class="message-text error-message">{{ pinnedRecsError }}</div>
       <table class="order-table">
         <thead><tr><th>Image</th><th>Product</th><th>Price</th><th>Order QTY</th><th>Total Cost</th></tr></thead>
         <tbody>
           <tr v-if="recommendationItems.length === 0"><td colspan="5">No recommendations available.</td></tr>
-          <tr v-for="item in recommendationItems" :key="item.SKU">
+          <tr v-for="item in recommendationItems" :key="item.Sku">
             <td>
-              <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.Title"
+              <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.ItemTitle"
                    class="product-image" @error="onImageError" @mouseover="showPreview(item.image_url)" @mouseout="hidePreview">
             </td>
             <td class="product-details">
-              <a :href="item.product_url" target="_blank" rel="noopener noreferrer">{{ item.Title }} - {{ item.SKU }}</a>
+              <a :href="item.product_url" target="_blank" rel="noopener noreferrer">{{ item.ItemTitle }} - {{ item.Sku }}</a>
               <p class="description">{{ item.description }}</p>
             </td>
             <td>${{ item.price }}</td>
@@ -568,13 +669,13 @@ function handleAddSku() {
         <table class="order-table">
           <thead><tr><th>Image</th><th>Product</th><th>Price</th><th>Order QTY</th><th>Total Cost</th></tr></thead>
           <tbody>
-            <tr v-for="item in manuallyAddedItems" :key="item.SKU">
+            <tr v-for="item in manuallyAddedItems" :key="item.Sku">
               <td>
-                <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.Title"
-                     class="product-image" @error="onImageError" @mouseover="showPreview(item.image_url)" @mouseout="hidePreview">
+                <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.ItemTitle"
+                      class="product-image" @error="onImageError" @mouseover="showPreview(item.image_url)" @mouseout="hidePreview">
               </td>
               <td class="product-details">
-                {{ item.Title }} - {{ item.SKU }}
+                {{ item.ItemTitle }} - {{ item.Sku }}
                 <p class="description">{{ item.description }}</p>
               </td>
               <td>${{ item.price }}</td>
@@ -594,8 +695,8 @@ function handleAddSku() {
     <div class="bottom-bar">
       <span class="summary-item">Total QTY: <strong>{{ totalQuantity }}</strong></span>
       <span class="summary-item">Order Estimate: <strong>${{ totalPrice }}</strong></span>
-      <button @click="submitOrder" :disabled="totalQuantity === 0 || isLoading" class="submit-button">
-        {{ isLoading ? 'Processing...' : 'Submit Order' }}
+      <button @click="submitOrder" :disabled="totalQuantity === 0 || overallLoading" class="submit-button">
+        {{ overallLoading ? 'Processing...' : 'Submit Order' }}
       </button>
       <p v-if="submissionStatus" :class="{'success-message': !error, 'error-message': error}" class="submission-status-message">
         {{ submissionStatus }}
@@ -635,19 +736,34 @@ function handleAddSku() {
   position: relative; /* Needed for absolute positioning of overlays */
 }
 
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 15px 0; /* Increased padding for better visual spacing */
+  background-color: #48A5BA; /* Changed background to blue */
+  border-radius: 8px 8px 0 0; /* Rounded top corners to match container */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+}
+
+.logo {
+  max-width: 300px; /* Adjust as needed */
+  height: auto;
+}
+
 .loading-overlay {
-    position: fixed; /* Changed to fixed to cover whole screen */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly more opaque */
+    background-color: rgba(255, 255, 255, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.5em; /* Larger text */
+    font-size: 1.5em;
     color: #333;
-    z-index: 10000; /* Ensure it's on top of everything */
+    z-index: 10000;
 }
 
 .error-message {
@@ -675,61 +791,176 @@ function handleAddSku() {
 .address { margin-left: 10px; font-style: italic; }
 
 .info-message { font-size: 0.9em; color: #555; }
-.info-message.text-lg { font-size: 1.1em; margin-bottom: 1rem;} /* For general order form message */
+.info-message.text-lg { font-size: 1.1em; margin-bottom: 1rem;}
 
 
 .table-section, .add-sku-section, .notes-section {
   margin-bottom: 30px;
 }
-/* Sticker Section Specific Styles */
-.sticker-section {
-    /* Removed Tailwind bg, padding, rounded from here as it's applied inline for testing */
+
+/* --- Sticker Section Styling --- */
+.sticker-section-container {
+  background-color: #e3f2fd; /* A light blue background */
+  padding: 1.5rem; /* Good internal spacing */
+  border-radius: 0.5rem; /* Slightly rounded corners */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06); /* Subtle inner shadow */
+  margin-bottom: 2rem; /* Space below the section */
 }
-.sticker-section h2 {
-    /* color: #333; */
+
+.sticker-section-header {
+  font-size: 1.5rem; /* Larger header text */
+  font-weight: bold;
+  color: #1565c0; /* A darker blue for the header */
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #90caf9; /* A lighter blue underline */
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
 }
+
+.header-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 0.5rem;
+  color: #2196f3; /* Medium blue for the icon */
+}
+
+/* Message Text (Loading, Error, No Stickers) */
+.message-text {
+  text-align: center;
+  font-size: 1.125rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  color: #1976d2; /* Blue for loading/no stickers messages */
+}
+
+.message-text.error-message {
+  color: #d32f2f; /* Red for error messages */
+  font-weight: 500;
+}
+
+/* --- Sticker List Wrapper (The Flexbox Parent) --- */
+.sticker-list-wrapper {
+  display: flex;
+  flex-wrap: nowrap; /* Prevents wrapping to multiple rows */
+  overflow-x: auto; /* Enables horizontal scrolling */
+  padding-bottom: 1rem; /* Space for the scrollbar */
+  gap: 1rem; /* Space between sticker cards */
+  -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS */
+}
+
+/* Custom scrollbar for better appearance */
 .custom-scrollbar::-webkit-scrollbar {
-    height: 8px;
+  height: 8px;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #cbd5e1; /* Tailwind gray-400 */
-    border-radius: 10px;
+  background-color: #94a3b8; /* Tailwind slate-400 */
+  border-radius: 10px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: #e2e8f0; /* Tailwind gray-300 */
+  background-color: #e2e8f0; /* Tailwind slate-200 */
 }
 
-/* Styles for sticker items if needed, but primarily using inline for debugging */
-.sticker-item-debug { 
-  /* This class is just for semantic grouping if needed, styles are inline */
-  display: flex; /* Added to help with internal alignment if text-center on parent is not enough */
-  flex-direction: column; /* Ensure content within card stacks vertically */
-  justify-content: space-between; /* Push content to top and bottom */
-}
-.image-container-debug {
-  /* This class is just for semantic grouping if needed, styles are inline */
-}
-
-.sticker-item-debug .qty-btn { /* Target buttons within the debugged sticker item */
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    color: #495057;
-    padding: 0.25rem 0.6rem;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    font-weight: bold;
-    line-height: 1;
-}
-.sticker-item-debug .qty-btn:hover {
-    background-color: #dee2e6;
-}
-.sticker-item-debug .qty-input { /* Target input within the debugged sticker item */
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    padding: 0.3rem;
-    font-size: 0.9rem;
+/* --- Individual Sticker Card Styling --- */
+.sticker-card {
+  box-sizing: border-box; /* Include padding/border in width calculation */
+  flex-shrink: 0; /* Prevent cards from shrinking */
+  flex-grow: 0; /* Prevent cards from growing */
+  background-color: #ffffff; /* White background for cards */
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Standard shadow */
+  padding: 0.75rem;
+  text-align: center;
+  transition: transform 0.2s ease-in-out; /* Smooth hover effect */
+  /* min-width and max-width are set inline from stickerItemWidth */
 }
 
+.sticker-card:hover {
+  transform: scale(1.03); /* Slightly less aggressive scale on hover */
+}
+
+/* Image Wrapper and Image */
+.image-wrapper {
+  width: 9rem; /* 144px */
+  height: 9rem; /* 144px */
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.5rem;
+  border: 1px solid #e2e8f0; /* Light gray border */
+  border-radius: 0.25rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc; /* Very light gray background for image area */
+}
+
+.image-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* Sticker SKU text */
+.sticker-sku {
+  font-size: 0.75rem;
+  color: #4a5568; /* Darker gray for text */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Keep SKU on one line */
+  margin-bottom: 0.25rem;
+  height: 1.5rem; /* Fixed height to prevent layout shifts */
+  line-height: 1.5rem;
+}
+
+/* Sticker Price text */
+.sticker-price {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6366f1; /* Indigo for price */
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Quantity Controls */
+.quantity-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.5rem;
+  gap: 0.25rem; /* Space between buttons and input */
+}
+
+.qty-btn {
+  background-color: #e2e8f0;
+  color: #4a5568;
+  font-weight: bold;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px; /* Pill shape */
+  transition: background-color 0.2s ease-in-out;
+  border: none;
+  cursor: pointer;
+}
+
+.qty-btn:hover {
+  background-color: #cbd5e1;
+}
+
+.qty-input {
+  width: 3rem;
+  text-align: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.375rem;
+  padding: 0.25rem 0.5rem;
+  -moz-appearance: textfield; /* Hide arrows on Firefox */
+}
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Hide arrows on Chrome, Safari, Edge */
+  margin: 0;
+}
+
+/* --- Rest of your existing styles --- */
 
 h2 {
   border-bottom: 2px solid #48A5BA;
@@ -738,15 +969,70 @@ h2 {
   color: #333;
 }
 
-.order-table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
-.order-table th, .order-table td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; vertical-align: middle; }
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    table-layout: fixed;
+}
+.order-table th, .order-table td {
+    border: 1px solid #ddd;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: middle;
+    word-wrap: break-word;
+}
 .order-table th { background-color: #48A5BA; color: white; font-weight: bold; }
 .order-table tbody tr:nth-child(odd) { background-color: #f9f9f9; }
+
+/* Column Width Definitions */
+.order-table th:nth-child(1), .order-table td:nth-child(1) {
+    width: 100px;
+    text-align: center;
+}
+
+.order-table th:nth-child(2), .order-table td:nth-child(2) {
+    width: 35%;
+    min-width: 250px;
+}
+
+.order-table th:nth-child(3), .order-table td:nth-child(3) {
+    width: 80px;
+    text-align: right;
+}
+
+.order-table th:nth-child(4), .order-table td:nth-child(4) {
+    width: 100px;
+    text-align: center;
+}
+
+.order-table th:nth-child(5), .order-table td:nth-child(5) {
+    width: 100px;
+    text-align: center;
+}
+
+.order-table th:nth-child(6), .order-table td:nth-child(6) {
+    width: 100px;
+    text-align: center;
+}
+
+.order-table th:nth-child(7), .order-table td:nth-child(7) {
+    width: 120px;
+    text-align: right;
+}
 
 .product-image { max-width: 80px; max-height: 80px; display: block; margin: 0 auto; cursor: pointer; }
 .product-details a { font-weight: bold; color: #0056b3; text-decoration: none; }
 .product-details a:hover { text-decoration: underline; }
-.product-details .description { font-size: 0.85em; color: #666; margin-top: 4px; max-height: 4.5em; overflow: hidden; }
+.product-details .description {
+    font-size: 0.85em;
+    color: #666;
+    margin-top: 4px;
+    max-height: 4.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
 
 .quantity-input { width: 60px; padding: 5px; text-align: center; border: 1px solid #ccc; border-radius: 4px; }
 .center-align { text-align: center; }
@@ -758,20 +1044,19 @@ h2 {
 .notes-textarea { width: 100%; min-height: 100px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 1em; box-sizing: border-box; }
 
 .bottom-bar {
-  position: fixed; bottom: 0; left: 0; width: 100%;
-  background-color: #48A5BA; color: white; padding: 15px 20px;
-  border-top: 1px solid #ccc; display: flex; justify-content: flex-end;
-  align-items: center; box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
-  z-index: 50; box-sizing: border-box;
+    position: fixed; bottom: 0; left: 0; width: 100%;
+    background-color: #48A5BA; color: white; padding: 15px 20px;
+    border-top: 1px solid #ccc; display: flex; justify-content: flex-end;
+    align-items: center; box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    z-index: 50; box-sizing: border-box;
 }
 .summary-item { margin-left: 25px; font-size: 1.1em; }
 
 .action-button, .submit-button {
-  padding: 10px 18px; border: none; border-radius: 5px;
-  cursor: pointer; font-size: 1em; transition: background-color 0.2s ease;
+    padding: 10px 18px; border: none; border-radius: 5px;
+    cursor: pointer; font-size: 1em; transition: background-color 0.2s ease;
 }
 .action-button { background-color: #eee; color: #333; border: 1px solid #ccc; margin: 5px; }
-.action-button:hover { background-color: #ddd; }
 .action-button.secondary { background-color: #aaa; color: white; }
 .action-button.secondary:hover { background-color: #888; }
 
@@ -780,33 +1065,82 @@ h2 {
 .submit-button:disabled { background-color: #ccc; color: #666; cursor: not-allowed; }
 
 .submission-status-message {
-  width: 100%; text-align: right; margin-top: 10px;
-  margin-right: 10px; padding: 5px 0; font-size: 0.9em;
+    width: 100%; text-align: right; margin-top: 10px;
+    margin-right: 10px; padding: 5px 0; font-size: 0.9em;
 }
 .success-message { color: #155724; }
-.error-message { color: #D8000C; font-weight: bold; } /* Also used for form-level errors */
+.error-message { color: #D8000C; font-weight: bold; }
 
 .modal-overlay {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6); display: flex;
-  justify-content: center; align-items: center; z-index: 1000;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6); display: flex;
+    justify-content: center; align-items: center; z-index: 1000;
 }
 .modal-container {
-  background-color: #fff; padding: 30px; border-radius: 8px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2); max-width: 500px; width: 90%;
+    background-color: #fff; padding: 30px; border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); max-width: 500px; width: 90%;
 }
 .modal-container h2 { margin-top: 0; color: #48A5BA; }
 .modal-actions { margin-top: 20px; text-align: right; }
 
 .image-preview-overlay {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7); display: flex;
-  justify-content: center; align-items: center; z-index: 1100; cursor: pointer;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); display: flex;
+    justify-content: center; align-items: center; z-index: 1100;
+    cursor: pointer;
 }
 .large-image-preview {
-  max-width: 80%; max-height: 80%; object-fit: contain;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    max-width: 80%; max-height: 80%; object-fit: contain;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-@media print { /* Print styles ... */ }
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .order-form-container, .order-form-container * {
+    visibility: visible;
+  }
+  .order-form-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+  }
+  .bottom-bar, .image-preview-overlay, .modal-overlay, .logo-container, .action-button, .add-sku-section, .notes-section {
+    display: none !important; /* Hide elements not relevant for print */
+  }
+  .order-table {
+    table-layout: auto; /* Allow table columns to size naturally for print */
+  }
+  .order-table th, .order-table td {
+    padding: 5px;
+    font-size: 0.8em;
+  }
+  .product-image {
+    max-width: 50px; /* Smaller images for print */
+    max-height: 50px;
+  }
+  .customer-info, .form-header {
+    text-align: left;
+    margin-bottom: 10px;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+  }
+  .info-message {
+    display: none;
+  }
+  h2 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 3px;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
+}
 </style>

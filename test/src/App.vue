@@ -1,9 +1,5 @@
 <template>
     <div id="app">
-      <nav>
-        <router-link to="/">Home</router-link> |
-        <router-link to="/order">General Order Form</router-link>
-      </nav>
       <router-view :key="$route.fullPath"></router-view>
     </div>
   </template>

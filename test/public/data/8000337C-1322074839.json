@@ -1,0 +1,302 @@
+{
+  "UrlId": "8000337C-1322074839",
+  "CustomerId": "80000B49-1702050369",
+  "CompanyName": "ANACORTES DIVING AND SUPPLY",
+  "Email": "info@anacortesdiving.com",
+  "Phone": "360.293.2070",
+  "ContactName": " ",
+  "Address": "ANACORTES DIVING AND SUPPLY<br>2502 COMMERCIAL AVENUE<br><br><br><br>ANACORTES, WA 98221 ",
+  "BigfootCustomer": false,
+  "State": "WA",
+  "date": "06/05/2025",
+  "data": [
+    {
+      "Sku": "HPC055",
+      "TimesPurchased": 8,
+      "Quantity": 38
+    },
+    {
+      "Sku": "CWP008",
+      "TimesPurchased": 3,
+      "Quantity": 30
+    },
+    {
+      "Sku": "HPC053",
+      "TimesPurchased": 10,
+      "Quantity": 27
+    },
+    {
+      "Sku": "CWP009",
+      "TimesPurchased": 2,
+      "Quantity": 25
+    },
+    {
+      "Sku": "HPC150",
+      "TimesPurchased": 7,
+      "Quantity": 25
+    },
+    {
+      "Sku": "IHP_TAPS24",
+      "TimesPurchased": 2,
+      "Quantity": 24
+    },
+    {
+      "Sku": "CWP007",
+      "TimesPurchased": 1,
+      "Quantity": 24
+    },
+    {
+      "Sku": "HPC021",
+      "TimesPurchased": 6,
+      "Quantity": 21
+    },
+    {
+      "Sku": "HPC129",
+      "TimesPurchased": 5,
+      "Quantity": 18
+    },
+    {
+      "Sku": "PAR133",
+      "TimesPurchased": 2,
+      "Quantity": 18
+    },
+    {
+      "Sku": "PAR205",
+      "TimesPurchased": 3,
+      "Quantity": 16
+    },
+    {
+      "Sku": "PAR156",
+      "TimesPurchased": 4,
+      "Quantity": 16
+    },
+    {
+      "Sku": "HPC160",
+      "TimesPurchased": 4,
+      "Quantity": 12
+    },
+    {
+      "Sku": "HPC163",
+      "TimesPurchased": 4,
+      "Quantity": 12
+    },
+    {
+      "Sku": "HPC151",
+      "TimesPurchased": 4,
+      "Quantity": 12
+    },
+    {
+      "Sku": "IHP_TAPS25",
+      "TimesPurchased": 2,
+      "Quantity": 12
+    },
+    {
+      "Sku": "PAR173",
+      "TimesPurchased": 2,
+      "Quantity": 12
+    },
+    {
+      "Sku": "PAR191",
+      "TimesPurchased": 2,
+      "Quantity": 12
+    },
+    {
+      "Sku": "PAR416",
+      "TimesPurchased": 2,
+      "Quantity": 12
+    },
+    {
+      "Sku": "PAR157",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "PAR129",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "EVE023",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "HPC167",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "IHP_TAPS23",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "PAR739",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "HPC046",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "PAR134",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "PAR102",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "PAR131",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "PAR189",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "PAR682",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "CMG036",
+      "TimesPurchased": 3,
+      "Quantity": 4
+    },
+    {
+      "Sku": "QRP021",
+      "TimesPurchased": 2,
+      "Quantity": 3
+    },
+    {
+      "Sku": "PAR075",
+      "TimesPurchased": 2,
+      "Quantity": 3
+    },
+    {
+      "Sku": "PAR172",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR632",
+      "TimesPurchased": 1,
+      "Quantity": 1
+    },
+    {
+      "Sku": "PAR633",
+      "TimesPurchased": 1,
+      "Quantity": 1
+    },
+    {
+      "Sku": "PAR185",
+      "TimesPurchased": 1,
+      "Quantity": 1
+    },
+    {
+      "Sku": "PAR522",
+      "TimesPurchased": 1,
+      "Quantity": 1
+    },
+    {
+      "Sku": "HPC007",
+      "TimesPurchased": 2,
+      "Quantity": 1
+    },
+    {
+      "Sku": "FGG095",
+      "TimesPurchased": 1,
+      "Quantity": 1
+    }
+  ],
+  "recommendations": [
+    {
+      "Sku": "FPL003"
+    },
+    {
+      "Sku": "PAR137"
+    },
+    {
+      "Sku": "PAR151"
+    },
+    {
+      "Sku": "WPC128"
+    },
+    {
+      "Sku": "HPC139"
+    },
+    {
+      "Sku": "RAN293"
+    },
+    {
+      "Sku": "PAR144"
+    },
+    {
+      "Sku": "CPC007"
+    },
+    {
+      "Sku": "PGN226"
+    },
+    {
+      "Sku": "PAR626"
+    },
+    {
+      "Sku": "PER073"
+    },
+    {
+      "Sku": "ASP001"
+    },
+    {
+      "Sku": "IPS027"
+    },
+    {
+      "Sku": "LPP012"
+    },
+    {
+      "Sku": "PER101"
+    },
+    {
+      "Sku": "HPC054"
+    },
+    {
+      "Sku": "TEN007"
+    },
+    {
+      "Sku": "PAR135"
+    },
+    {
+      "Sku": "PAR186"
+    },
+    {
+      "Sku": "PAR072"
+    },
+    {
+      "Sku": "RFP014"
+    },
+    {
+      "Sku": "PAR221"
+    },
+    {
+      "Sku": "WFP054"
+    },
+    {
+      "Sku": "MAC002"
+    },
+    {
+      "Sku": "CPC001"
+    },
+    {
+      "Sku": "MAC001"
+    },
+    {
+      "Sku": "WFP008"
+    }
+  ]
+}
