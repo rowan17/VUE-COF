@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import OrderForm from '../components/OrderForm.vue';
 import BadIdPage from '../components/BadIdPage.vue';
 
 const routes = [
   {
-    path: '/:customerId',
+    path: '/:customerId([^.]+)\\.html', // Capture ID from URLs ending in .html
     name: 'OrderForm',
     component: OrderForm,
     props: true // Pass route params as props
@@ -24,7 +24,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 });
 

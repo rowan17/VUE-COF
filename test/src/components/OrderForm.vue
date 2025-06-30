@@ -98,8 +98,8 @@ async function fetchData(id) {
   notes.value = '';
 
   try {
-    console.log(`Attempting to fetch: /data/${id}.json`);
-    const response = await axios.get(`/data/${id}.json`);
+    console.log(`Attempting to fetch: ${import.meta.env.BASE_URL}data/${id}.json`);
+    const response = await axios.get(`${import.meta.env.BASE_URL}data/${id}.json`);
     console.log("Raw response data:", response.data); // Log raw response
     customerData.value = response.data;
     // Set BigfootCustomer based on the fetched data, default to false if not present
@@ -132,7 +132,7 @@ async function fetchProductCatalog() {
   console.log("Fetching product catalog (productdata.json)...");
   productCatalogError.value = null;
   try {
-    const response = await axios.get('/productdata.json');
+    const response = await axios.get(`${import.meta.env.BASE_URL}productdata.json`);
     if (Array.isArray(response.data)) {
       allProductsCatalog.value = response.data;
     } else {
@@ -151,7 +151,7 @@ async function loadStickers() {
   isLoadingStickers.value = true;
   stickerLoadingError.value = null;
   try {
-    const response = await axios.get('/stickers.json');
+    const response = await axios.get(`${import.meta.env.BASE_URL}stickers.json`);
     if (Array.isArray(response.data)) {
       fetchedStickers.value = response.data.filter(s => s && typeof s.sku === 'string' && s.sku.trim() !== '' && s.img);
       fetchedStickers.value.forEach(sticker => {
@@ -177,7 +177,7 @@ async function fetchPinnedBigfootRecommendations() {
   isLoadingPinnedRecs.value = true;
   pinnedRecsError.value = null;
   try {
-    const response = await axios.get('/bigfootPinnedRecommendations.json');
+    const response = await axios.get(`${import.meta.env.BASE_URL}bigfootPinnedRecommendations.json`);
     if (Array.isArray(response.data)) {
       pinnedBigfootRecs.value = response.data;
       console.log("Pinned Bigfoot recommendations fetched successfully.");
@@ -398,7 +398,8 @@ async function submitOrder() {
         price: item.price, rowTotal: (parseFloat(item.price || 0) * Number(item.currentQuantity || 0)).toFixed(2)
       })),
     totalQuantity: totalQuantity.value, totalPrice: totalPrice.value,
-    orderTimestamp: new Date().toISOString()
+    orderTimestamp: new Date().toISOString(),
+    topRecommendations: recommendationItems.value.slice(0, 5).map(item => ({ Sku: item.Sku, ItemTitle: item.ItemTitle }))
   };
   const formData = new URLSearchParams();
   formData.append('realemail', orderData.customerInfo.email || '');
@@ -406,7 +407,15 @@ async function submitOrder() {
   formData.append('url_link', window.location.href);
   formData.append('order_details', formatOrderDetailsForEmail(orderData));
   try {
-    const response = await axios.post('http://localhost:8001/mail.php', formData, {
+    let mailEndpoint = import.meta.env.VITE_MAIL_ENDPOINT;
+    if (mailEndpoint && !mailEndpoint.startsWith('http')) {
+      // For production, VITE_MAIL_ENDPOINT is 'mail.php', prepend BASE_URL
+      // Ensure BASE_URL ends with a slash and mailEndpoint doesn't start with one if combining.
+      // Or, more simply, ensure BASE_URL is correctly set (e.g. /orderform/new_cof/)
+      // and mail.php is just the filename.
+      mailEndpoint = `${import.meta.env.BASE_URL}${mailEndpoint}`;
+    }
+    const response = await axios.post(mailEndpoint, formData, {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
     if (response.data && response.data.success) {
@@ -449,6 +458,14 @@ function formatOrderDetailsForEmail(orderData) {
   detailsString += `\n--- TOTALS ---\n`;
   detailsString += `Total Quantity: ${orderData.totalQuantity}\n`;
   detailsString += `Total Price: $${orderData.totalPrice}\n`;
+
+  if (orderData.topRecommendations && orderData.topRecommendations.length > 0) {
+    detailsString += `\n--- TOP 5 RECOMMENDED ITEMS ---\n`;
+    orderData.topRecommendations.forEach(rec => {
+      detailsString += `${rec.ItemTitle} (Sku: ${rec.Sku})\n`;
+    });
+  }
+
   if (orderData.notes) {
     detailsString += `\n--- NOTES ---\n${orderData.notes}\n`;
   }
@@ -462,10 +479,16 @@ function downloadCSV() {
       return;
   }
   const headers = ['ItemTitle', 'Sku', 'Price', 'Quantity', 'TimesPurchased'];
-  const rows = customerData.value.data.map(item => ({
-      ItemTitle: item.ItemTitle, Sku: item.Sku, Price: item.price,
-      Quantity: item.Quantity, TimesPurchased: item.TimesPurchased
-  }));
+  const rows = customerData.value.data.map(item => {
+    const productDetails = fetchProductDetails(item.Sku);
+    return {
+      ItemTitle: item.ItemTitle || (productDetails ? productDetails.ItemTitle : 'N/A'), // Fallback for ItemTitle
+      Sku: item.Sku,
+      Price: productDetails ? productDetails.price : 'N/A', // Get price from catalog
+      Quantity: item.Quantity,
+      TimesPurchased: item.TimesPurchased
+    };
+  });
   const contactInfo = customerData.value;
   const headerRows = [
       ["Paradise Cay Publications /// orders@paracay.com /// (707) 822-9063"],

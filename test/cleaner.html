@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	
+	<title></title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	
+	<style>
+
+        p {
+
+            text-align:center;
+
+        }
+
+
+        textarea {
+
+            width:800px;
+            height:500px;
+            position:relative;
+            margin:auto;
+            display:block;
+
+
+        }
+
+        button{
+
+            position:relative;
+            display:inline-block;
+            margin:auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 200px;
+            margin-top: 10px;
+
+        }
+
+        .title {
+
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+
+        }
+
+        #dancer {
+
+            position: absolute;
+            top: 50%;  
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            width: 500px;
+            z-index:999;
+            display:none;
+
+        }
+
+        #print_helper {
+             display: none;
+             font-size: 14px;
+             column-count: 2;
+             overflow-wrap: anywhere;
+        }
+
+        @media print {
+
+            #print_helper { 
+                display: block;
+                overflow: visible;
+                font-family: Menlo, "Deja Vu Sans Mono", "Bitstream Vera Sans Mono", Monaco, monospace;
+                white-space: pre;
+                white-space: pre-wrap;
+            }
+            textarea {
+                display: none;
+            }
+
+            img {
+                display:none;
+            }
+
+            #dancer{
+
+                display:none;
+
+            }
+
+            button {
+
+                display:none;
+
+            }
+
+
+
+
+        }
+
+
+    </style>
+	
+</head>
+<body>
+	
+	<img class="title" style="width: 500px" src="title.gif">
+    <div id="print_helper"></div>
+
+    <textarea id="textarea"></textarea>
+
+    <button id="clean">Clean 'Er Up</button>
+
+    <img src="yay.gif" id="dancer">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	
+	<script>
+		
+		$(function() {
+
+
+            $('#clean').click(function() {
+                //event.preventDefault();
+                var text = $('#textarea').val();
+                console.log(text);
+                text = text.replace(/.* 0 x.*$/gm, '');
+                text = text.replace(/(^[ \t]*\n)/gm, "");
+                console.log(text);
+                //send to server and process response
+                $('#textarea').val(text);
+                $("#dancer").show().delay(1000).fadeOut();
+                setTimeout(printTextArea, 2000);
+
+
+            });
+
+           function printTextArea() {
+
+                $('#print_helper').text($('#textarea').val());
+                window.print();
+        
+            }
+
+
+        });
+		
+	</script>
+	
+</body>
+</html>
