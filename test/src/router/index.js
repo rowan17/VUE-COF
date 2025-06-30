@@ -4,7 +4,7 @@ import BadIdPage from '../components/BadIdPage.vue';
 
 const routes = [
   {
-    path: '/:customerId([^.]+)\\.html', // Capture ID from URLs ending in .html
+    path: '/:customerId', // Capture ID without .html
     name: 'OrderForm',
     component: OrderForm,
     props: true // Pass route params as props

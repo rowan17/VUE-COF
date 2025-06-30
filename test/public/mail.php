@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     // Email details
-    $to = "orders@paracy.com," . $customerEmail;
+    // Ensure 'orders@paracay.com' is a valid sender address on your cPanel
+    $to = "orders@paracay.com," . $customerEmail;
     $subject = "Custom Order from " . $companyName;
 
     // Construct the email message body
@@ -70,7 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['message'] = 'Order submitted successfully! A confirmation email has been sent.';
     } else {
         $response['message'] = 'There was an issue sending the order email. Please check server logs or contact support.';
-        // You might want to log the error here: error_log("Mail failed to send to $to. Subject: $subject");
+        // Log the error here for troubleshooting
+        error_log("Mail failed to send to $to. Subject: $subject");
     }
 } else {
     $response['message'] = 'Invalid request method. Only POST requests are accepted.';

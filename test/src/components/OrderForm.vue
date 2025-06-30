@@ -38,10 +38,15 @@ const pinnedRecsError = ref(null);
 
 // --- Computed Properties ---
 
+// Computed property to get the customer ID without the .html extension
+const cleanedCustomerId = computed(() => {
+  return props.customerId ? props.customerId.replace(/\.html$/, '') : null;
+});
+
 // Overall loading indicator for the entire form
 const overallLoading = computed(() => {
   // If customerId is present, we are loading until customerData and product catalog are fetched
-  if (props.customerId) {
+  if (cleanedCustomerId.value) {
     return isLoading.value || !allProductsCatalog.value;
   } else {
     // If no customerId (general form), we are loading if stickers or product catalog are still loading
@@ -79,14 +84,12 @@ onMounted(async () => {
   await loadStickers();
   await fetchPinnedBigfootRecommendations();
 
-  // Then fetch customer-specific data if customerId is provided
-  if (props.customerId) {
-    await fetchData(props.customerId);
-  } else {
+  // For general form (no customerId), mark main loading as false immediately
+  if (!cleanedCustomerId.value) {
     console.log('General Order Form loaded (no customerId).');
-    isLoading.value = false; // Mark main loading as false for general form
-    // initializeOrderItems will be called by the watch effect on overallLoading
+    isLoading.value = false;
   }
+  // Initial data fetch for customerId is handled by the watch effect with immediate: true
 });
 
 // --- Data Fetching Functions ---
@@ -98,7 +101,7 @@ async function fetchData(id) {
   notes.value = '';
 
   try {
-    console.log(`Attempting to fetch: ${import.meta.env.BASE_URL}data/${id}.json`);
+    console.log(`Attempting to fetch data for ID: ${id} from URL: ${import.meta.env.BASE_URL}data/${id}.json`);
     const response = await axios.get(`${import.meta.env.BASE_URL}data/${id}.json`);
     console.log("Raw response data:", response.data); // Log raw response
     customerData.value = response.data;
@@ -215,11 +218,11 @@ function initializeOrderItems() {
     (customerData.value.data || []).forEach(item => {
       if (!tempOrderMap.has(item.Sku)) { // Only add if not already present (e.g., manually added)
         const details = fetchProductDetails(item.Sku);
-        if (details) {
+        // Check if details were found and if the image URL is not the placeholder
+        if (details && details.image_url !== "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image") {
           tempOrderMap.set(item.Sku, { ...details, ...item, type: 'history', currentQuantity: 0 });
         } else {
-          console.warn(`Product details not found for history item SKU: ${item.Sku}`);
-          tempOrderMap.set(item.Sku, { ...item, type: 'history', currentQuantity: 0, image_url: "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image", product_url: "#" });
+          console.warn(`Skipping history item with no loaded image or details found for SKU: ${item.Sku}`);
         }
       }
     });
@@ -233,8 +236,11 @@ function initializeOrderItems() {
     if (customerData.value.BigfootCustomer && pinnedBigfootRecs.value.length > 0) {
       pinnedBigfootRecs.value.forEach(pinnedItem => {
         const details = fetchProductDetails(pinnedItem.Sku);
-        if (details) {
+        // Check if details were found and if the image URL is not the placeholder
+        if (details && details.image_url !== "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image") {
           potentialRecs.push({ ...details, type: 'recommendation' });
+        } else {
+          console.warn(`Skipping pinned recommendation with no loaded image or details found for SKU: ${pinnedItem.Sku}`);
         }
       });
     }
@@ -243,8 +249,11 @@ function initializeOrderItems() {
     if (customerData.value.recommendations) {
       customerData.value.recommendations.forEach(recItem => {
         const details = fetchProductDetails(recItem.Sku);
-        if (details) {
+        // Check if details were found and if the image URL is not the placeholder
+        if (details && details.image_url !== "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image") {
           potentialRecs.push({ ...details, type: 'recommendation' });
+        } else {
+          console.warn(`Skipping recommendation with no loaded image or details found for SKU: ${recItem.Sku}`);
         }
       });
     }
@@ -358,7 +367,8 @@ async function addSkuItem(sku) {
   }
 
   const details = fetchProductDetails(sku);
-  if (details) {
+  // Check if details were found and if the image URL is not the placeholder
+  if (details && details.image_url !== "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image") {
     // Check if the item already exists in orderItems (regardless of type)
     const existingItemIndex = orderItems.value.findIndex(item => item.Sku === details.Sku);
 
@@ -377,7 +387,8 @@ async function addSkuItem(sku) {
       orderItems.value.push({ ...details, currentQuantity: 1, type: 'manual' });
     }
   } else {
-    alert(`Could not find details for SKU: ${sku}`);
+    console.warn(`Skipping manually added item with no loaded image or details found for SKU: ${sku}`);
+    alert(`Could not find details or image for SKU: ${sku}`);
   }
 }
 
@@ -385,7 +396,7 @@ async function submitOrder() {
   isLoading.value = true;
   submissionStatus.value = ''; error.value = null;
   const orderData = {
-    customerId: props.customerId,
+    customerId: cleanedCustomerId.value,
     customerInfo: {
       contactName: customerData.value?.ContactName, companyName: customerData.value?.CompanyName,
       email: customerData.value?.Email, phone: customerData.value?.Phone,
@@ -453,7 +464,8 @@ function formatOrderDetailsForEmail(orderData) {
   }
   detailsString += `\n--- ITEMS ORDERED ---\n`;
   orderData.items.forEach(item => {
-    detailsString += `${item.ItemTitle} (Sku: ${item.Sku}) - Qty: ${item.quantity}, Price: $${item.price}, Total: $${item.rowTotal}\n`;
+    // Format each item as: SKU - quantity x $price
+    detailsString += `${item.Sku} - ${item.quantity} x $${item.price}\n`;
   });
   detailsString += `\n--- TOTALS ---\n`;
   detailsString += `Total Quantity: ${orderData.totalQuantity}\n`;
@@ -474,10 +486,10 @@ function formatOrderDetailsForEmail(orderData) {
 }
 
 function downloadCSV() {
-  if (!props.customerId || !customerData.value || !customerData.value.data) {
-      alert("No customer-specific order history available to download.");
-      return;
-  }
+  if (!cleanedCustomerId.value || !customerData.value || !customerData.value.data) {
+       alert("No customer-specific order history available to download.");
+       return;
+   }
   const headers = ['ItemTitle', 'Sku', 'Price', 'Quantity', 'TimesPurchased'];
   const rows = customerData.value.data.map(item => {
     const productDetails = fetchProductDetails(item.Sku);
@@ -502,7 +514,7 @@ function downloadCSV() {
   const encodedUri = encodeURI(csvContent);
   const link = document.createElement("a");
   link.setAttribute("href", encodedUri);
-  link.setAttribute("download", `orderhistory_${props.customerId}.csv`);
+  link.setAttribute("download", `orderhistory_${cleanedCustomerId.value}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -528,21 +540,24 @@ function hidePreview() {
     showLargeImage.value = false; largeImageUrl.value = '';
 }
 
-watch([() => props.customerId, overallLoading], ([newId, newOverallLoading], [oldId, oldOverallLoading]) => {
-  // Only re-fetch customer data if customerId changes and is not null
-  if (newId && newId !== oldId) {
-    fetchData(newId);
-  } else if (!newId && oldId) { // If customerId becomes null from a previous value
+// Watch for changes in cleanedCustomerId to fetch customer-specific data
+watch(cleanedCustomerId, (newCleanId, oldCleanId) => {
+  if (newCleanId && newCleanId !== oldCleanId) {
+    fetchData(newCleanId);
+  } else if (!newCleanId && oldCleanId) { // If cleaned customerId becomes null from a previous value
     customerData.value = null;
   }
+}, { immediate: true }); // Fetch data immediately if customerId is available on mount
 
-  // Initialize order items only when overall loading is complete
-  // This ensures all necessary data (customer, catalog, stickers, pinned recs) is available
+// Watch for overall loading to complete before initializing order items
+watch(overallLoading, (newOverallLoading, oldOverallLoading) => {
+  // Initialize order items only when overall loading changes from true to false
+  // This ensures all necessary data (customer, catalog, stickers, pinned recs, customerData) is available
   if (!newOverallLoading && oldOverallLoading) {
     console.log("Overall loading complete, initializing order items.");
     initializeOrderItems();
   }
-}, { immediate: true });
+});
 
 const skuToAdd = ref('');
 function handleAddSku() {
@@ -570,7 +585,7 @@ function stripHtml(html) {
       <p>{{ error }}</p>
     </div>
 
-    <div v-if="props.customerId && customerData && !overallLoading && !error">
+    <div v-if="cleanedCustomerId && customerData && !overallLoading && !error">
       <header class="form-header">
         <div class="customer-info">
           <p><strong>Contact:</strong> {{ customerData.ContactName }} ({{ customerData.Email }}, {{ customerData.Phone }})</p>
@@ -584,7 +599,7 @@ function stripHtml(html) {
         <p class="info-message">Annual publications or discontinued items may not appear below. Use the Notes field for inquiries.</p>
       </header>
     </div>
-    <div v-if="!props.customerId && !overallLoading && !error" class="form-header">
+    <div v-if="!cleanedCustomerId && !overallLoading && !error" class="form-header">
         <p class="info-message text-lg">General Order Form. Add items by SKU or select from available stickers.</p>
     </div>
 
@@ -656,7 +671,7 @@ function stripHtml(html) {
       </table>
     </section>
 
-    <section v-if="props.customerId && customerData" class="table-section">
+    <section v-if="cleanedCustomerId && customerData" class="table-section">
       <h2>We Think You Might Like</h2>
       <div v-if="isLoadingPinnedRecs" class="message-text">Loading special recommendations...</div>
       <div v-else-if="pinnedRecsError" class="message-text error-message">{{ pinnedRecsError }}</div>

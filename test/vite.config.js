@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
       vue(),
       vueDevTools(),
     ],
-    base: mode === 'production' ? '/orderform/new_cof/' : '/',
+    base: mode === 'production' ? '/orderform/' : '/',
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
