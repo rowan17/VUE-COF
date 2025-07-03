@@ -38,6 +38,12 @@ const pinnedRecsError = ref(null);
 
 // --- Computed Properties ---
 
+// Computed property for current date and time for printing
+const currentDateTime = computed(() => {
+  const now = new Date();
+  return new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'long' }).format(now);
+});
+
 // Computed property to get the customer ID without the .html extension
 const cleanedCustomerId = computed(() => {
   return props.customerId ? props.customerId.replace(/\.html$/, '') : null;
@@ -448,7 +454,7 @@ async function submitOrder() {
     } else {
       submissionStatus.value = "Error: Could not send request.";
     }
-    error.value = submissionStatus.value;
+    error.value = error.value || submissionStatus.value; // Set error value as well
   } finally {
     isLoading.value = false;
   }
@@ -520,7 +526,11 @@ function downloadCSV() {
   document.body.removeChild(link);
 }
 
-function printOrder() { window.print(); }
+async function printOrder() {
+  // Ensure the DOM is updated before printing
+  await nextTick();
+  window.print();
+}
 
 function onImageError(event) {
   if (!event.target.src.includes('placehold.co')) {
@@ -597,10 +607,12 @@ function stripHtml(html) {
         <button @click="downloadCSV" class="action-button">Download Order History (CSV)</button>
         <hr>
         <p class="info-message">Annual publications or discontinued items may not appear below. Use the Notes field for inquiries.</p>
+        <p class="print-timestamp" style="display: none;">Printed On: {{ currentDateTime }}</p>
       </header>
     </div>
     <div v-if="!cleanedCustomerId && !overallLoading && !error" class="form-header">
         <p class="info-message text-lg">General Order Form. Add items by SKU or select from available stickers.</p>
+        <p class="print-timestamp" style="display: none;">Printed On: {{ currentDateTime }}</p>
     </div>
 
     <!-- Conditional rendering for Sticker Section based on customerData.BigfootCustomer -->
@@ -758,9 +770,51 @@ function stripHtml(html) {
       </div>
     </div>
   </div>
+
+  <!-- Print-only details section -->
+  <div class="print-only-details" style="display: none;">
+    <div class="print-header">
+      <h2>Order Details</h2>
+      <p>Printed On: {{ currentDateTime }}</p>
+    </div>
+
+    <div class="print-customer-info">
+      <h3>Customer Information</h3>
+      <p><strong>Contact:</strong> {{ customerData?.ContactName }} ({{ customerData?.Email }}, {{ customerData?.Phone }})</p>
+      <p><strong>Company:</strong> {{ customerData?.CompanyName }}</p>
+      <p><strong>Shipping Address:</strong></p>
+      <div v-html="customerData?.Address"></div>
+    </div>
+
+    <div class="print-items">
+      <h3>Items Ordered</h3>
+      <div v-for="item in orderItems.filter(item => item.currentQuantity > 0)" :key="item.Sku" class="print-item">
+        {{ item.Sku }} - {{ item.currentQuantity }} x ${{ item.price }} - {{ item.ItemTitle }}
+      </div>
+    </div>
+
+    <div class="print-totals">
+      <h3>Totals</h3>
+      <p>Total Quantity: {{ totalQuantity }}</p>
+      <p>Total Price: ${{ totalPrice }}</p>
+    </div>
+
+    <div v-if="notes" class="print-notes">
+      <h3>Notes</h3>
+      <p>{{ notes }}</p>
+    </div>
+
+    <div v-if="recommendationItems.length > 0" class="print-recommendations">
+      <h3>Top 5 Recommended Items</h3>
+      <div v-for="rec in recommendationItems.slice(0, 5)" :key="rec.Sku" class="print-rec-item">
+        {{ rec.ItemTitle }} (Sku: {{ rec.Sku }})
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+/* Basic Styling - Enhance with a UI library or more detailed CSS */
 /* Basic Styling - Enhance with a UI library or more detailed CSS */
 .order-form-container {
   font-family: 'Roboto', sans-serif;
@@ -1136,49 +1190,70 @@ h2 {
   body * {
     visibility: hidden;
   }
-  .order-form-container, .order-form-container * {
-    visibility: visible;
-  }
   .order-form-container {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 20px; /* Add some padding for print */
     border: none;
     box-shadow: none;
     background-color: transparent;
+    visibility: visible; /* Make the container visible */
   }
-  .bottom-bar, .image-preview-overlay, .modal-overlay, .logo-container, .action-button, .add-sku-section, .notes-section {
-    display: none !important; /* Hide elements not relevant for print */
+
+  /* Hide main form elements */
+  .logo-container,
+  .loading-overlay,
+  .error-message,
+  .form-header, /* Hide the main header */
+  .sticker-section-container,
+  .table-section,
+  .add-sku-section,
+  .notes-section,
+  .bottom-bar,
+  .image-preview-overlay,
+  .modal-overlay {
+    display: none !important;
   }
-  .order-table {
-    table-layout: auto; /* Allow table columns to size naturally for print */
+
+  /* Show the print-only details section */
+  .print-only-details {
+    display: block !important;
+    visibility: visible !important;
+    width: 100%;
   }
-  .order-table th, .order-table td {
-    padding: 5px;
-    font-size: 0.8em;
+
+  /* Basic styling for the print-only section */
+  .print-header, .print-customer-info, .print-items, .print-totals, .print-notes, .print-recommendations {
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
   }
-  .product-image {
-    max-width: 50px; /* Smaller images for print */
-    max-height: 50px;
+
+  .print-header h2, .print-customer-info h3, .print-items h3, .print-totals h3, .print-notes h3, .print-recommendations h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+      font-size: 1.1em;
+      color: #333;
   }
-  .customer-info, .form-header {
-    text-align: left;
-    margin-bottom: 10px;
-    padding: 0;
-    border: none;
-    background-color: transparent;
+
+  .print-item, .print-rec-item {
+      margin-bottom: 5px;
+      font-size: 0.9em;
+      line-height: 1.4;
   }
-  .info-message {
-    display: none;
+
+  .print-customer-info p, .print-totals p, .print-notes p {
+      margin: 5px 0;
+      font-size: 0.9em;
   }
-  h2 {
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 3px;
-    margin-bottom: 10px;
-    font-size: 1.2em;
+
+  .print-customer-info div {
+      margin-left: 10px;
+      font-style: italic;
+      font-size: 0.9em;
   }
 }
 </style>

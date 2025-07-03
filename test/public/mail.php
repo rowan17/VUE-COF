@@ -38,7 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     // Email details
     // Ensure 'orders@paracay.com' is a valid sender address on your cPanel
-    $to = "orders@paracay.com," . $customerEmail;
+    #$to = "orders@paracay.com," . $customerEmail;
+    $to = "rowanmagnuson@gmail.com," . $customerEmail;
+
     $subject = "Custom Order from " . $companyName;
 
     // Construct the email message body
@@ -66,16 +68,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Remove the '@' error suppressor for better debugging during development
     $mail_sent = mail($to, $subject, $emailMessage, $headers);
 
-    if ($mail_sent) {
-        $response['success'] = true;
-        $response['message'] = 'Order submitted successfully! A confirmation email has been sent.';
-    } else {
-        $response['message'] = 'There was an issue sending the order email. Please check server logs or contact support.';
-        // Log the error here for troubleshooting
+    // Always set success to true for the frontend response
+    $response['success'] = true;
+    $response['message'] = 'Order data received. You should receive an email confirmation shortly.'; // Default success message
+
+    if (!$mail_sent) {
+        // If email sending failed, log the error on the server
         error_log("Mail failed to send to $to. Subject: $subject");
+        // Optionally, you could add a note to the message for the user,
+        // but the requirement is to show the confirmation modal anyway.
+        // $response['message'] .= ' (Note: Email sending failed)';
     }
+
 } else {
     $response['message'] = 'Invalid request method. Only POST requests are accepted.';
+    // For non-POST requests, success remains false as initialized.
 }
 
 echo json_encode($response);
