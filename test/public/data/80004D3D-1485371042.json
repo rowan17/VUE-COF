@@ -1,0 +1,567 @@
+{
+  "UrlId": "80004D3D-1485371042",
+  "CustomerId": "80000D5C-1702051079",
+  "CompanyName": "ATON MARITIME INSTITUTE",
+  "Email": "pk346us@yahoo.com",
+  "Phone": "6096513469",
+  "ContactName": "PRATEEK KUMAR",
+  "Address": "ATON MARITIME INSTITUTE<br>PRATEEK KUMAR<br>17 COLONIAL AVE<br><br><br>PRINCETON JUNCTION, NJ 08550 ",
+  "BigfootCustomer": false,
+  "State": "NJ",
+  "date": "07/01/2025",
+  "data": [
+    {
+      "Sku": "PAR064",
+      "TimesPurchased": 7,
+      "Quantity": 24
+    },
+    {
+      "Sku": "PAR062",
+      "TimesPurchased": 6,
+      "Quantity": 11
+    },
+    {
+      "Sku": "PAR063",
+      "TimesPurchased": 6,
+      "Quantity": 11
+    },
+    {
+      "Sku": "CEL013",
+      "TimesPurchased": 2,
+      "Quantity": 2
+    }
+  ],
+  "recommendations": [
+    {
+      "Sku": "XSHIPOTHER"
+    },
+    {
+      "Sku": "PAR076"
+    },
+    {
+      "Sku": "CEL012"
+    },
+    {
+      "Sku": "PAR073"
+    },
+    {
+      "Sku": "CEL014"
+    },
+    {
+      "Sku": "XSHIPSERV"
+    },
+    {
+      "Sku": "JCS005"
+    },
+    {
+      "Sku": "MSV106"
+    },
+    {
+      "Sku": "PAR007"
+    },
+    {
+      "Sku": "PAR222"
+    },
+    {
+      "Sku": "NAV019"
+    },
+    {
+      "Sku": "JCS001"
+    },
+    {
+      "Sku": "DKP037"
+    },
+    {
+      "Sku": "STL074"
+    },
+    {
+      "Sku": "PAR072"
+    },
+    {
+      "Sku": "LYB071"
+    },
+    {
+      "Sku": "JCS003"
+    },
+    {
+      "Sku": "INT014"
+    },
+    {
+      "Sku": "INT362"
+    },
+    {
+      "Sku": "CAN007"
+    },
+    {
+      "Sku": "CMP005"
+    },
+    {
+      "Sku": "RAN109"
+    },
+    {
+      "Sku": "STR040"
+    },
+    {
+      "Sku": "RAN234"
+    },
+    {
+      "Sku": "PAR230"
+    },
+    {
+      "Sku": "MOU067"
+    },
+    {
+      "Sku": "MSP023"
+    },
+    {
+      "Sku": "RAN002"
+    },
+    {
+      "Sku": "CMP017"
+    },
+    {
+      "Sku": "BFB003"
+    },
+    {
+      "Sku": "CEL003"
+    },
+    {
+      "Sku": "IHP_CHART1"
+    },
+    {
+      "Sku": "FPL003"
+    },
+    {
+      "Sku": "GNL001"
+    },
+    {
+      "Sku": "INT461"
+    },
+    {
+      "Sku": "WIL044"
+    },
+    {
+      "Sku": "WPC021"
+    },
+    {
+      "Sku": "WPP003"
+    },
+    {
+      "Sku": "INT442"
+    },
+    {
+      "Sku": "INT149"
+    },
+    {
+      "Sku": "INT434"
+    },
+    {
+      "Sku": "BMN394D"
+    },
+    {
+      "Sku": "BN3775D"
+    },
+    {
+      "Sku": "PAR078"
+    },
+    {
+      "Sku": "PGN128"
+    },
+    {
+      "Sku": "INT466"
+    },
+    {
+      "Sku": "KGF010"
+    },
+    {
+      "Sku": "ACB153"
+    },
+    {
+      "Sku": "CMP093"
+    },
+    {
+      "Sku": "EVE017"
+    },
+    {
+      "Sku": "INT456"
+    },
+    {
+      "Sku": "RAN107"
+    },
+    {
+      "Sku": "USS026"
+    },
+    {
+      "Sku": "STR048"
+    },
+    {
+      "Sku": "PGW019"
+    },
+    {
+      "Sku": "EVE054"
+    },
+    {
+      "Sku": "FGG003"
+    },
+    {
+      "Sku": "INT427"
+    },
+    {
+      "Sku": "BMY380D"
+    },
+    {
+      "Sku": "BMY381D"
+    },
+    {
+      "Sku": "BH474D"
+    },
+    {
+      "Sku": "CMP012"
+    },
+    {
+      "Sku": "CMP014"
+    },
+    {
+      "Sku": "FGG001"
+    },
+    {
+      "Sku": "FGG002"
+    },
+    {
+      "Sku": "PAR318"
+    },
+    {
+      "Sku": "PAR234"
+    },
+    {
+      "Sku": "INT501"
+    },
+    {
+      "Sku": "MMG006"
+    },
+    {
+      "Sku": "RFP006"
+    },
+    {
+      "Sku": "WIL061"
+    },
+    {
+      "Sku": "PMP007"
+    },
+    {
+      "Sku": "INT219"
+    },
+    {
+      "Sku": "HMC061"
+    },
+    {
+      "Sku": "HMC060"
+    },
+    {
+      "Sku": "IDG005"
+    },
+    {
+      "Sku": "CPS001"
+    },
+    {
+      "Sku": "CMP025"
+    },
+    {
+      "Sku": "CMP091"
+    },
+    {
+      "Sku": "BH4776D"
+    },
+    {
+      "Sku": "BMH455D"
+    },
+    {
+      "Sku": "ACB124"
+    },
+    {
+      "Sku": "BY370D"
+    },
+    {
+      "Sku": "POD002"
+    },
+    {
+      "Sku": "POD017"
+    },
+    {
+      "Sku": "INT465"
+    },
+    {
+      "Sku": "PAR004"
+    },
+    {
+      "Sku": "SIM136"
+    },
+    {
+      "Sku": "STR037"
+    },
+    {
+      "Sku": "SHP246"
+    },
+    {
+      "Sku": "STL256"
+    },
+    {
+      "Sku": "NO_18465TR"
+    },
+    {
+      "Sku": "MSP021"
+    },
+    {
+      "Sku": "INT451"
+    },
+    {
+      "Sku": "INT452"
+    },
+    {
+      "Sku": "POD004"
+    },
+    {
+      "Sku": "PAR316"
+    },
+    {
+      "Sku": "PAR215"
+    },
+    {
+      "Sku": "PAR077"
+    },
+    {
+      "Sku": "PAR319"
+    },
+    {
+      "Sku": "CLI001"
+    },
+    {
+      "Sku": "ENS002"
+    },
+    {
+      "Sku": "GEB001"
+    },
+    {
+      "Sku": "GNL006"
+    },
+    {
+      "Sku": "IMR060"
+    },
+    {
+      "Sku": "INT026"
+    },
+    {
+      "Sku": "CMP011"
+    },
+    {
+      "Sku": "PGW024"
+    },
+    {
+      "Sku": "POD011"
+    },
+    {
+      "Sku": "PSP001"
+    },
+    {
+      "Sku": "PDV007"
+    },
+    {
+      "Sku": "PGN077"
+    },
+    {
+      "Sku": "RAN250"
+    },
+    {
+      "Sku": "INT455"
+    },
+    {
+      "Sku": "INT460"
+    },
+    {
+      "Sku": "MOR013"
+    },
+    {
+      "Sku": "MSP041"
+    },
+    {
+      "Sku": "STR012"
+    },
+    {
+      "Sku": "STR013"
+    },
+    {
+      "Sku": "WPP004"
+    },
+    {
+      "Sku": "WPP002"
+    },
+    {
+      "Sku": "WIL076"
+    },
+    {
+      "Sku": "STR016"
+    },
+    {
+      "Sku": "SHP615"
+    },
+    {
+      "Sku": "SIM134"
+    },
+    {
+      "Sku": "RFP008"
+    },
+    {
+      "Sku": "SHP098"
+    },
+    {
+      "Sku": "UHP004"
+    },
+    {
+      "Sku": "PAR023"
+    },
+    {
+      "Sku": "PAR066"
+    },
+    {
+      "Sku": "MOR008"
+    },
+    {
+      "Sku": "INT463"
+    },
+    {
+      "Sku": "LDG002"
+    },
+    {
+      "Sku": "JES001"
+    },
+    {
+      "Sku": "JES004"
+    },
+    {
+      "Sku": "PMP006"
+    },
+    {
+      "Sku": "RAN104"
+    },
+    {
+      "Sku": "PLP005"
+    },
+    {
+      "Sku": "PAR325"
+    },
+    {
+      "Sku": "CMP244"
+    },
+    {
+      "Sku": "CMP018"
+    },
+    {
+      "Sku": "CHC001"
+    },
+    {
+      "Sku": "CHP001"
+    },
+    {
+      "Sku": "BMR276D"
+    },
+    {
+      "Sku": "INT105"
+    },
+    {
+      "Sku": "IHP_BD24V1"
+    },
+    {
+      "Sku": "FMC008"
+    },
+    {
+      "Sku": "FGG004"
+    },
+    {
+      "Sku": "EVE059"
+    },
+    {
+      "Sku": "FER009"
+    },
+    {
+      "Sku": "FER058"
+    },
+    {
+      "Sku": "ENS001"
+    },
+    {
+      "Sku": "FMC003"
+    },
+    {
+      "Sku": "GPT081"
+    },
+    {
+      "Sku": "HNA015"
+    },
+    {
+      "Sku": "INT440"
+    },
+    {
+      "Sku": "ACB018"
+    },
+    {
+      "Sku": "BMN203D"
+    },
+    {
+      "Sku": "CKM001"
+    },
+    {
+      "Sku": "CMP302"
+    },
+    {
+      "Sku": "CMP007"
+    },
+    {
+      "Sku": "CMP001"
+    },
+    {
+      "Sku": "CMP003"
+    },
+    {
+      "Sku": "PAR324"
+    },
+    {
+      "Sku": "PLP009"
+    },
+    {
+      "Sku": "PAR219"
+    },
+    {
+      "Sku": "RAN570"
+    },
+    {
+      "Sku": "LDG003"
+    },
+    {
+      "Sku": "INT464"
+    },
+    {
+      "Sku": "INT448"
+    },
+    {
+      "Sku": "MBI091"
+    },
+    {
+      "Sku": "VMI110D"
+    },
+    {
+      "Sku": "WAC004"
+    },
+    {
+      "Sku": "SKY033"
+    },
+    {
+      "Sku": "SPC023"
+    },
+    {
+      "Sku": "RFP031"
+    },
+    {
+      "Sku": "WPL0176"
+    }
+  ]
+}

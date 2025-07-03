@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted, defineProps, nextTick } from 'vue';
+import { ref, computed, watch, onMounted, nextTick } from 'vue';
 import axios from 'axios';
 
 // --- Props ---
@@ -82,6 +82,9 @@ const recommendationItems = computed(() => orderItems.value.filter(item => item.
 // Filter orderItems to display only sticker items (for internal use, main display is different)
 const selectedStickerItemsForDisplay = computed(() => orderItems.value.filter(item => item.type === 'sticker'));
 
+// Computed property for items with currentQuantity > 0, for print view
+const orderedItemsForPrint = computed(() => orderItems.value.filter(item => item.currentQuantity > 0));
+
 
 // --- Lifecycle Hooks ---
 onMounted(async () => {
@@ -110,6 +113,16 @@ async function fetchData(id) {
     console.log(`Attempting to fetch data for ID: ${id} from URL: ${import.meta.env.BASE_URL}data/${id}.json`);
     const response = await axios.get(`${import.meta.env.BASE_URL}data/${id}.json`);
     console.log("Raw response data:", response.data); // Log raw response
+    // Check if the response is HTML instead of JSON
+    const contentType = response.headers['content-type'];
+    if (contentType && contentType.includes('text/html')) {
+        console.error("Received HTML response when expecting JSON:", response.data);
+        error.value = `Customer ID Not Found: The customer ID entered in the URL was not found. Please contact order@paracay.com to confirm your ID.`;
+        customerData.value = null; // Ensure customerData is null to hide the form
+        isLoading.value = false; // Stop loading
+        return; // Exit the function
+    }
+
     customerData.value = response.data;
     // Set BigfootCustomer based on the fetched data, default to false if not present
     // Ensure response.data is an object before trying to access properties
@@ -117,8 +130,8 @@ async function fetchData(id) {
         customerData.value.BigfootCustomer = response.data.BigfootCustomer || false;
     } else {
         console.error("Received non-object data, cannot set BigfootCustomer:", response.data);
-        // Handle this case, perhaps by setting a default or throwing an error
-        customerData.value = { BigfootCustomer: false }; // Provide a default structure
+        error.value = `Customer ID Not Found: The customer ID entered in the URL was not found. Please contact order@paracay.com to confirm your ID.`;
+        customerData.value = null; // Ensure customerData is null to hide the form
     }
     console.log("Customer data fetched successfully:", customerData.value);
     // initializeOrderItems will be called by the watch effect on overallLoading
@@ -127,7 +140,12 @@ async function fetchData(id) {
     if (err.response && err.response.status === 404) {
         error.value = `Customer ID Not Found: The customer ID entered in the URL was not found. Please contact order@paracay.com to confirm your ID.`;
         customerData.value = null; // Ensure customerData is null to hide the form
-    } else {
+    } else if (err.response && typeof err.response.data === 'string' && err.response.data.toLowerCase().includes("<!doctype html>")) {
+        // If the response is HTML, it means the server redirected to index.html for a missing file
+        error.value = `Customer ID Not Found: The customer ID entered in the URL was not found. Please contact order@paracay.com to confirm your ID.`;
+        customerData.value = null;
+    }
+    else {
         error.value = `An error occurred while loading customer data. Please try again later.`;
     }
     customerData.value = null;
@@ -151,8 +169,9 @@ async function fetchProductCatalog() {
     }
     console.log("Product catalog fetched successfully.");
   } catch (err) {
-    console.error("Error fetching product catalog:", err);
-    productCatalogError.value = "Could not load product catalog.";
+    const url = err.config?.url || 'productdata.json';
+    console.error(`Failed to fetch product catalog from ${url}. Status: ${err.response?.status}`, err);
+    productCatalogError.value = "Could not load product catalog. Check console for details.";
   }
 }
 
@@ -206,43 +225,45 @@ async function fetchPinnedBigfootRecommendations() {
 
 // --- Initialize Order State: Centralized logic for populating orderItems ---
 function initializeOrderItems() {
-  // Create a temporary map to build up unique items and manage their currentQuantity
-  const tempOrderMap = new Map(); // Key: SKU, Value: item object
+  const tempOrderMap = new Map();
 
-  // 1. Add existing manually added items (if any, to preserve user input)
-  orderItems.value.filter(item => item.type === 'manual').forEach(item => {
-    tempOrderMap.set(item.Sku, { ...item }); // Clone to avoid direct mutation issues during reinitialization
-  });
-
-  // 2. Add existing sticker items (to preserve user input)
-  orderItems.value.filter(item => item.type === 'sticker').forEach(item => {
+  // Populate tempOrderMap with existing orderItems to preserve currentQuantity
+  orderItems.value.forEach(item => {
     tempOrderMap.set(item.Sku, { ...item });
   });
 
-  // 3. Add history items if customerData is available
+  // Add/Update history items
   if (customerData.value?.data) {
     (customerData.value.data || []).forEach(item => {
-      if (!tempOrderMap.has(item.Sku)) { // Only add if not already present (e.g., manually added)
-        const details = fetchProductDetails(item.Sku);
-        // Check if details were found and if the image URL is not the placeholder
-        if (details && details.image_url !== "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image") {
-          tempOrderMap.set(item.Sku, { ...details, ...item, type: 'history', currentQuantity: 0 });
+      const existingItem = tempOrderMap.get(item.Sku);
+      const details = fetchProductDetails(item.Sku);
+
+      if (details && details.image_url !== "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image") {
+        if (existingItem) {
+          // If item exists, update its details but preserve currentQuantity and type if it's manual/sticker
+          // If it's a history item, update its details and keep its currentQuantity
+          if (existingItem.type === 'manual' || existingItem.type === 'sticker') {
+            // Do nothing, manual/sticker takes precedence for quantity and type
+          } else {
+            tempOrderMap.set(item.Sku, { ...details, ...item, type: 'history', currentQuantity: existingItem.currentQuantity });
+          }
         } else {
-          console.warn(`Skipping history item with no loaded image or details found for SKU: ${item.Sku}`);
+          // If item does not exist, add it as a new history item with quantity 0
+          tempOrderMap.set(item.Sku, { ...details, ...item, type: 'history', currentQuantity: 0 });
         }
+      } else {
+        console.warn(`Skipping history item with no loaded image or details found for SKU: ${item.Sku}`);
       }
     });
   }
 
-  // 4. Add recommendations (both pinned and standard) if customerData is available AND product catalog is loaded
-  if (customerData.value && allProductsCatalog.value) { // Added check for allProductsCatalog.value
+  // Add/Update recommendations
+  if (customerData.value && allProductsCatalog.value) {
     const potentialRecs = [];
-
     // Add pinned Bigfoot recommendations first if BigfootCustomer
     if (customerData.value.BigfootCustomer && pinnedBigfootRecs.value.length > 0) {
       pinnedBigfootRecs.value.forEach(pinnedItem => {
         const details = fetchProductDetails(pinnedItem.Sku);
-        // Check if details were found and if the image URL is not the placeholder
         if (details && details.image_url !== "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image") {
           potentialRecs.push({ ...details, type: 'recommendation' });
         } else {
@@ -250,12 +271,10 @@ function initializeOrderItems() {
         }
       });
     }
-
     // Add standard recommendations from customerData
     if (customerData.value.recommendations) {
       customerData.value.recommendations.forEach(recItem => {
         const details = fetchProductDetails(recItem.Sku);
-        // Check if details were found and if the image URL is not the placeholder
         if (details && details.image_url !== "https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image") {
           potentialRecs.push({ ...details, type: 'recommendation' });
         } else {
@@ -264,25 +283,34 @@ function initializeOrderItems() {
       });
     }
 
-    // Now add these potential recommendations to the map, avoiding duplicates and history items
     potentialRecs.forEach(recItem => {
-      // Ensure it's not already in history or manually added, and not already added as another rec
-      if (!tempOrderMap.has(recItem.Sku) || tempOrderMap.get(recItem.Sku).type === 'history') {
-        // If it's a history item that's also a recommendation, we'll keep it as history.
-        // Otherwise, add as a recommendation.
-        if (tempOrderMap.has(recItem.Sku) && tempOrderMap.get(recItem.Sku).type === 'history') {
-            // Do nothing, history takes precedence for display type
+      const existingItem = tempOrderMap.get(recItem.Sku);
+      if (existingItem) {
+        // If item exists, update its details but preserve currentQuantity and type if it's manual/sticker/history
+        if (existingItem.type === 'manual' || existingItem.type === 'sticker' || existingItem.type === 'history') {
+          // Do nothing, higher precedence types take precedence for quantity and type
         } else {
-            tempOrderMap.set(recItem.Sku, { ...recItem, currentQuantity: 0 });
+          tempOrderMap.set(recItem.Sku, { ...recItem, currentQuantity: existingItem.currentQuantity });
         }
+      } else {
+        // If item does not exist, add it as a new recommendation item with quantity 0
+        tempOrderMap.set(recItem.Sku, { ...recItem, currentQuantity: 0 });
       }
     });
   }
 
   // Convert the map values back to an array for orderItems
-  orderItems.value = Array.from(tempOrderMap.values());
+  // Sort them to maintain a consistent order (e.g., by Sku or type)
+  orderItems.value = Array.from(tempOrderMap.values()).sort((a, b) => {
+    // Prioritize manual, then sticker, then history, then recommendation
+    const typeOrder = { 'manual': 1, 'sticker': 2, 'history': 3, 'recommendation': 4 };
+    if (typeOrder[a.type] !== typeOrder[b.type]) {
+      return typeOrder[a.type] - typeOrder[b.type];
+    }
+    return a.Sku.localeCompare(b.Sku); // Then by SKU
+  });
 
-  console.log("Initialized order items:", JSON.parse(JSON.stringify(orderItems.value)));
+  console.log("Initialized order items (after preserving quantities):", JSON.parse(JSON.stringify(orderItems.value)));
 }
 
 
@@ -437,10 +465,9 @@ async function submitOrder() {
     });
     if (response.data && response.data.success) {
       submissionStatus.value = response.data.message || "Order submitted successfully!";
-      showConfirmationModal.value = true;
     } else {
       submissionStatus.value = response.data.message || "Failed to submit order.";
-      error.value = submissionStatus.value;
+      error.value = submissionStatus.value; // Set error if submission was not successful
     }
   } catch (err) {
     submissionStatus.value = "An error occurred while submitting your order.";
@@ -457,6 +484,7 @@ async function submitOrder() {
     error.value = error.value || submissionStatus.value; // Set error value as well
   } finally {
     isLoading.value = false;
+    showConfirmationModal.value = true; // Always show the modal after submission attempt
   }
 }
 
@@ -543,11 +571,24 @@ function onStickerImageError(event) {
   }
 }
 
+let previewTimeoutId = null;
+
 function showPreview(url) {
+    if (previewTimeoutId) {
+        clearTimeout(previewTimeoutId);
+        previewTimeoutId = null;
+    }
     if (url) { largeImageUrl.value = url; showLargeImage.value = true; }
 }
 function hidePreview() {
-    showLargeImage.value = false; largeImageUrl.value = '';
+    if (previewTimeoutId) {
+        clearTimeout(previewTimeoutId);
+    }
+    previewTimeoutId = setTimeout(() => {
+        showLargeImage.value = false;
+        largeImageUrl.value = '';
+        previewTimeoutId = null;
+    }, 200); // Add a 200ms delay to prevent flickering
 }
 
 // Watch for changes in cleanedCustomerId to fetch customer-specific data
@@ -584,148 +625,121 @@ function stripHtml(html) {
 </script>
 
 <template>
-  <div class="order-form-container">
-    <div class="logo-container">
-      <img src="https://paracay.com/orderform/logo.png" alt="Paradise Cay Publications Logo" class="logo">
-    </div>
-
-    <div v-if="overallLoading" class="loading-overlay">Loading data...</div>
-    <div v-if="error" class="error-message">
-      <p>Error:</p>
-      <p>{{ error }}</p>
-    </div>
-
-    <div v-if="cleanedCustomerId && customerData && !overallLoading && !error">
-      <header class="form-header">
-        <div class="customer-info">
-          <p><strong>Contact:</strong> {{ customerData.ContactName }} ({{ customerData.Email }}, {{ customerData.Phone }})</p>
-          <p><strong>Company:</strong> {{ customerData.CompanyName }}</p>
-          <p><strong>Default Shipping Address:</strong></p>
-          <div v-html="customerData.Address" class="address"></div>
-          <p><small>Order Form Updated: {{ customerData.date }}</small></p>
-        </div>
-        <button @click="downloadCSV" class="action-button">Download Order History (CSV)</button>
-        <hr>
-        <p class="info-message">Annual publications or discontinued items may not appear below. Use the Notes field for inquiries.</p>
-        <p class="print-timestamp" style="display: none;">Printed On: {{ currentDateTime }}</p>
+  <div>
+    <div class="order-form-container">
+      <header class="order-header">
+        <img src="/text-logo.png" alt="Text Logo" class="text-logo">
       </header>
-    </div>
-    <div v-if="!cleanedCustomerId && !overallLoading && !error" class="form-header">
-        <p class="info-message text-lg">General Order Form. Add items by SKU or select from available stickers.</p>
-        <p class="print-timestamp" style="display: none;">Printed On: {{ currentDateTime }}</p>
-    </div>
 
-    <!-- Conditional rendering for Sticker Section based on customerData.BigfootCustomer -->
-    <section v-if="customerData && customerData.BigfootCustomer" class="sticker-section-container">
-      <h2 class="sticker-section-header">
-        <svg xmlns="http://www.w3.org/2000/svg" class="header-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-        </svg>
-        Stickers
-      </h2>
-      <div v-if="isLoadingStickers" class="message-text">Loading stickers...</div>
-      <div v-else-if="stickerLoadingError" class="message-text error-message">{{ stickerLoadingError }}</div>
-      <div v-else-if="fetchedStickers.length === 0" class="message-text">No stickers available.</div>
+      <div v-if="overallLoading" class="loading-overlay">Loading data...</div>
+      <div v-if="error" class="error-message">
+        <p>Error:</p>
+        <p>{{ error }}</p>
+      </div>
 
-      <div v-else class="sticker-list-wrapper custom-scrollbar">
-        <div v-for="sticker in fetchedStickers" :key="sticker.sku"
-              class="sticker-card"
-              :style="{ minWidth: stickerItemWidth, maxWidth: stickerItemWidth }">
-
-          <div class="image-wrapper">
-            <img :src="sticker.img" :alt="`Sticker ${sticker.sku}`"
-                  @error="onStickerImageError"/>
+      <div v-if="cleanedCustomerId && customerData && !overallLoading && !error">
+        <header class="form-header">
+          <div class="customer-info">
+            <p><strong>Contact:</strong> {{ customerData.ContactName }} ({{ customerData.Email }}, {{ customerData.Phone }})</p>
+            <p><strong>Company:</strong> {{ customerData.CompanyName }}</p>
+            <p><strong>Default Shipping Address:</strong></p>
+            <div v-html="customerData.Address" class="address"></div>
+            <p><small>Order Form Updated: {{ customerData.date }}</small></p>
           </div>
+          <button @click="downloadCSV" class="action-button">Download Order History (CSV)</button>
+          <hr>
+          <p class="info-message">Annual publications or discontinued items may not appear below. Use the Notes field for inquiries.</p>
+          <p class="print-timestamp" style="display: none;">Printed On: {{ currentDateTime }}</p>
+        </header>
+      </div>
+      <div v-if="!cleanedCustomerId && !overallLoading && !error" class="form-header">
+          <p class="info-message text-lg">General Order Form. Add items by SKU or select from available stickers.</p>
+          <p class="print-timestamp" style="display: none;">Printed On: {{ currentDateTime }}</p>
+      </div>
 
-          <p class="sticker-sku" :title="sticker.sku">SKU: {{ sticker.sku }}</p>
-          <p class="sticker-price">${{ stickerPrice.toFixed(2) }}</p>
+      <!-- Conditional rendering for Sticker Section based on customerData.BigfootCustomer -->
+      <section v-if="customerData && customerData.BigfootCustomer" class="sticker-section-container">
+        <h2 class="sticker-section-header">
+          <svg xmlns="http://www.w3.org/2000/svg" class="header-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+          </svg>
+          Stickers
+        </h2>
+        <div v-if="isLoadingStickers" class="message-text">Loading stickers...</div>
+        <div v-else-if="stickerLoadingError" class="message-text error-message">{{ stickerLoadingError }}</div>
+        <div v-else-if="fetchedStickers.length === 0" class="message-text">No stickers available.</div>
 
-          <div class="quantity-controls">
-            <button @click="decrementStickerQuantity(sticker.sku)" class="qty-btn">-</button>
-            <input type="number"
-                  :value="stickerQuantities[sticker.sku] || 0"
-                  @input="updateStickerQuantity(sticker.sku, $event.target.value)"
-                  min="0" class="qty-input"/>
-            <button @click="incrementStickerQuantity(sticker.sku)" class="qty-btn">+</button>
+        <div v-else class="sticker-list-wrapper custom-scrollbar">
+          <div v-for="sticker in fetchedStickers" :key="sticker.sku"
+                class="sticker-card"
+                :style="{ minWidth: stickerItemWidth, maxWidth: stickerItemWidth }">
+
+            <div class="image-wrapper">
+              <img :src="sticker.img" :alt="`Sticker ${sticker.sku}`"
+                    @error="onStickerImageError"/>
+            </div>
+
+            <p class="sticker-sku" :title="sticker.sku">SKU: {{ sticker.sku }}</p>
+            <p class="sticker-price">${{ stickerPrice.toFixed(2) }}</p>
+
+            <div class="quantity-controls">
+              <button @click="decrementStickerQuantity(sticker.sku)" class="qty-btn">-</button>
+              <input type="number"
+                    :value="stickerQuantities[sticker.sku] || 0"
+                    @input="updateStickerQuantity(sticker.sku, $event.target.value)"
+                    min="0" class="qty-input"/>
+              <button @click="incrementStickerQuantity(sticker.sku)" class="qty-btn">+</button>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section v-if="props.customerId && customerData" class="table-section">
-      <h2>Your Order History</h2>
-      <table class="order-table">
-        <thead>
-          <tr>
-            <th>Image</th><th>Product</th><th>Price</th>
-            <th>Total Qty Purchased</th><th># Times Purchased</th>
-            <th>Order QTY</th><th>Total Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-if="historyItems.length === 0"><td colspan="7">No order history found.</td></tr>
-          <tr v-for="item in historyItems" :key="item.Sku">
-            <td>
-              <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.ItemTitle"
-                   class="product-image" @error="onImageError" @mouseover="showPreview(item.image_url)" @mouseout="hidePreview">
-            </td>
-            <td class="product-details">
-              <a :href="item.product_url" target="_blank" rel="noopener noreferrer">{{ item.ItemTitle }} - {{ item.Sku }}</a>
-              <p class="description">{{ item.description }}</p>
-            </td>
-            <td>${{ item.price }}</td>
-            <td class="center-align">{{ item.Quantity }}</td>
-            <td class="center-align">{{ item.TimesPurchased }}</td>
-            <td><input type="number" v-model.number="item.currentQuantity" min="0" class="quantity-input"></td>
-            <td class="right-align">${{ (parseFloat(item.price || 0) * Number(item.currentQuantity || 0)).toFixed(2) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+      <section v-if="props.customerId && customerData" class="table-section">
+        <h2>Your Order History</h2>
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th>Image</th><th>Product</th><th>Price</th>
+              <th>Total Qty Purchased</th><th># Times Purchased</th>
+              <th>Order QTY</th><th>Total Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-if="historyItems.length === 0"><td colspan="7">No order history found.</td></tr>
+            <tr v-for="item in historyItems" :key="item.Sku">
+              <td>
+                <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.ItemTitle"
+                     class="product-image" @error="onImageError" @mouseenter="showPreview(item.image_url)" @mouseleave="hidePreview">
+              </td>
+              <td class="product-details">
+                <a :href="item.product_url" target="_blank" rel="noopener noreferrer">{{ item.ItemTitle }} - {{ item.Sku }}</a>
+                <p class="description">{{ item.description }}</p>
+              </td>
+              <td>${{ item.price }}</td>
+              <td class="center-align">{{ item.Quantity }}</td>
+              <td class="center-align">{{ item.TimesPurchased }}</td>
+              <td><input type="number" v-model.number="item.currentQuantity" min="0" class="quantity-input"></td>
+              <td class="right-align">${{ (parseFloat(item.price || 0) * Number(item.currentQuantity || 0)).toFixed(2) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
-    <section v-if="cleanedCustomerId && customerData" class="table-section">
-      <h2>We Think You Might Like</h2>
-      <div v-if="isLoadingPinnedRecs" class="message-text">Loading special recommendations...</div>
-      <div v-else-if="pinnedRecsError" class="message-text error-message">{{ pinnedRecsError }}</div>
-      <table class="order-table">
-        <thead><tr><th>Image</th><th>Product</th><th>Price</th><th>Order QTY</th><th>Total Cost</th></tr></thead>
-        <tbody>
-          <tr v-if="recommendationItems.length === 0"><td colspan="5">No recommendations available.</td></tr>
-          <tr v-for="item in recommendationItems" :key="item.Sku">
-            <td>
-              <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.ItemTitle"
-                   class="product-image" @error="onImageError" @mouseover="showPreview(item.image_url)" @mouseout="hidePreview">
-            </td>
-            <td class="product-details">
-              <a :href="item.product_url" target="_blank" rel="noopener noreferrer">{{ item.ItemTitle }} - {{ item.Sku }}</a>
-              <p class="description">{{ item.description }}</p>
-            </td>
-            <td>${{ item.price }}</td>
-            <td><input type="number" v-model.number="item.currentQuantity" min="0" class="quantity-input"></td>
-            <td class="right-align">${{ (parseFloat(item.price || 0) * Number(item.currentQuantity || 0)).toFixed(2) }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="add-sku-section">
-      <h2>Add Product by SKU</h2>
-      <div class="add-sku-controls">
-        <input type="text" v-model="skuToAdd" placeholder="Enter SKU" @keyup.enter="handleAddSku">
-        <button @click="handleAddSku" class="action-button">Add Item</button>
-      </div>
-      <div v-if="manuallyAddedItems.length > 0">
-        <h3>Manually Added Items</h3>
+      <section v-if="cleanedCustomerId && customerData" class="table-section">
+        <h2>We Think You Might Like</h2>
+        <div v-if="isLoadingPinnedRecs" class="message-text">Loading special recommendations...</div>
+        <div v-else-if="pinnedRecsError" class="message-text error-message">{{ pinnedRecsError }}</div>
         <table class="order-table">
           <thead><tr><th>Image</th><th>Product</th><th>Price</th><th>Order QTY</th><th>Total Cost</th></tr></thead>
           <tbody>
-            <tr v-for="item in manuallyAddedItems" :key="item.Sku">
+            <tr v-if="recommendationItems.length === 0"><td colspan="5">No recommendations available.</td></tr>
+            <tr v-for="item in recommendationItems" :key="item.Sku">
               <td>
                 <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.ItemTitle"
-                      class="product-image" @error="onImageError" @mouseover="showPreview(item.image_url)" @mouseout="hidePreview">
+                      class="product-image" @error="onImageError" @mouseenter="showPreview(item.image_url)" @mouseleave="hidePreview">
               </td>
               <td class="product-details">
-                {{ item.ItemTitle }} - {{ item.Sku }}
+                <a :href="item.product_url" target="_blank" rel="noopener noreferrer">{{ item.ItemTitle }} - {{ item.Sku }}</a>
                 <p class="description">{{ item.description }}</p>
               </td>
               <td>${{ item.price }}</td>
@@ -734,80 +748,134 @@ function stripHtml(html) {
             </tr>
           </tbody>
         </table>
+      </section>
+
+      <section class="add-sku-section">
+        <h2>Add Product by SKU</h2>
+        <div class="add-sku-controls">
+          <input type="text" v-model="skuToAdd" placeholder="Enter SKU" @keyup.enter="handleAddSku">
+          <button @click="handleAddSku" class="action-button">Add Item</button>
+        </div>
+        <div v-if="manuallyAddedItems.length > 0">
+          <h3>Manually Added Items</h3>
+          <table class="order-table">
+            <thead><tr><th>Image</th><th>Product</th><th>Price</th><th>Order QTY</th><th>Total Cost</th></tr></thead>
+            <tbody>
+              <tr v-for="item in manuallyAddedItems" :key="item.Sku">
+                <td>
+                  <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.ItemTitle"
+                        class="product-image" @error="onImageError" @mouseover="showPreview(item.image_url)" @mouseout="hidePreview">
+                </td>
+                <td class="product-details">
+                  {{ item.ItemTitle }} - {{ item.Sku }}
+                  <p class="description">{{ item.description }}</p>
+                </td>
+                <td>${{ item.price }}</td>
+                <td><input type="number" v-model.number="item.currentQuantity" min="0" class="quantity-input"></td>
+                <td class="right-align">${{ (parseFloat(item.price || 0) * Number(item.currentQuantity || 0)).toFixed(2) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="notes-section">
+        <h2>Notes</h2>
+        <textarea v-model="notes" placeholder="Add any notes about your order..." class="notes-textarea"></textarea>
+      </section>
+
+      <div class="bottom-bar">
+        <span class="summary-item">Total QTY: <strong>{{ totalQuantity }}</strong></span>
+        <span class="summary-item">Order Estimate: <strong>${{ totalPrice }}</strong></span>
+        <button @click="submitOrder" :disabled="totalQuantity === 0 || overallLoading" class="submit-button">
+          {{ overallLoading ? 'Processing...' : 'Submit Order' }}
+        </button>
+        <p v-if="submissionStatus" :class="{'success-message': !error, 'error-message': error}" class="submission-status-message">
+          {{ submissionStatus }}
+        </p>
       </div>
-    </section>
 
-    <section class="notes-section">
-      <h2>Notes</h2>
-      <textarea v-model="notes" placeholder="Add any notes about your order..." class="notes-textarea"></textarea>
-    </section>
+      <div v-if="showLargeImage" class="image-preview-overlay" @click="hidePreview">
+        <img :src="largeImageUrl" alt="Large product preview" class="large-image-preview">
+      </div>
 
-    <div class="bottom-bar">
-      <span class="summary-item">Total QTY: <strong>{{ totalQuantity }}</strong></span>
-      <span class="summary-item">Order Estimate: <strong>${{ totalPrice }}</strong></span>
-      <button @click="submitOrder" :disabled="totalQuantity === 0 || overallLoading" class="submit-button">
-        {{ overallLoading ? 'Processing...' : 'Submit Order' }}
-      </button>
-      <p v-if="submissionStatus" :class="{'success-message': !error, 'error-message': error}" class="submission-status-message">
-        {{ submissionStatus }}
-      </p>
-    </div>
-
-    <div v-if="showLargeImage" class="image-preview-overlay" @click="hidePreview">
-      <img :src="largeImageUrl" alt="Large product preview" class="large-image-preview">
-    </div>
-
-    <div v-if="showConfirmationModal" class="modal-overlay">
-      <div class="modal-container">
-        <h2>Thank you!</h2>
-        <p>Your order has been submitted successfully.</p>
-        <p>You should receive an email confirmation shortly. If not, please contact orders@paracay.com.</p>
-        <p><strong>Please print a copy of your order for your records.</strong></p>
-        <div class="modal-actions">
-          <button @click="printOrder" class="action-button">Print Order</button>
-          <button @click="showConfirmationModal = false" class="action-button secondary">Close</button>
+      <div v-if="showConfirmationModal" class="modal-overlay">
+        <div class="modal-container">
+          <h2 v-if="!error">Thank you!</h2>
+          <h2 v-else>Submission Failed</h2>
+          <p v-if="!error">Your order has been submitted successfully.</p>
+          <p v-else>There was an issue submitting your order. Please review the details and try again, or contact support.</p>
+          <p>You should receive an email confirmation shortly. If not, please contact orders@paracay.com.</p>
+          <p><strong>Please print a copy of your order for your records.</strong></p>
+          <div class="modal-actions">
+            <button @click="printOrder" class="action-button">Print Order</button>
+            <button @click="showConfirmationModal = false" class="action-button secondary">Close</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Print-only details section -->
-  <div class="print-only-details" style="display: none;">
-    <div class="print-header">
-      <h2>Order Details</h2>
-      <p>Printed On: {{ currentDateTime }}</p>
-    </div>
-
-    <div class="print-customer-info">
-      <h3>Customer Information</h3>
-      <p><strong>Contact:</strong> {{ customerData?.ContactName }} ({{ customerData?.Email }}, {{ customerData?.Phone }})</p>
-      <p><strong>Company:</strong> {{ customerData?.CompanyName }}</p>
-      <p><strong>Shipping Address:</strong></p>
-      <div v-html="customerData?.Address"></div>
-    </div>
-
-    <div class="print-items">
-      <h3>Items Ordered</h3>
-      <div v-for="item in orderItems.filter(item => item.currentQuantity > 0)" :key="item.Sku" class="print-item">
-        {{ item.Sku }} - {{ item.currentQuantity }} x ${{ item.price }} - {{ item.ItemTitle }}
+    <!-- Print-only details section -->
+    <div class="print-only-details" style="display: none;">
+      <div class="print-header">
+        <h2>Order Details</h2>
+        <p>Printed On: {{ currentDateTime }}</p>
       </div>
-    </div>
 
-    <div class="print-totals">
-      <h3>Totals</h3>
-      <p>Total Quantity: {{ totalQuantity }}</p>
-      <p>Total Price: ${{ totalPrice }}</p>
-    </div>
+      <div class="print-customer-info">
+        <h3>Customer Information</h3>
+        <p><strong>Contact:</strong> {{ customerData?.ContactName }} ({{ customerData?.Email }}, {{ customerData?.Phone }})</p>
+        <p><strong>Company:</strong> {{ customerData?.CompanyName }}</p>
+        <p><strong>Shipping Address:</strong></p>
+        <div v-html="customerData?.Address"></div>
+      </div>
 
-    <div v-if="notes" class="print-notes">
-      <h3>Notes</h3>
-      <p>{{ notes }}</p>
-    </div>
+      <div class="print-items">
+        <h3>Items Ordered</h3>
+        <table class="print-order-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Order QTY</th>
+              <th>Total Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-if="orderedItemsForPrint.length === 0"><td colspan="5">No items ordered.</td></tr>
+            <tr v-for="item in orderedItemsForPrint" :key="item.Sku">
+              <td>
+                <img :src="item.image_url || 'https://placehold.co/80x80/eeeeee/aaaaaa?text=No+Image'" :alt="item.ItemTitle" class="print-product-image">
+              </td>
+              <td class="print-product-details">
+                {{ item.ItemTitle }} - {{ item.Sku }}
+                <p class="print-description">{{ item.description }}</p>
+              </td>
+              <td class="print-right-align">${{ item.price }}</td>
+              <td class="print-center-align">{{ item.currentQuantity }}</td>
+              <td class="print-right-align">${{ (parseFloat(item.price || 0) * Number(item.currentQuantity || 0)).toFixed(2) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-    <div v-if="recommendationItems.length > 0" class="print-recommendations">
-      <h3>Top 5 Recommended Items</h3>
-      <div v-for="rec in recommendationItems.slice(0, 5)" :key="rec.Sku" class="print-rec-item">
-        {{ rec.ItemTitle }} (Sku: {{ rec.Sku }})
+      <div class="print-totals">
+        <h3>Totals</h3>
+        <p>Total Quantity: {{ totalQuantity }}</p>
+        <p>Total Price: ${{ totalPrice }}</p>
+      </div>
+
+      <div v-if="notes" class="print-notes">
+        <h3>Notes</h3>
+        <p>{{ notes }}</p>
+      </div>
+
+      <div v-if="recommendationItems.length > 0" class="print-recommendations">
+        <h3>Top 5 Recommended Items</h3>
+        <div v-for="rec in recommendationItems.slice(0, 5)" :key="rec.Sku" class="print-rec-item">
+          {{ rec.ItemTitle }} (Sku: {{ rec.Sku }})
+        </div>
       </div>
     </div>
   </div>
@@ -828,20 +896,24 @@ function stripHtml(html) {
   position: relative; /* Needed for absolute positioning of overlays */
 }
 
-.logo-container {
+.order-header {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* Align items to the start */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #48A5BA; /* Blue background */
+  color: white;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   margin-bottom: 20px;
-  padding: 15px 0; /* Increased padding for better visual spacing */
-  background-color: #48A5BA; /* Changed background to blue */
-  border-radius: 8px 8px 0 0; /* Rounded top corners to match container */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+  gap: 15px; /* Add space between the two logos */
 }
 
-.logo {
-  max-width: 300px; /* Adjust as needed */
+.text-logo {
+  max-height: 50px; /* Adjust as needed for the text logo */
   height: auto;
 }
+
 
 .loading-overlay {
     position: fixed;
@@ -1244,6 +1316,52 @@ h2 {
       font-size: 0.9em;
       line-height: 1.4;
   }
+
+  /* Print Table Specific Styles */
+  .print-order-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85em; /* Slightly smaller font for print table */
+      margin-top: 10px;
+  }
+
+  .print-order-table th, .print-order-table td {
+      border: 1px solid #ccc; /* Lighter border for print */
+      padding: 6px 8px; /* Smaller padding */
+      text-align: left;
+      vertical-align: top;
+      word-wrap: break-word;
+  }
+
+  .print-order-table th {
+      background-color: #f0f0f0; /* Light background for headers */
+      color: #333;
+      font-weight: bold;
+  }
+
+  .print-order-table td {
+      background-color: #fff;
+  }
+
+  .print-product-image {
+      max-width: 60px; /* Smaller images for print */
+      max-height: 60px;
+      display: block;
+      margin: 0 auto;
+  }
+
+  .print-product-details {
+      font-weight: bold;
+  }
+
+  .print-description {
+      font-size: 0.8em;
+      color: #666;
+      margin-top: 2px;
+  }
+
+  .print-center-align { text-align: center; }
+  .print-right-align { text-align: right; }
 
   .print-customer-info p, .print-totals p, .print-notes p {
       margin: 5px 0;

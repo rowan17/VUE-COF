@@ -1,0 +1,5268 @@
+{
+  "UrlId": "80005393-1517008245",
+  "CustomerId": "80000A86-1702050155",
+  "CompanyName": "ALL SEASONS GROCERY, HARDWARE, & SPORTS",
+  "Email": "looney99148@aol.com",
+  "Phone": "5092332444",
+  "ContactName": "JOHN JACOBS",
+  "Address": "ALL SEASONS GROCERY, HARDWARE, & SPORTS<br>JOHN JACOBS<br>3942 HWY 292<br><br><br>LOON LAKE, WA 99148 ",
+  "BigfootCustomer": false,
+  "State": "WA",
+  "date": "07/01/2025",
+  "data": [
+    {
+      "Sku": "CMG044",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "CMG039",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "CMG038",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "CMG040",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "CMG041",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "CMG043",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "CMG042",
+      "TimesPurchased": 1,
+      "Quantity": 6
+    },
+    {
+      "Sku": "PAR091",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR201",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR093",
+      "TimesPurchased": 2,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR166",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR167",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR521",
+      "TimesPurchased": 2,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR137",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR513",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR145",
+      "TimesPurchased": 2,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR205",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR512",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR192",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR461",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR434",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR430",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR511",
+      "TimesPurchased": 1,
+      "Quantity": 2
+    },
+    {
+      "Sku": "PAR556",
+      "TimesPurchased": 1,
+      "Quantity": 1
+    },
+    {
+      "Sku": "PAR189",
+      "TimesPurchased": 1,
+      "Quantity": 0
+    }
+  ],
+  "recommendations": [
+    {
+      "Sku": "PPP001"
+    },
+    {
+      "Sku": "PAR655"
+    },
+    {
+      "Sku": "PAR471"
+    },
+    {
+      "Sku": "PAR599"
+    },
+    {
+      "Sku": "PAR612"
+    },
+    {
+      "Sku": "MPS013"
+    },
+    {
+      "Sku": "RAN284"
+    },
+    {
+      "Sku": "PAR666"
+    },
+    {
+      "Sku": "PAR641"
+    },
+    {
+      "Sku": "PAR610"
+    },
+    {
+      "Sku": "PAR156"
+    },
+    {
+      "Sku": "PAR680"
+    },
+    {
+      "Sku": "SIM141"
+    },
+    {
+      "Sku": "MPS032"
+    },
+    {
+      "Sku": "PAR186"
+    },
+    {
+      "Sku": "PAR183"
+    },
+    {
+      "Sku": "PAR533"
+    },
+    {
+      "Sku": "PAR770"
+    },
+    {
+      "Sku": "PAR138"
+    },
+    {
+      "Sku": "PAR144"
+    },
+    {
+      "Sku": "PAR184"
+    },
+    {
+      "Sku": "PAR506"
+    },
+    {
+      "Sku": "SSS001"
+    },
+    {
+      "Sku": "PAR797"
+    },
+    {
+      "Sku": "PAR777"
+    },
+    {
+      "Sku": "PAR650"
+    },
+    {
+      "Sku": "PAR133"
+    },
+    {
+      "Sku": "PAR191"
+    },
+    {
+      "Sku": "PAR608"
+    },
+    {
+      "Sku": "PER091"
+    },
+    {
+      "Sku": "PAR218"
+    },
+    {
+      "Sku": "PAR173"
+    },
+    {
+      "Sku": "PAR793"
+    },
+    {
+      "Sku": "IPS056"
+    },
+    {
+      "Sku": "SSS003"
+    },
+    {
+      "Sku": "PAR160"
+    },
+    {
+      "Sku": "PAR203"
+    },
+    {
+      "Sku": "PAR097"
+    },
+    {
+      "Sku": "PER021"
+    },
+    {
+      "Sku": "PAR693"
+    },
+    {
+      "Sku": "PAR763"
+    },
+    {
+      "Sku": "RAN293"
+    },
+    {
+      "Sku": "PAR701"
+    },
+    {
+      "Sku": "PAR161"
+    },
+    {
+      "Sku": "PAR543"
+    },
+    {
+      "Sku": "PAR187"
+    },
+    {
+      "Sku": "PAR800"
+    },
+    {
+      "Sku": "SMW001"
+    },
+    {
+      "Sku": "PAR544"
+    },
+    {
+      "Sku": "PAR415"
+    },
+    {
+      "Sku": "PAR095"
+    },
+    {
+      "Sku": "LBC115"
+    },
+    {
+      "Sku": "RAN109"
+    },
+    {
+      "Sku": "PAR534"
+    },
+    {
+      "Sku": "PAR162"
+    },
+    {
+      "Sku": "PSH004"
+    },
+    {
+      "Sku": "PSH007"
+    },
+    {
+      "Sku": "PAR101"
+    },
+    {
+      "Sku": "PAR835"
+    },
+    {
+      "Sku": "PAR698"
+    },
+    {
+      "Sku": "PAR685"
+    },
+    {
+      "Sku": "PAR773"
+    },
+    {
+      "Sku": "PAR404"
+    },
+    {
+      "Sku": "MOU076"
+    },
+    {
+      "Sku": "GPT096"
+    },
+    {
+      "Sku": "SIM312"
+    },
+    {
+      "Sku": "PAR411"
+    },
+    {
+      "Sku": "PAR190"
+    },
+    {
+      "Sku": "PAR628"
+    },
+    {
+      "Sku": "HCB001"
+    },
+    {
+      "Sku": "HCB043"
+    },
+    {
+      "Sku": "PER126"
+    },
+    {
+      "Sku": "PAR194"
+    },
+    {
+      "Sku": "PAR424"
+    },
+    {
+      "Sku": "SIM202"
+    },
+    {
+      "Sku": "PAR574"
+    },
+    {
+      "Sku": "MPS015"
+    },
+    {
+      "Sku": "PAR202"
+    },
+    {
+      "Sku": "PAR157"
+    },
+    {
+      "Sku": "PAR134"
+    },
+    {
+      "Sku": "PAR510"
+    },
+    {
+      "Sku": "PER125"
+    },
+    {
+      "Sku": "PAR836"
+    },
+    {
+      "Sku": "PAR840"
+    },
+    {
+      "Sku": "PAR629"
+    },
+    {
+      "Sku": "PAR679"
+    },
+    {
+      "Sku": "CPC007"
+    },
+    {
+      "Sku": "HCB074"
+    },
+    {
+      "Sku": "PAR615"
+    },
+    {
+      "Sku": "PAR828"
+    },
+    {
+      "Sku": "PAR587"
+    },
+    {
+      "Sku": "PAR448"
+    },
+    {
+      "Sku": "SFF006"
+    },
+    {
+      "Sku": "PGW267"
+    },
+    {
+      "Sku": "RAN107"
+    },
+    {
+      "Sku": "PAR570"
+    },
+    {
+      "Sku": "PAR812"
+    },
+    {
+      "Sku": "IPS133"
+    },
+    {
+      "Sku": "CSI001"
+    },
+    {
+      "Sku": "PAR522"
+    },
+    {
+      "Sku": "NOR001"
+    },
+    {
+      "Sku": "SFF004"
+    },
+    {
+      "Sku": "PAR504"
+    },
+    {
+      "Sku": "PER020"
+    },
+    {
+      "Sku": "SSS101"
+    },
+    {
+      "Sku": "PAR712"
+    },
+    {
+      "Sku": "HPC139"
+    },
+    {
+      "Sku": "PAR571"
+    },
+    {
+      "Sku": "PAR450"
+    },
+    {
+      "Sku": "MPS164"
+    },
+    {
+      "Sku": "PAR454"
+    },
+    {
+      "Sku": "HNA055"
+    },
+    {
+      "Sku": "HCB006"
+    },
+    {
+      "Sku": "GPT149"
+    },
+    {
+      "Sku": "PAR429"
+    },
+    {
+      "Sku": "PAR125"
+    },
+    {
+      "Sku": "PAR131"
+    },
+    {
+      "Sku": "PAR148"
+    },
+    {
+      "Sku": "WFP066"
+    },
+    {
+      "Sku": "WFP054"
+    },
+    {
+      "Sku": "SPC056"
+    },
+    {
+      "Sku": "PAR427"
+    },
+    {
+      "Sku": "PAR217"
+    },
+    {
+      "Sku": "PAR671"
+    },
+    {
+      "Sku": "AVK035"
+    },
+    {
+      "Sku": "AVK054"
+    },
+    {
+      "Sku": "ARC056"
+    },
+    {
+      "Sku": "CPC003"
+    },
+    {
+      "Sku": "PAR694"
+    },
+    {
+      "Sku": "PAR625"
+    },
+    {
+      "Sku": "PAR841"
+    },
+    {
+      "Sku": "PER133"
+    },
+    {
+      "Sku": "STL260"
+    },
+    {
+      "Sku": "SWS002"
+    },
+    {
+      "Sku": "SFF003"
+    },
+    {
+      "Sku": "RAN234"
+    },
+    {
+      "Sku": "STL076"
+    },
+    {
+      "Sku": "PER127"
+    },
+    {
+      "Sku": "PAR649"
+    },
+    {
+      "Sku": "PAR631"
+    },
+    {
+      "Sku": "PAR425"
+    },
+    {
+      "Sku": "PAR102"
+    },
+    {
+      "Sku": "PAR159"
+    },
+    {
+      "Sku": "DKP037"
+    },
+    {
+      "Sku": "CPC001"
+    },
+    {
+      "Sku": "DAW001"
+    },
+    {
+      "Sku": "FAR004"
+    },
+    {
+      "Sku": "PAR433"
+    },
+    {
+      "Sku": "SSS102"
+    },
+    {
+      "Sku": "SKY080"
+    },
+    {
+      "Sku": "PPP012"
+    },
+    {
+      "Sku": "SFF002"
+    },
+    {
+      "Sku": "PAR146"
+    },
+    {
+      "Sku": "PAR151"
+    },
+    {
+      "Sku": "LPP012"
+    },
+    {
+      "Sku": "PGN180"
+    },
+    {
+      "Sku": "HCB081"
+    },
+    {
+      "Sku": "SHG002"
+    },
+    {
+      "Sku": "RAN441"
+    },
+    {
+      "Sku": "HCB003"
+    },
+    {
+      "Sku": "PAR621"
+    },
+    {
+      "Sku": "PAR706"
+    },
+    {
+      "Sku": "PAR661"
+    },
+    {
+      "Sku": "PAR888"
+    },
+    {
+      "Sku": "OBP028"
+    },
+    {
+      "Sku": "PAR180"
+    },
+    {
+      "Sku": "PAR170"
+    },
+    {
+      "Sku": "PAR756"
+    },
+    {
+      "Sku": "HCB036"
+    },
+    {
+      "Sku": "WPC124"
+    },
+    {
+      "Sku": "WPC129"
+    },
+    {
+      "Sku": "QRP027"
+    },
+    {
+      "Sku": "HCB021"
+    },
+    {
+      "Sku": "PGN226"
+    },
+    {
+      "Sku": "PGN294"
+    },
+    {
+      "Sku": "PAR775"
+    },
+    {
+      "Sku": "PAR188"
+    },
+    {
+      "Sku": "HCB002"
+    },
+    {
+      "Sku": "FCP056"
+    },
+    {
+      "Sku": "AVK018"
+    },
+    {
+      "Sku": "FPL003"
+    },
+    {
+      "Sku": "PAR128"
+    },
+    {
+      "Sku": "PAR452"
+    },
+    {
+      "Sku": "PAR542"
+    },
+    {
+      "Sku": "PAR747"
+    },
+    {
+      "Sku": "PAR709"
+    },
+    {
+      "Sku": "PAR604"
+    },
+    {
+      "Sku": "PAR636"
+    },
+    {
+      "Sku": "PER122"
+    },
+    {
+      "Sku": "PER109"
+    },
+    {
+      "Sku": "RAN227"
+    },
+    {
+      "Sku": "SIM118"
+    },
+    {
+      "Sku": "WFP015"
+    },
+    {
+      "Sku": "PAR691"
+    },
+    {
+      "Sku": "PAR746"
+    },
+    {
+      "Sku": "PAR494"
+    },
+    {
+      "Sku": "AVK099"
+    },
+    {
+      "Sku": "HCB004"
+    },
+    {
+      "Sku": "HCB040"
+    },
+    {
+      "Sku": "HNA053"
+    },
+    {
+      "Sku": "PAR428"
+    },
+    {
+      "Sku": "PAR158"
+    },
+    {
+      "Sku": "PAR834"
+    },
+    {
+      "Sku": "PGN198"
+    },
+    {
+      "Sku": "RAN470"
+    },
+    {
+      "Sku": "RAN104"
+    },
+    {
+      "Sku": "SWS001"
+    },
+    {
+      "Sku": "PAR689"
+    },
+    {
+      "Sku": "PAR686"
+    },
+    {
+      "Sku": "PAR622"
+    },
+    {
+      "Sku": "MPS153"
+    },
+    {
+      "Sku": "HMC316"
+    },
+    {
+      "Sku": "GSP006"
+    },
+    {
+      "Sku": "HNA054"
+    },
+    {
+      "Sku": "AVK028"
+    },
+    {
+      "Sku": "GPT228"
+    },
+    {
+      "Sku": "MOU079"
+    },
+    {
+      "Sku": "PAR453"
+    },
+    {
+      "Sku": "PAR546"
+    },
+    {
+      "Sku": "PAR647"
+    },
+    {
+      "Sku": "PAR745"
+    },
+    {
+      "Sku": "PAR708"
+    },
+    {
+      "Sku": "WFP056"
+    },
+    {
+      "Sku": "SWS011"
+    },
+    {
+      "Sku": "PAR626"
+    },
+    {
+      "Sku": "PER108"
+    },
+    {
+      "Sku": "PER052"
+    },
+    {
+      "Sku": "PAR422"
+    },
+    {
+      "Sku": "PAR149"
+    },
+    {
+      "Sku": "PAR120"
+    },
+    {
+      "Sku": "FFB112"
+    },
+    {
+      "Sku": "HCB039"
+    },
+    {
+      "Sku": "HCB082"
+    },
+    {
+      "Sku": "AVK038"
+    },
+    {
+      "Sku": "PGN303"
+    },
+    {
+      "Sku": "PAR605"
+    },
+    {
+      "Sku": "SKY029"
+    },
+    {
+      "Sku": "RAN235"
+    },
+    {
+      "Sku": "RAN230"
+    },
+    {
+      "Sku": "RAN310"
+    },
+    {
+      "Sku": "RAN447"
+    },
+    {
+      "Sku": "RAN229"
+    },
+    {
+      "Sku": "RAN048"
+    },
+    {
+      "Sku": "SWS012"
+    },
+    {
+      "Sku": "WPC121"
+    },
+    {
+      "Sku": "PAR432"
+    },
+    {
+      "Sku": "PAR584"
+    },
+    {
+      "Sku": "HCB018"
+    },
+    {
+      "Sku": "HNA047"
+    },
+    {
+      "Sku": "KGF010"
+    },
+    {
+      "Sku": "IPS061"
+    },
+    {
+      "Sku": "HRW104"
+    },
+    {
+      "Sku": "HCB083"
+    },
+    {
+      "Sku": "AVK042"
+    },
+    {
+      "Sku": "MOU058"
+    },
+    {
+      "Sku": "MAC001"
+    },
+    {
+      "Sku": "PAR695"
+    },
+    {
+      "Sku": "PAR707"
+    },
+    {
+      "Sku": "PAR843"
+    },
+    {
+      "Sku": "PER073"
+    },
+    {
+      "Sku": "SKY117"
+    },
+    {
+      "Sku": "RAN286"
+    },
+    {
+      "Sku": "RMP001"
+    },
+    {
+      "Sku": "PAR936"
+    },
+    {
+      "Sku": "PAR714"
+    },
+    {
+      "Sku": "LYB071"
+    },
+    {
+      "Sku": "MOU093"
+    },
+    {
+      "Sku": "PAR572"
+    },
+    {
+      "Sku": "PAR538"
+    },
+    {
+      "Sku": "BFB003"
+    },
+    {
+      "Sku": "GWP001"
+    },
+    {
+      "Sku": "HPC054"
+    },
+    {
+      "Sku": "HHP021"
+    },
+    {
+      "Sku": "HRW146"
+    },
+    {
+      "Sku": "IPS235"
+    },
+    {
+      "Sku": "HPC154"
+    },
+    {
+      "Sku": "HPC021"
+    },
+    {
+      "Sku": "HCB076"
+    },
+    {
+      "Sku": "DAW005"
+    },
+    {
+      "Sku": "DON002"
+    },
+    {
+      "Sku": "MOU067"
+    },
+    {
+      "Sku": "STL335"
+    },
+    {
+      "Sku": "WFP004"
+    },
+    {
+      "Sku": "STL165"
+    },
+    {
+      "Sku": "WPC128"
+    },
+    {
+      "Sku": "WFP161"
+    },
+    {
+      "Sku": "RAN416"
+    },
+    {
+      "Sku": "SIM215"
+    },
+    {
+      "Sku": "PPP014"
+    },
+    {
+      "Sku": "MOU108"
+    },
+    {
+      "Sku": "PAR135"
+    },
+    {
+      "Sku": "PAR153"
+    },
+    {
+      "Sku": "PAR195"
+    },
+    {
+      "Sku": "PAR673"
+    },
+    {
+      "Sku": "AVK026"
+    },
+    {
+      "Sku": "AVK052"
+    },
+    {
+      "Sku": "HCB127"
+    },
+    {
+      "Sku": "INT158"
+    },
+    {
+      "Sku": "IPG089"
+    },
+    {
+      "Sku": "HCB119"
+    },
+    {
+      "Sku": "HCB088"
+    },
+    {
+      "Sku": "AVK063"
+    },
+    {
+      "Sku": "FCP083"
+    },
+    {
+      "Sku": "PAR711"
+    },
+    {
+      "Sku": "PAR172"
+    },
+    {
+      "Sku": "MOU090"
+    },
+    {
+      "Sku": "RAN103"
+    },
+    {
+      "Sku": "WLP019"
+    },
+    {
+      "Sku": "SIM145"
+    },
+    {
+      "Sku": "SFF001"
+    },
+    {
+      "Sku": "PAR155"
+    },
+    {
+      "Sku": "PAR630"
+    },
+    {
+      "Sku": "PGN312"
+    },
+    {
+      "Sku": "GPT237"
+    },
+    {
+      "Sku": "FUN001"
+    },
+    {
+      "Sku": "CPC006"
+    },
+    {
+      "Sku": "ING008"
+    },
+    {
+      "Sku": "HPC142"
+    },
+    {
+      "Sku": "HRW004"
+    },
+    {
+      "Sku": "HCB015"
+    },
+    {
+      "Sku": "AVK083"
+    },
+    {
+      "Sku": "BCP006"
+    },
+    {
+      "Sku": "PAR681"
+    },
+    {
+      "Sku": "PAR705"
+    },
+    {
+      "Sku": "PAR741"
+    },
+    {
+      "Sku": "PAR492"
+    },
+    {
+      "Sku": "PAR523"
+    },
+    {
+      "Sku": "MOR013"
+    },
+    {
+      "Sku": "LPP011"
+    },
+    {
+      "Sku": "SHG008"
+    },
+    {
+      "Sku": "SIM239"
+    },
+    {
+      "Sku": "PPP021"
+    },
+    {
+      "Sku": "STL235"
+    },
+    {
+      "Sku": "STL148"
+    },
+    {
+      "Sku": "WFP008"
+    },
+    {
+      "Sku": "QRP026"
+    },
+    {
+      "Sku": "SBI004"
+    },
+    {
+      "Sku": "PAR447"
+    },
+    {
+      "Sku": "PAR846"
+    },
+    {
+      "Sku": "DAW006"
+    },
+    {
+      "Sku": "AVK056"
+    },
+    {
+      "Sku": "AVK031"
+    },
+    {
+      "Sku": "HBC003"
+    },
+    {
+      "Sku": "GPT247"
+    },
+    {
+      "Sku": "IPS124"
+    },
+    {
+      "Sku": "JES003"
+    },
+    {
+      "Sku": "HMC333"
+    },
+    {
+      "Sku": "AVK081"
+    },
+    {
+      "Sku": "BCP007"
+    },
+    {
+      "Sku": "GPT196"
+    },
+    {
+      "Sku": "GPR003"
+    },
+    {
+      "Sku": "FCP066"
+    },
+    {
+      "Sku": "FCP030"
+    },
+    {
+      "Sku": "FAP047"
+    },
+    {
+      "Sku": "FAP056"
+    },
+    {
+      "Sku": "PAR675"
+    },
+    {
+      "Sku": "PGN149"
+    },
+    {
+      "Sku": "PAR540"
+    },
+    {
+      "Sku": "PAR106"
+    },
+    {
+      "Sku": "PAR197"
+    },
+    {
+      "Sku": "UWP002"
+    },
+    {
+      "Sku": "SKY020"
+    },
+    {
+      "Sku": "STL074"
+    },
+    {
+      "Sku": "SQB036"
+    },
+    {
+      "Sku": "WPC081"
+    },
+    {
+      "Sku": "SIM359"
+    },
+    {
+      "Sku": "PSH005"
+    },
+    {
+      "Sku": "PAR171"
+    },
+    {
+      "Sku": "PAR046"
+    },
+    {
+      "Sku": "PAR491"
+    },
+    {
+      "Sku": "PGN095"
+    },
+    {
+      "Sku": "PER219"
+    },
+    {
+      "Sku": "PAR676"
+    },
+    {
+      "Sku": "PAR663"
+    },
+    {
+      "Sku": "PAR684"
+    },
+    {
+      "Sku": "PAR644"
+    },
+    {
+      "Sku": "FAR011"
+    },
+    {
+      "Sku": "DKP053"
+    },
+    {
+      "Sku": "AVK082"
+    },
+    {
+      "Sku": "ARB003"
+    },
+    {
+      "Sku": "ARC068"
+    },
+    {
+      "Sku": "HMC319"
+    },
+    {
+      "Sku": "HHP005"
+    },
+    {
+      "Sku": "HCB005"
+    },
+    {
+      "Sku": "KCP012"
+    },
+    {
+      "Sku": "INT438"
+    },
+    {
+      "Sku": "HRW008"
+    },
+    {
+      "Sku": "HRW103"
+    },
+    {
+      "Sku": "KLU003"
+    },
+    {
+      "Sku": "FCP074"
+    },
+    {
+      "Sku": "DKP092"
+    },
+    {
+      "Sku": "GPT081"
+    },
+    {
+      "Sku": "PAR818"
+    },
+    {
+      "Sku": "PAR732"
+    },
+    {
+      "Sku": "PGN365"
+    },
+    {
+      "Sku": "PAR501"
+    },
+    {
+      "Sku": "MOR008"
+    },
+    {
+      "Sku": "MOU065"
+    },
+    {
+      "Sku": "MPS133"
+    },
+    {
+      "Sku": "PPP015"
+    },
+    {
+      "Sku": "RAN105"
+    },
+    {
+      "Sku": "RAN250"
+    },
+    {
+      "Sku": "SIM330"
+    },
+    {
+      "Sku": "SHG001"
+    },
+    {
+      "Sku": "RAN544"
+    },
+    {
+      "Sku": "WPC142"
+    },
+    {
+      "Sku": "WPC024"
+    },
+    {
+      "Sku": "SPB023"
+    },
+    {
+      "Sku": "SPC062"
+    },
+    {
+      "Sku": "SSS002"
+    },
+    {
+      "Sku": "SKY032"
+    },
+    {
+      "Sku": "TEN013"
+    },
+    {
+      "Sku": "STL200"
+    },
+    {
+      "Sku": "STL078"
+    },
+    {
+      "Sku": "WFP156"
+    },
+    {
+      "Sku": "WPC095"
+    },
+    {
+      "Sku": "SHG013"
+    },
+    {
+      "Sku": "RAN228"
+    },
+    {
+      "Sku": "PPP033"
+    },
+    {
+      "Sku": "PPP003"
+    },
+    {
+      "Sku": "PAR208"
+    },
+    {
+      "Sku": "PAR713"
+    },
+    {
+      "Sku": "PAR739"
+    },
+    {
+      "Sku": "PAR624"
+    },
+    {
+      "Sku": "PAR674"
+    },
+    {
+      "Sku": "GPT198"
+    },
+    {
+      "Sku": "ARC169"
+    },
+    {
+      "Sku": "CPC011"
+    },
+    {
+      "Sku": "HPC140"
+    },
+    {
+      "Sku": "HPC151"
+    },
+    {
+      "Sku": "INT219"
+    },
+    {
+      "Sku": "HEY001"
+    },
+    {
+      "Sku": "HCB126"
+    },
+    {
+      "Sku": "HCB115"
+    },
+    {
+      "Sku": "HHP016"
+    },
+    {
+      "Sku": "IHS-10P-041"
+    },
+    {
+      "Sku": "HPC158"
+    },
+    {
+      "Sku": "JES004"
+    },
+    {
+      "Sku": "CMP220"
+    },
+    {
+      "Sku": "FAP048"
+    },
+    {
+      "Sku": "PAR554"
+    },
+    {
+      "Sku": "PAR731"
+    },
+    {
+      "Sku": "PAR762"
+    },
+    {
+      "Sku": "PAR727"
+    },
+    {
+      "Sku": "PAR938"
+    },
+    {
+      "Sku": "PGW094"
+    },
+    {
+      "Sku": "PER069"
+    },
+    {
+      "Sku": "PAR405"
+    },
+    {
+      "Sku": "PAR573"
+    },
+    {
+      "Sku": "PAR547"
+    },
+    {
+      "Sku": "PAR548"
+    },
+    {
+      "Sku": "NBN033"
+    },
+    {
+      "Sku": "MAC003"
+    },
+    {
+      "Sku": "PGW252"
+    },
+    {
+      "Sku": "RAN476"
+    },
+    {
+      "Sku": "RAN487"
+    },
+    {
+      "Sku": "WPC052"
+    },
+    {
+      "Sku": "TEN007"
+    },
+    {
+      "Sku": "SSS004"
+    },
+    {
+      "Sku": "SPC020"
+    },
+    {
+      "Sku": "SPB015"
+    },
+    {
+      "Sku": "WPC036"
+    },
+    {
+      "Sku": "WPC126"
+    },
+    {
+      "Sku": "WFP131"
+    },
+    {
+      "Sku": "WFP026"
+    },
+    {
+      "Sku": "WFP037"
+    },
+    {
+      "Sku": "RFP032"
+    },
+    {
+      "Sku": "SIM325"
+    },
+    {
+      "Sku": "PIN001"
+    },
+    {
+      "Sku": "PIN002"
+    },
+    {
+      "Sku": "PPG021"
+    },
+    {
+      "Sku": "PPP032"
+    },
+    {
+      "Sku": "RAN002"
+    },
+    {
+      "Sku": "MAC012"
+    },
+    {
+      "Sku": "MOU116"
+    },
+    {
+      "Sku": "NVS003"
+    },
+    {
+      "Sku": "MPS037"
+    },
+    {
+      "Sku": "PAR545"
+    },
+    {
+      "Sku": "PAR503"
+    },
+    {
+      "Sku": "PAR476"
+    },
+    {
+      "Sku": "PAR437"
+    },
+    {
+      "Sku": "PAR416"
+    },
+    {
+      "Sku": "PER094"
+    },
+    {
+      "Sku": "PER120"
+    },
+    {
+      "Sku": "PGN307"
+    },
+    {
+      "Sku": "PAR638"
+    },
+    {
+      "Sku": "PAR658"
+    },
+    {
+      "Sku": "FCP021"
+    },
+    {
+      "Sku": "JES002"
+    },
+    {
+      "Sku": "IPS203"
+    },
+    {
+      "Sku": "ING028"
+    },
+    {
+      "Sku": "HCB035"
+    },
+    {
+      "Sku": "IPS171"
+    },
+    {
+      "Sku": "LDG004"
+    },
+    {
+      "Sku": "INT501"
+    },
+    {
+      "Sku": "FCP075"
+    },
+    {
+      "Sku": "EZN003"
+    },
+    {
+      "Sku": "FPL004"
+    },
+    {
+      "Sku": "FGG100"
+    },
+    {
+      "Sku": "AVK051"
+    },
+    {
+      "Sku": "ARC165"
+    },
+    {
+      "Sku": "A&M001"
+    },
+    {
+      "Sku": "PAR683"
+    },
+    {
+      "Sku": "PAR639"
+    },
+    {
+      "Sku": "PAR786"
+    },
+    {
+      "Sku": "PAR794"
+    },
+    {
+      "Sku": "PAR710"
+    },
+    {
+      "Sku": "PGN333"
+    },
+    {
+      "Sku": "PER110"
+    },
+    {
+      "Sku": "PER101"
+    },
+    {
+      "Sku": "PAR409"
+    },
+    {
+      "Sku": "PAR446"
+    },
+    {
+      "Sku": "NBN004"
+    },
+    {
+      "Sku": "MOU118"
+    },
+    {
+      "Sku": "MOU122"
+    },
+    {
+      "Sku": "MOU077"
+    },
+    {
+      "Sku": "RAN306"
+    },
+    {
+      "Sku": "RAN396"
+    },
+    {
+      "Sku": "PPP052"
+    },
+    {
+      "Sku": "SIM354"
+    },
+    {
+      "Sku": "RAN638"
+    },
+    {
+      "Sku": "RWT001"
+    },
+    {
+      "Sku": "RAN409"
+    },
+    {
+      "Sku": "WFP166"
+    },
+    {
+      "Sku": "WPC135"
+    },
+    {
+      "Sku": "XSHIPSERV"
+    },
+    {
+      "Sku": "WFP006"
+    },
+    {
+      "Sku": "WFP010"
+    },
+    {
+      "Sku": "STL077"
+    },
+    {
+      "Sku": "STL278"
+    },
+    {
+      "Sku": "SSS005"
+    },
+    {
+      "Sku": "STL030"
+    },
+    {
+      "Sku": "SIM379"
+    },
+    {
+      "Sku": "WPC077"
+    },
+    {
+      "Sku": "WPC018"
+    },
+    {
+      "Sku": "WHI023"
+    },
+    {
+      "Sku": "WFP039"
+    },
+    {
+      "Sku": "WFP043"
+    },
+    {
+      "Sku": "WFP080"
+    },
+    {
+      "Sku": "RAN436"
+    },
+    {
+      "Sku": "RAN504"
+    },
+    {
+      "Sku": "RUN029"
+    },
+    {
+      "Sku": "RAN565"
+    },
+    {
+      "Sku": "SIM197"
+    },
+    {
+      "Sku": "SIM003"
+    },
+    {
+      "Sku": "PGW176"
+    },
+    {
+      "Sku": "RAN295"
+    },
+    {
+      "Sku": "OBP030"
+    },
+    {
+      "Sku": "NGM015"
+    },
+    {
+      "Sku": "PAR601"
+    },
+    {
+      "Sku": "PAR196"
+    },
+    {
+      "Sku": "PAR185"
+    },
+    {
+      "Sku": "PAR037"
+    },
+    {
+      "Sku": "PAR116"
+    },
+    {
+      "Sku": "PGN197"
+    },
+    {
+      "Sku": "PGN313"
+    },
+    {
+      "Sku": "PAR735"
+    },
+    {
+      "Sku": "PAR740"
+    },
+    {
+      "Sku": "PAR939"
+    },
+    {
+      "Sku": "PAR635"
+    },
+    {
+      "Sku": "PAR616"
+    },
+    {
+      "Sku": "PAR659"
+    },
+    {
+      "Sku": "ARC044"
+    },
+    {
+      "Sku": "ARC154"
+    },
+    {
+      "Sku": "AVK049"
+    },
+    {
+      "Sku": "CCB001"
+    },
+    {
+      "Sku": "BCP001"
+    },
+    {
+      "Sku": "BEN002"
+    },
+    {
+      "Sku": "FMC003"
+    },
+    {
+      "Sku": "FGG081"
+    },
+    {
+      "Sku": "EVE045"
+    },
+    {
+      "Sku": "FAM019"
+    },
+    {
+      "Sku": "FCP067"
+    },
+    {
+      "Sku": "FCP069"
+    },
+    {
+      "Sku": "LDG003"
+    },
+    {
+      "Sku": "ING025"
+    },
+    {
+      "Sku": "HRW025"
+    },
+    {
+      "Sku": "HPC134"
+    },
+    {
+      "Sku": "HCB033"
+    },
+    {
+      "Sku": "GSP001"
+    },
+    {
+      "Sku": "HEY003"
+    },
+    {
+      "Sku": "HCT049"
+    },
+    {
+      "Sku": "HCB118"
+    },
+    {
+      "Sku": "HMC339"
+    },
+    {
+      "Sku": "HMC343"
+    },
+    {
+      "Sku": "HCB097"
+    },
+    {
+      "Sku": "HCB129"
+    },
+    {
+      "Sku": "HCB030"
+    },
+    {
+      "Sku": "HCB061"
+    },
+    {
+      "Sku": "LPP010"
+    },
+    {
+      "Sku": "IPG102"
+    },
+    {
+      "Sku": "IPS027"
+    },
+    {
+      "Sku": "FAM008"
+    },
+    {
+      "Sku": "EPP002"
+    },
+    {
+      "Sku": "EVE017"
+    },
+    {
+      "Sku": "FFB079"
+    },
+    {
+      "Sku": "FFB088"
+    },
+    {
+      "Sku": "GPR005"
+    },
+    {
+      "Sku": "GPR001"
+    },
+    {
+      "Sku": "GPT153"
+    },
+    {
+      "Sku": "DEP001"
+    },
+    {
+      "Sku": "AVK066"
+    },
+    {
+      "Sku": "AVK080"
+    },
+    {
+      "Sku": "PAR690"
+    },
+    {
+      "Sku": "PAR692"
+    },
+    {
+      "Sku": "PAR627"
+    },
+    {
+      "Sku": "PAR723"
+    },
+    {
+      "Sku": "PGN325"
+    },
+    {
+      "Sku": "PGN266"
+    },
+    {
+      "Sku": "PGN187"
+    },
+    {
+      "Sku": "PGN122"
+    },
+    {
+      "Sku": "PER225"
+    },
+    {
+      "Sku": "PER165"
+    },
+    {
+      "Sku": "PAR603"
+    },
+    {
+      "Sku": "PAR507"
+    },
+    {
+      "Sku": "PAR472"
+    },
+    {
+      "Sku": "NBN049"
+    },
+    {
+      "Sku": "NBN030"
+    },
+    {
+      "Sku": "MOU073"
+    },
+    {
+      "Sku": "MOU013"
+    },
+    {
+      "Sku": "MAC002"
+    },
+    {
+      "Sku": "LPP029"
+    },
+    {
+      "Sku": "RAN220"
+    },
+    {
+      "Sku": "RAN251"
+    },
+    {
+      "Sku": "RAN201"
+    },
+    {
+      "Sku": "PPP007"
+    },
+    {
+      "Sku": "PPP049"
+    },
+    {
+      "Sku": "SHP100"
+    },
+    {
+      "Sku": "SIM350"
+    },
+    {
+      "Sku": "SIM369"
+    },
+    {
+      "Sku": "RAN536"
+    },
+    {
+      "Sku": "SBI016"
+    },
+    {
+      "Sku": "RAN433"
+    },
+    {
+      "Sku": "WFP085"
+    },
+    {
+      "Sku": "WHI015"
+    },
+    {
+      "Sku": "WPC017"
+    },
+    {
+      "Sku": "WPC150"
+    },
+    {
+      "Sku": "SKY039"
+    },
+    {
+      "Sku": "SSS006"
+    },
+    {
+      "Sku": "SPB009"
+    },
+    {
+      "Sku": "STL257"
+    },
+    {
+      "Sku": "STL115"
+    },
+    {
+      "Sku": "STL302"
+    },
+    {
+      "Sku": "WFP007"
+    },
+    {
+      "Sku": "SIM377"
+    },
+    {
+      "Sku": "WPC021"
+    },
+    {
+      "Sku": "WLP017"
+    },
+    {
+      "Sku": "WPC025"
+    },
+    {
+      "Sku": "WHI010"
+    },
+    {
+      "Sku": "WFP065"
+    },
+    {
+      "Sku": "RAN426"
+    },
+    {
+      "Sku": "RHP003"
+    },
+    {
+      "Sku": "SIM283"
+    },
+    {
+      "Sku": "SIM240"
+    },
+    {
+      "Sku": "SIM227"
+    },
+    {
+      "Sku": "PPP044"
+    },
+    {
+      "Sku": "RAN113"
+    },
+    {
+      "Sku": "MPS248"
+    },
+    {
+      "Sku": "PAR490"
+    },
+    {
+      "Sku": "PAR126"
+    },
+    {
+      "Sku": "PAR152"
+    },
+    {
+      "Sku": "PAR412"
+    },
+    {
+      "Sku": "PER208"
+    },
+    {
+      "Sku": "PGN196"
+    },
+    {
+      "Sku": "PGN205"
+    },
+    {
+      "Sku": "PGN314"
+    },
+    {
+      "Sku": "PGN321"
+    },
+    {
+      "Sku": "PAR749"
+    },
+    {
+      "Sku": "PAR682"
+    },
+    {
+      "Sku": "AVK040"
+    },
+    {
+      "Sku": "ARC144"
+    },
+    {
+      "Sku": "DEP101"
+    },
+    {
+      "Sku": "DEP103"
+    },
+    {
+      "Sku": "CPC012"
+    },
+    {
+      "Sku": "BEN001"
+    },
+    {
+      "Sku": "CBP014"
+    },
+    {
+      "Sku": "GPT147"
+    },
+    {
+      "Sku": "GPT172"
+    },
+    {
+      "Sku": "DON001"
+    },
+    {
+      "Sku": "FAM006"
+    },
+    {
+      "Sku": "FAP023"
+    },
+    {
+      "Sku": "INT466"
+    },
+    {
+      "Sku": "INT499"
+    },
+    {
+      "Sku": "LPI004"
+    },
+    {
+      "Sku": "HPC144"
+    },
+    {
+      "Sku": "HRW093"
+    },
+    {
+      "Sku": "HRW001"
+    },
+    {
+      "Sku": "HRW105"
+    },
+    {
+      "Sku": "HRW132"
+    },
+    {
+      "Sku": "INT362"
+    },
+    {
+      "Sku": "GSP008"
+    },
+    {
+      "Sku": "HCB014"
+    },
+    {
+      "Sku": "HCB122"
+    },
+    {
+      "Sku": "HCB120"
+    },
+    {
+      "Sku": "HCB117"
+    },
+    {
+      "Sku": "HNA018"
+    },
+    {
+      "Sku": "HMC022"
+    },
+    {
+      "Sku": "HMC062"
+    },
+    {
+      "Sku": "HMC015"
+    },
+    {
+      "Sku": "HPC046"
+    },
+    {
+      "Sku": "HCB098"
+    },
+    {
+      "Sku": "HCT036"
+    },
+    {
+      "Sku": "HCB060"
+    },
+    {
+      "Sku": "HCB089"
+    },
+    {
+      "Sku": "HCB093"
+    },
+    {
+      "Sku": "HPC159"
+    },
+    {
+      "Sku": "HPC146"
+    },
+    {
+      "Sku": "IPS160"
+    },
+    {
+      "Sku": "IPS161"
+    },
+    {
+      "Sku": "IPS006"
+    },
+    {
+      "Sku": "FAP053"
+    },
+    {
+      "Sku": "FAM005"
+    },
+    {
+      "Sku": "FAM001"
+    },
+    {
+      "Sku": "FAR013"
+    },
+    {
+      "Sku": "FAR023"
+    },
+    {
+      "Sku": "FAR026"
+    },
+    {
+      "Sku": "FCP033"
+    },
+    {
+      "Sku": "FFB139"
+    },
+    {
+      "Sku": "BMP035"
+    },
+    {
+      "Sku": "DEP102"
+    },
+    {
+      "Sku": "ARC095"
+    },
+    {
+      "Sku": "AVK019"
+    },
+    {
+      "Sku": "PAR730"
+    },
+    {
+      "Sku": "PAR783"
+    },
+    {
+      "Sku": "PGN332"
+    },
+    {
+      "Sku": "PAR475"
+    },
+    {
+      "Sku": "PAR443"
+    },
+    {
+      "Sku": "PAR508"
+    },
+    {
+      "Sku": "PAR505"
+    },
+    {
+      "Sku": "MPS241"
+    },
+    {
+      "Sku": "NWD009"
+    },
+    {
+      "Sku": "MPS124"
+    },
+    {
+      "Sku": "MAC004"
+    },
+    {
+      "Sku": "MAC011"
+    },
+    {
+      "Sku": "MMG032"
+    },
+    {
+      "Sku": "MOU087"
+    },
+    {
+      "Sku": "QRT039"
+    },
+    {
+      "Sku": "RAN294"
+    },
+    {
+      "Sku": "RAN331"
+    },
+    {
+      "Sku": "PIN003"
+    },
+    {
+      "Sku": "SIM263"
+    },
+    {
+      "Sku": "SIM289"
+    },
+    {
+      "Sku": "SHG017"
+    },
+    {
+      "Sku": "RWM003"
+    },
+    {
+      "Sku": "RAN484"
+    },
+    {
+      "Sku": "RAN462"
+    },
+    {
+      "Sku": "WFP075"
+    },
+    {
+      "Sku": "WFP061"
+    },
+    {
+      "Sku": "WFP012"
+    },
+    {
+      "Sku": "WFP145"
+    },
+    {
+      "Sku": "WPC169"
+    },
+    {
+      "Sku": "SKY096"
+    },
+    {
+      "Sku": "SKY116"
+    },
+    {
+      "Sku": "SQB042"
+    },
+    {
+      "Sku": "SQB019"
+    },
+    {
+      "Sku": "UWP007"
+    },
+    {
+      "Sku": "SWS003"
+    },
+    {
+      "Sku": "STL090"
+    },
+    {
+      "Sku": "STL114"
+    },
+    {
+      "Sku": "STL238"
+    },
+    {
+      "Sku": "STL120"
+    },
+    {
+      "Sku": "TMB001"
+    },
+    {
+      "Sku": "SST001"
+    },
+    {
+      "Sku": "SQSP1"
+    },
+    {
+      "Sku": "SPC070"
+    },
+    {
+      "Sku": "SMP064"
+    },
+    {
+      "Sku": "SKY128"
+    },
+    {
+      "Sku": "SKY084"
+    },
+    {
+      "Sku": "SIM390"
+    },
+    {
+      "Sku": "WPC149"
+    },
+    {
+      "Sku": "WPC033"
+    },
+    {
+      "Sku": "WWN831"
+    },
+    {
+      "Sku": "WWN836"
+    },
+    {
+      "Sku": "WFP160"
+    },
+    {
+      "Sku": "WHI090"
+    },
+    {
+      "Sku": "WFP038"
+    },
+    {
+      "Sku": "WFP076"
+    },
+    {
+      "Sku": "WFP082"
+    },
+    {
+      "Sku": "RAN494"
+    },
+    {
+      "Sku": "RAN456"
+    },
+    {
+      "Sku": "SBI007"
+    },
+    {
+      "Sku": "RAN637"
+    },
+    {
+      "Sku": "SIM191"
+    },
+    {
+      "Sku": "SIM258"
+    },
+    {
+      "Sku": "SIM328"
+    },
+    {
+      "Sku": "PPG032"
+    },
+    {
+      "Sku": "PPP009"
+    },
+    {
+      "Sku": "PPP005"
+    },
+    {
+      "Sku": "PPP051"
+    },
+    {
+      "Sku": "PPP079"
+    },
+    {
+      "Sku": "RAN338"
+    },
+    {
+      "Sku": "RAN340"
+    },
+    {
+      "Sku": "RAN406"
+    },
+    {
+      "Sku": "RAN296"
+    },
+    {
+      "Sku": "RAN273"
+    },
+    {
+      "Sku": "RAN244"
+    },
+    {
+      "Sku": "QRP017"
+    },
+    {
+      "Sku": "MOU088"
+    },
+    {
+      "Sku": "MOU084"
+    },
+    {
+      "Sku": "MOU075"
+    },
+    {
+      "Sku": "MBI125"
+    },
+    {
+      "Sku": "LPP046"
+    },
+    {
+      "Sku": "MPS230"
+    },
+    {
+      "Sku": "NIA001"
+    },
+    {
+      "Sku": "NIA002"
+    },
+    {
+      "Sku": "PAR193"
+    },
+    {
+      "Sku": "PAR154"
+    },
+    {
+      "Sku": "PGN350"
+    },
+    {
+      "Sku": "PGN360"
+    },
+    {
+      "Sku": "PGW083"
+    },
+    {
+      "Sku": "PGN204"
+    },
+    {
+      "Sku": "PER227"
+    },
+    {
+      "Sku": "PER148"
+    },
+    {
+      "Sku": "PER071"
+    },
+    {
+      "Sku": "PER054"
+    },
+    {
+      "Sku": "PAR782"
+    },
+    {
+      "Sku": "PAR778"
+    },
+    {
+      "Sku": "PAR733"
+    },
+    {
+      "Sku": "PAR702"
+    },
+    {
+      "Sku": "ARC175"
+    },
+    {
+      "Sku": "ASP001"
+    },
+    {
+      "Sku": "ARB002"
+    },
+    {
+      "Sku": "CPC004"
+    },
+    {
+      "Sku": "DBD013"
+    },
+    {
+      "Sku": "CBP017"
+    },
+    {
+      "Sku": "FFB084"
+    },
+    {
+      "Sku": "GPT171"
+    },
+    {
+      "Sku": "GPT245"
+    },
+    {
+      "Sku": "FCP118"
+    },
+    {
+      "Sku": "FAM014"
+    },
+    {
+      "Sku": "IPS035"
+    },
+    {
+      "Sku": "INT448"
+    },
+    {
+      "Sku": "IPS157"
+    },
+    {
+      "Sku": "KLU004"
+    },
+    {
+      "Sku": "INT374"
+    },
+    {
+      "Sku": "INT095"
+    },
+    {
+      "Sku": "HRW122"
+    },
+    {
+      "Sku": "HCB095"
+    },
+    {
+      "Sku": "HCB071"
+    },
+    {
+      "Sku": "HCB079"
+    },
+    {
+      "Sku": "HCB025"
+    },
+    {
+      "Sku": "HCB037"
+    },
+    {
+      "Sku": "HBC004"
+    },
+    {
+      "Sku": "HBC007"
+    },
+    {
+      "Sku": "HCT052"
+    },
+    {
+      "Sku": "HCB100"
+    },
+    {
+      "Sku": "HCB116"
+    },
+    {
+      "Sku": "HCB102"
+    },
+    {
+      "Sku": "HPC053"
+    },
+    {
+      "Sku": "HMC321"
+    },
+    {
+      "Sku": "HCB125"
+    },
+    {
+      "Sku": "HHO017"
+    },
+    {
+      "Sku": "GSP005"
+    },
+    {
+      "Sku": "HCB019"
+    },
+    {
+      "Sku": "HCB024"
+    },
+    {
+      "Sku": "HRW140"
+    },
+    {
+      "Sku": "HRW148"
+    },
+    {
+      "Sku": "INT026"
+    },
+    {
+      "Sku": "INT036"
+    },
+    {
+      "Sku": "INT088"
+    },
+    {
+      "Sku": "HPC136"
+    },
+    {
+      "Sku": "HPC129"
+    },
+    {
+      "Sku": "HPC153"
+    },
+    {
+      "Sku": "HPC141"
+    },
+    {
+      "Sku": "LDG005"
+    },
+    {
+      "Sku": "LDG002"
+    },
+    {
+      "Sku": "JCP001"
+    },
+    {
+      "Sku": "JCP002"
+    },
+    {
+      "Sku": "JCP004"
+    },
+    {
+      "Sku": "IPG074"
+    },
+    {
+      "Sku": "FAP013"
+    },
+    {
+      "Sku": "FAP046"
+    },
+    {
+      "Sku": "FCP082"
+    },
+    {
+      "Sku": "FCP071"
+    },
+    {
+      "Sku": "FCP037"
+    },
+    {
+      "Sku": "FAR018"
+    },
+    {
+      "Sku": "GPT214"
+    },
+    {
+      "Sku": "GPT203"
+    },
+    {
+      "Sku": "GPT145"
+    },
+    {
+      "Sku": "FFB101"
+    },
+    {
+      "Sku": "FFB153"
+    },
+    {
+      "Sku": "FFB164"
+    },
+    {
+      "Sku": "FGG099"
+    },
+    {
+      "Sku": "FGG086"
+    },
+    {
+      "Sku": "CMP219"
+    },
+    {
+      "Sku": "BMP038"
+    },
+    {
+      "Sku": "BTR008"
+    },
+    {
+      "Sku": "AVK085"
+    },
+    {
+      "Sku": "BMP032"
+    },
+    {
+      "Sku": "DBD022"
+    },
+    {
+      "Sku": "DFP002"
+    },
+    {
+      "Sku": "ARC067"
+    },
+    {
+      "Sku": "ACB136"
+    },
+    {
+      "Sku": "PAR738"
+    },
+    {
+      "Sku": "PAR774"
+    },
+    {
+      "Sku": "PAR827"
+    },
+    {
+      "Sku": "PAR937"
+    },
+    {
+      "Sku": "PAR900"
+    },
+    {
+      "Sku": "PAR839"
+    },
+    {
+      "Sku": "PER147"
+    },
+    {
+      "Sku": "PER117"
+    },
+    {
+      "Sku": "PER220"
+    },
+    {
+      "Sku": "PER230"
+    },
+    {
+      "Sku": "PGN201"
+    },
+    {
+      "Sku": "PGN018"
+    },
+    {
+      "Sku": "PGN357"
+    },
+    {
+      "Sku": "PGN343"
+    },
+    {
+      "Sku": "PGN288"
+    },
+    {
+      "Sku": "PAR127"
+    },
+    {
+      "Sku": "PAR136"
+    },
+    {
+      "Sku": "PAR541"
+    },
+    {
+      "Sku": "PAR552"
+    },
+    {
+      "Sku": "PAR459"
+    },
+    {
+      "Sku": "MPS202"
+    },
+    {
+      "Sku": "LPP013"
+    },
+    {
+      "Sku": "MOU063"
+    },
+    {
+      "Sku": "MOU060"
+    },
+    {
+      "Sku": "QRP004"
+    },
+    {
+      "Sku": "QRP008"
+    },
+    {
+      "Sku": "QRP028"
+    },
+    {
+      "Sku": "RAN388"
+    },
+    {
+      "Sku": "PPP046"
+    },
+    {
+      "Sku": "PPP053"
+    },
+    {
+      "Sku": "PPP026"
+    },
+    {
+      "Sku": "PPP027"
+    },
+    {
+      "Sku": "PPP029"
+    },
+    {
+      "Sku": "PPP013"
+    },
+    {
+      "Sku": "PPP018"
+    },
+    {
+      "Sku": "PIN004"
+    },
+    {
+      "Sku": "SIM341"
+    },
+    {
+      "Sku": "SIM317"
+    },
+    {
+      "Sku": "SIM275"
+    },
+    {
+      "Sku": "SIM172"
+    },
+    {
+      "Sku": "SHG011"
+    },
+    {
+      "Sku": "RAN545"
+    },
+    {
+      "Sku": "SBI013"
+    },
+    {
+      "Sku": "RAN451"
+    },
+    {
+      "Sku": "RAN479"
+    },
+    {
+      "Sku": "WFP042"
+    },
+    {
+      "Sku": "WFP111"
+    },
+    {
+      "Sku": "WFP176"
+    },
+    {
+      "Sku": "WFP164"
+    },
+    {
+      "Sku": "WPP001"
+    },
+    {
+      "Sku": "WWN804"
+    },
+    {
+      "Sku": "WPC114"
+    },
+    {
+      "Sku": "SKY126"
+    },
+    {
+      "Sku": "SSS009"
+    },
+    {
+      "Sku": "WFP016"
+    },
+    {
+      "Sku": "WFP017"
+    },
+    {
+      "Sku": "STL319"
+    },
+    {
+      "Sku": "STL346"
+    },
+    {
+      "Sku": "STL358"
+    },
+    {
+      "Sku": "STL322"
+    },
+    {
+      "Sku": "STL303"
+    },
+    {
+      "Sku": "STL256"
+    },
+    {
+      "Sku": "SSS011"
+    },
+    {
+      "Sku": "SSS017"
+    },
+    {
+      "Sku": "SSS008"
+    },
+    {
+      "Sku": "SPB020"
+    },
+    {
+      "Sku": "SPC057"
+    },
+    {
+      "Sku": "SIM458"
+    },
+    {
+      "Sku": "SMP043"
+    },
+    {
+      "Sku": "SIM400"
+    },
+    {
+      "Sku": "SIM376"
+    },
+    {
+      "Sku": "SIM423"
+    },
+    {
+      "Sku": "WPC089"
+    },
+    {
+      "Sku": "WPC032"
+    },
+    {
+      "Sku": "WPC053"
+    },
+    {
+      "Sku": "WPC054"
+    },
+    {
+      "Sku": "WPC161"
+    },
+    {
+      "Sku": "WPC127"
+    },
+    {
+      "Sku": "WWN809"
+    },
+    {
+      "Sku": "WFP150"
+    },
+    {
+      "Sku": "WFP181"
+    },
+    {
+      "Sku": "WFP059"
+    },
+    {
+      "Sku": "TEN004"
+    },
+    {
+      "Sku": "WFP025"
+    },
+    {
+      "Sku": "WFP087"
+    },
+    {
+      "Sku": "RAN440"
+    },
+    {
+      "Sku": "RAN491"
+    },
+    {
+      "Sku": "RAN511"
+    },
+    {
+      "Sku": "RAN461"
+    },
+    {
+      "Sku": "RAN423"
+    },
+    {
+      "Sku": "RFP033"
+    },
+    {
+      "Sku": "SHP360"
+    },
+    {
+      "Sku": "SIM123"
+    },
+    {
+      "Sku": "SIM125"
+    },
+    {
+      "Sku": "SIM219"
+    },
+    {
+      "Sku": "SIM220"
+    },
+    {
+      "Sku": "SIM296"
+    },
+    {
+      "Sku": "SIM269"
+    },
+    {
+      "Sku": "SIM303"
+    },
+    {
+      "Sku": "SIM332"
+    },
+    {
+      "Sku": "SIM334"
+    },
+    {
+      "Sku": "SIM365"
+    },
+    {
+      "Sku": "PGW265"
+    },
+    {
+      "Sku": "PGW278"
+    },
+    {
+      "Sku": "PPP024"
+    },
+    {
+      "Sku": "PPP050"
+    },
+    {
+      "Sku": "PPP074"
+    },
+    {
+      "Sku": "QRP025"
+    },
+    {
+      "Sku": "QRT009"
+    },
+    {
+      "Sku": "QRP005"
+    },
+    {
+      "Sku": "RAN091"
+    },
+    {
+      "Sku": "MOU054"
+    },
+    {
+      "Sku": "MOU064"
+    },
+    {
+      "Sku": "MOU128"
+    },
+    {
+      "Sku": "LPP031"
+    },
+    {
+      "Sku": "MOO065"
+    },
+    {
+      "Sku": "MPS151"
+    },
+    {
+      "Sku": "MPS084"
+    },
+    {
+      "Sku": "MPS070"
+    },
+    {
+      "Sku": "NGB003"
+    },
+    {
+      "Sku": "NGB005"
+    },
+    {
+      "Sku": "NBN028"
+    },
+    {
+      "Sku": "MPS246"
+    },
+    {
+      "Sku": "PAR488"
+    },
+    {
+      "Sku": "PAR509"
+    },
+    {
+      "Sku": "PAR045"
+    },
+    {
+      "Sku": "PGN260"
+    },
+    {
+      "Sku": "PGN293"
+    },
+    {
+      "Sku": "PGN326"
+    },
+    {
+      "Sku": "PGN335"
+    },
+    {
+      "Sku": "PGN369"
+    },
+    {
+      "Sku": "PER198"
+    },
+    {
+      "Sku": "PER067"
+    },
+    {
+      "Sku": "PAR931"
+    },
+    {
+      "Sku": "PAR847"
+    },
+    {
+      "Sku": "PER040"
+    },
+    {
+      "Sku": "PAR776"
+    },
+    {
+      "Sku": "PAR721"
+    },
+    {
+      "Sku": "PAR687"
+    },
+    {
+      "Sku": "PAR614"
+    },
+    {
+      "Sku": "PAR619"
+    },
+    {
+      "Sku": "PAR653"
+    },
+    {
+      "Sku": "ARC048"
+    },
+    {
+      "Sku": "ARC073"
+    },
+    {
+      "Sku": "ARC150"
+    },
+    {
+      "Sku": "ARC143"
+    },
+    {
+      "Sku": "AVK023"
+    },
+    {
+      "Sku": "DEP002"
+    },
+    {
+      "Sku": "CPC005"
+    },
+    {
+      "Sku": "AVK096"
+    },
+    {
+      "Sku": "CBP015"
+    },
+    {
+      "Sku": "BWP004"
+    },
+    {
+      "Sku": "FGG087"
+    },
+    {
+      "Sku": "FMC001"
+    },
+    {
+      "Sku": "FGG033"
+    },
+    {
+      "Sku": "GPT167"
+    },
+    {
+      "Sku": "GPT213"
+    },
+    {
+      "Sku": "GPT218"
+    },
+    {
+      "Sku": "FCP073"
+    },
+    {
+      "Sku": "FCP078"
+    },
+    {
+      "Sku": "FCP086"
+    },
+    {
+      "Sku": "FCP050"
+    },
+    {
+      "Sku": "DKP126"
+    },
+    {
+      "Sku": "INT455"
+    },
+    {
+      "Sku": "INT464"
+    },
+    {
+      "Sku": "IPS037"
+    },
+    {
+      "Sku": "IPS163"
+    },
+    {
+      "Sku": "INT202"
+    },
+    {
+      "Sku": "INT332"
+    },
+    {
+      "Sku": "HCB031"
+    },
+    {
+      "Sku": "HCB034"
+    },
+    {
+      "Sku": "HCB069"
+    },
+    {
+      "Sku": "HCB055"
+    },
+    {
+      "Sku": "HCB011"
+    },
+    {
+      "Sku": "HCT019"
+    },
+    {
+      "Sku": "HCB109"
+    },
+    {
+      "Sku": "HCB099"
+    },
+    {
+      "Sku": "HMC326"
+    },
+    {
+      "Sku": "HMC331"
+    },
+    {
+      "Sku": "HMC335"
+    },
+    {
+      "Sku": "HNA074"
+    },
+    {
+      "Sku": "HNA028"
+    },
+    {
+      "Sku": "HNA059"
+    },
+    {
+      "Sku": "HMC336"
+    },
+    {
+      "Sku": "HCT046"
+    },
+    {
+      "Sku": "HMC309"
+    },
+    {
+      "Sku": "HCT037"
+    },
+    {
+      "Sku": "HHP019"
+    },
+    {
+      "Sku": "HCT054"
+    },
+    {
+      "Sku": "GRA038"
+    },
+    {
+      "Sku": "HCB010"
+    },
+    {
+      "Sku": "GPT248"
+    },
+    {
+      "Sku": "HCB051"
+    },
+    {
+      "Sku": "HCB026"
+    },
+    {
+      "Sku": "HCB029"
+    },
+    {
+      "Sku": "INT149"
+    },
+    {
+      "Sku": "HPC157"
+    },
+    {
+      "Sku": "HRW111"
+    },
+    {
+      "Sku": "HRW116"
+    },
+    {
+      "Sku": "IPS181"
+    },
+    {
+      "Sku": "IPS263"
+    },
+    {
+      "Sku": "LPP001"
+    },
+    {
+      "Sku": "KCP001"
+    },
+    {
+      "Sku": "KCP002"
+    },
+    {
+      "Sku": "KCP003"
+    },
+    {
+      "Sku": "KCP009"
+    },
+    {
+      "Sku": "IPS014"
+    },
+    {
+      "Sku": "IPS026"
+    },
+    {
+      "Sku": "IPS055"
+    },
+    {
+      "Sku": "IPS098"
+    },
+    {
+      "Sku": "IPG084"
+    },
+    {
+      "Sku": "DKP129"
+    },
+    {
+      "Sku": "FAP049"
+    },
+    {
+      "Sku": "FAM037"
+    },
+    {
+      "Sku": "FAP001"
+    },
+    {
+      "Sku": "FCP084"
+    },
+    {
+      "Sku": "FER111"
+    },
+    {
+      "Sku": "FAR024"
+    },
+    {
+      "Sku": "FCP010"
+    },
+    {
+      "Sku": "FCP015"
+    },
+    {
+      "Sku": "GPT222"
+    },
+    {
+      "Sku": "GPT223"
+    },
+    {
+      "Sku": "GPT235"
+    },
+    {
+      "Sku": "GPT211"
+    },
+    {
+      "Sku": "GPT207"
+    },
+    {
+      "Sku": "GPT156"
+    },
+    {
+      "Sku": "GPR019"
+    },
+    {
+      "Sku": "GPT002"
+    },
+    {
+      "Sku": "FFB110"
+    },
+    {
+      "Sku": "FFB154"
+    },
+    {
+      "Sku": "GPR006"
+    },
+    {
+      "Sku": "FGG098"
+    },
+    {
+      "Sku": "CAN007"
+    },
+    {
+      "Sku": "CPC002"
+    },
+    {
+      "Sku": "AVK090"
+    },
+    {
+      "Sku": "AWE002"
+    },
+    {
+      "Sku": "AWE005"
+    },
+    {
+      "Sku": "BEN004"
+    },
+    {
+      "Sku": "BEN005"
+    },
+    {
+      "Sku": "DBD102"
+    },
+    {
+      "Sku": "DAW004"
+    },
+    {
+      "Sku": "DKP064"
+    },
+    {
+      "Sku": "DKP044"
+    },
+    {
+      "Sku": "AVK015"
+    },
+    {
+      "Sku": "ARC176"
+    },
+    {
+      "Sku": "ARC170"
+    },
+    {
+      "Sku": "AVK104"
+    },
+    {
+      "Sku": "ARC131"
+    },
+    {
+      "Sku": "ARC087"
+    },
+    {
+      "Sku": "ARC013"
+    },
+    {
+      "Sku": "ARC027"
+    },
+    {
+      "Sku": "PAR781"
+    },
+    {
+      "Sku": "PER039"
+    },
+    {
+      "Sku": "PER072"
+    },
+    {
+      "Sku": "PER106"
+    },
+    {
+      "Sku": "PER157"
+    },
+    {
+      "Sku": "PER140"
+    },
+    {
+      "Sku": "PER215"
+    },
+    {
+      "Sku": "PER177"
+    },
+    {
+      "Sku": "PGN347"
+    },
+    {
+      "Sku": "PGN368"
+    },
+    {
+      "Sku": "PGW044"
+    },
+    {
+      "Sku": "PGW143"
+    },
+    {
+      "Sku": "PGW023"
+    },
+    {
+      "Sku": "PGN397"
+    },
+    {
+      "Sku": "PGN318"
+    },
+    {
+      "Sku": "PGN289"
+    },
+    {
+      "Sku": "PGN270"
+    },
+    {
+      "Sku": "PGN232"
+    },
+    {
+      "Sku": "PAR111"
+    },
+    {
+      "Sku": "PAR147"
+    },
+    {
+      "Sku": "PAR129"
+    },
+    {
+      "Sku": "PAR130"
+    },
+    {
+      "Sku": "PAR514"
+    },
+    {
+      "Sku": "PAR531"
+    },
+    {
+      "Sku": "PAR460"
+    },
+    {
+      "Sku": "PAR462"
+    },
+    {
+      "Sku": "NBN020"
+    },
+    {
+      "Sku": "NBN039"
+    },
+    {
+      "Sku": "MPS259"
+    },
+    {
+      "Sku": "NWD002"
+    },
+    {
+      "Sku": "OCG002"
+    },
+    {
+      "Sku": "MPS240"
+    },
+    {
+      "Sku": "MPS205"
+    },
+    {
+      "Sku": "MPS209"
+    },
+    {
+      "Sku": "MPS136"
+    },
+    {
+      "Sku": "MPS139"
+    },
+    {
+      "Sku": "MPS190"
+    },
+    {
+      "Sku": "MAC015"
+    },
+    {
+      "Sku": "MBI098"
+    },
+    {
+      "Sku": "MBI102"
+    },
+    {
+      "Sku": "MBI103"
+    },
+    {
+      "Sku": "LPP035"
+    },
+    {
+      "Sku": "LPP016"
+    },
+    {
+      "Sku": "LPP048"
+    },
+    {
+      "Sku": "MOU057"
+    },
+    {
+      "Sku": "MOU012"
+    },
+    {
+      "Sku": "MOU059"
+    },
+    {
+      "Sku": "QRP006"
+    },
+    {
+      "Sku": "QRP024"
+    },
+    {
+      "Sku": "RAN313"
+    },
+    {
+      "Sku": "RAN274"
+    },
+    {
+      "Sku": "RAN263"
+    },
+    {
+      "Sku": "PPP058"
+    },
+    {
+      "Sku": "PPP060"
+    },
+    {
+      "Sku": "PPP016"
+    },
+    {
+      "Sku": "PGW280"
+    },
+    {
+      "Sku": "PGW264"
+    },
+    {
+      "Sku": "PMP008"
+    },
+    {
+      "Sku": "PMP009"
+    },
+    {
+      "Sku": "PMP011"
+    },
+    {
+      "Sku": "PPP008"
+    },
+    {
+      "Sku": "SIM272"
+    },
+    {
+      "Sku": "SIM204"
+    },
+    {
+      "Sku": "SIM154"
+    },
+    {
+      "Sku": "SHP363"
+    },
+    {
+      "Sku": "SIM002"
+    },
+    {
+      "Sku": "SHP099"
+    },
+    {
+      "Sku": "SHG016"
+    },
+    {
+      "Sku": "RAR001"
+    },
+    {
+      "Sku": "RAN562"
+    },
+    {
+      "Sku": "RAN539"
+    },
+    {
+      "Sku": "RAN534"
+    },
+    {
+      "Sku": "RHP008"
+    },
+    {
+      "Sku": "RWM002"
+    },
+    {
+      "Sku": "RAN438"
+    },
+    {
+      "Sku": "RAN439"
+    },
+    {
+      "Sku": "RAN452"
+    },
+    {
+      "Sku": "RAN455"
+    },
+    {
+      "Sku": "RAN497"
+    },
+    {
+      "Sku": "WFP095"
+    },
+    {
+      "Sku": "WFP063"
+    },
+    {
+      "Sku": "WFP027"
+    },
+    {
+      "Sku": "WFP060"
+    },
+    {
+      "Sku": "WFP186"
+    },
+    {
+      "Sku": "WHI021"
+    },
+    {
+      "Sku": "WFP110"
+    },
+    {
+      "Sku": "WPP003"
+    },
+    {
+      "Sku": "WPC118"
+    },
+    {
+      "Sku": "WPC170"
+    },
+    {
+      "Sku": "WPC090"
+    },
+    {
+      "Sku": "WPC084"
+    },
+    {
+      "Sku": "SIM421"
+    },
+    {
+      "Sku": "SKY099"
+    },
+    {
+      "Sku": "SKY100"
+    },
+    {
+      "Sku": "SPC058"
+    },
+    {
+      "Sku": "SPC060"
+    },
+    {
+      "Sku": "SPC021"
+    },
+    {
+      "Sku": "SSS018"
+    },
+    {
+      "Sku": "SSS019"
+    },
+    {
+      "Sku": "STL209"
+    },
+    {
+      "Sku": "STL086"
+    },
+    {
+      "Sku": "SWS004"
+    },
+    {
+      "Sku": "SWS005"
+    },
+    {
+      "Sku": "WFP018"
+    },
+    {
+      "Sku": "WFP011"
+    },
+    {
+      "Sku": "TEN012"
+    },
+    {
+      "Sku": "TEN002"
+    },
+    {
+      "Sku": "STL357"
+    },
+    {
+      "Sku": "STL138"
+    },
+    {
+      "Sku": "STL177"
+    },
+    {
+      "Sku": "STL204"
+    },
+    {
+      "Sku": "STL298"
+    },
+    {
+      "Sku": "STL265"
+    },
+    {
+      "Sku": "SKY113"
+    },
+    {
+      "Sku": "SKY114"
+    },
+    {
+      "Sku": "SMP035"
+    },
+    {
+      "Sku": "SIM429"
+    },
+    {
+      "Sku": "SKY054"
+    },
+    {
+      "Sku": "SIM415"
+    },
+    {
+      "Sku": "SIM416"
+    },
+    {
+      "Sku": "SIM420"
+    },
+    {
+      "Sku": "WPC076"
+    },
+    {
+      "Sku": "WPC122"
+    },
+    {
+      "Sku": "WWN287"
+    },
+    {
+      "Sku": "WPP002"
+    },
+    {
+      "Sku": "WWN828"
+    },
+    {
+      "Sku": "WWN807"
+    },
+    {
+      "Sku": "WWN839"
+    },
+    {
+      "Sku": "WWN840"
+    },
+    {
+      "Sku": "WFP102"
+    },
+    {
+      "Sku": "WFP149"
+    },
+    {
+      "Sku": "WFP135"
+    },
+    {
+      "Sku": "WFP153"
+    },
+    {
+      "Sku": "WFP165"
+    },
+    {
+      "Sku": "WIL082"
+    },
+    {
+      "Sku": "WPC026"
+    },
+    {
+      "Sku": "WLP021"
+    },
+    {
+      "Sku": "WFP044"
+    },
+    {
+      "Sku": "WFP053"
+    },
+    {
+      "Sku": "WFP073"
+    },
+    {
+      "Sku": "WFP078"
+    },
+    {
+      "Sku": "WFP081"
+    },
+    {
+      "Sku": "RAN531"
+    },
+    {
+      "Sku": "RAN532"
+    },
+    {
+      "Sku": "RAN415"
+    },
+    {
+      "Sku": "SCH015"
+    },
+    {
+      "Sku": "RAN567"
+    },
+    {
+      "Sku": "RAN647"
+    },
+    {
+      "Sku": "RAN650"
+    },
+    {
+      "Sku": "RAN652"
+    },
+    {
+      "Sku": "SHG012"
+    },
+    {
+      "Sku": "SIM211"
+    },
+    {
+      "Sku": "SIM193"
+    },
+    {
+      "Sku": "SIM274"
+    },
+    {
+      "Sku": "SIM360"
+    },
+    {
+      "Sku": "SIM335"
+    },
+    {
+      "Sku": "PGW282"
+    },
+    {
+      "Sku": "PMP010"
+    },
+    {
+      "Sku": "PGW179"
+    },
+    {
+      "Sku": "PGW279"
+    },
+    {
+      "Sku": "PGW275"
+    },
+    {
+      "Sku": "PPP043"
+    },
+    {
+      "Sku": "PPP035"
+    },
+    {
+      "Sku": "PPP038"
+    },
+    {
+      "Sku": "PPP047"
+    },
+    {
+      "Sku": "QRP002"
+    },
+    {
+      "Sku": "RAN272"
+    },
+    {
+      "Sku": "RAN245"
+    },
+    {
+      "Sku": "RAN301"
+    },
+    {
+      "Sku": "QRP021"
+    },
+    {
+      "Sku": "QRP023"
+    },
+    {
+      "Sku": "QRP012"
+    },
+    {
+      "Sku": "QRP015"
+    },
+    {
+      "Sku": "RAN043"
+    },
+    {
+      "Sku": "RAN016"
+    },
+    {
+      "Sku": "MOU062"
+    },
+    {
+      "Sku": "MOU119"
+    },
+    {
+      "Sku": "MOU103"
+    },
+    {
+      "Sku": "LPP044"
+    },
+    {
+      "Sku": "MBI100"
+    },
+    {
+      "Sku": "MAC014"
+    },
+    {
+      "Sku": "MOO066"
+    },
+    {
+      "Sku": "MMG016"
+    },
+    {
+      "Sku": "MPS159"
+    },
+    {
+      "Sku": "MPS227"
+    },
+    {
+      "Sku": "MPS237"
+    },
+    {
+      "Sku": "MPS074"
+    },
+    {
+      "Sku": "MPS112"
+    },
+    {
+      "Sku": "PAP001"
+    },
+    {
+      "Sku": "NEU001"
+    },
+    {
+      "Sku": "MPS249"
+    },
+    {
+      "Sku": "NBN046"
+    },
+    {
+      "Sku": "PAR470"
+    },
+    {
+      "Sku": "PAR473"
+    },
+    {
+      "Sku": "PAR435"
+    },
+    {
+      "Sku": "PAR436"
+    },
+    {
+      "Sku": "PAR553"
+    },
+    {
+      "Sku": "PAR596"
+    },
+    {
+      "Sku": "PAR176"
+    },
+    {
+      "Sku": "PAR179"
+    },
+    {
+      "Sku": "PGN234"
+    },
+    {
+      "Sku": "PGN286"
+    },
+    {
+      "Sku": "PGN330"
+    },
+    {
+      "Sku": "PGN331"
+    },
+    {
+      "Sku": "PGN317"
+    },
+    {
+      "Sku": "PGN306"
+    },
+    {
+      "Sku": "PGN298"
+    },
+    {
+      "Sku": "PGN411"
+    },
+    {
+      "Sku": "PGW027"
+    },
+    {
+      "Sku": "PGW030"
+    },
+    {
+      "Sku": "PGN367"
+    },
+    {
+      "Sku": "PGW161"
+    },
+    {
+      "Sku": "PGW062"
+    },
+    {
+      "Sku": "PGN351"
+    },
+    {
+      "Sku": "PGN373"
+    },
+    {
+      "Sku": "PGN374"
+    },
+    {
+      "Sku": "PGN375"
+    },
+    {
+      "Sku": "PGN359"
+    },
+    {
+      "Sku": "PER181"
+    },
+    {
+      "Sku": "PER211"
+    },
+    {
+      "Sku": "PGN011"
+    },
+    {
+      "Sku": "PER228"
+    },
+    {
+      "Sku": "PER229"
+    },
+    {
+      "Sku": "PGN077"
+    },
+    {
+      "Sku": "PGN094"
+    },
+    {
+      "Sku": "PGN135"
+    },
+    {
+      "Sku": "PER075"
+    },
+    {
+      "Sku": "PER105"
+    },
+    {
+      "Sku": "PER068"
+    },
+    {
+      "Sku": "PER011"
+    },
+    {
+      "Sku": "PAR742"
+    },
+    {
+      "Sku": "PAR744"
+    },
+    {
+      "Sku": "PAR634"
+    },
+    {
+      "Sku": "PAR640"
+    },
+    {
+      "Sku": "PAR637"
+    },
+    {
+      "Sku": "PAR688"
+    },
+    {
+      "Sku": "PAR697"
+    },
+    {
+      "Sku": "ARB001"
+    },
+    {
+      "Sku": "ARC002"
+    },
+    {
+      "Sku": "ARC049"
+    },
+    {
+      "Sku": "ARC058"
+    },
+    {
+      "Sku": "ARC045"
+    },
+    {
+      "Sku": "ARC037"
+    },
+    {
+      "Sku": "ARC038"
+    },
+    {
+      "Sku": "ARC099"
+    },
+    {
+      "Sku": "ARC135"
+    },
+    {
+      "Sku": "AVK114"
+    },
+    {
+      "Sku": "AVK020"
+    },
+    {
+      "Sku": "AVK022"
+    },
+    {
+      "Sku": "DFP001"
+    },
+    {
+      "Sku": "DEP003"
+    },
+    {
+      "Sku": "DEP010"
+    },
+    {
+      "Sku": "DEP011"
+    },
+    {
+      "Sku": "AVK132"
+    },
+    {
+      "Sku": "CBP012"
+    },
+    {
+      "Sku": "BWP003"
+    },
+    {
+      "Sku": "FGG101"
+    },
+    {
+      "Sku": "GPR007"
+    },
+    {
+      "Sku": "FFB169"
+    },
+    {
+      "Sku": "FFB173"
+    },
+    {
+      "Sku": "FGG085"
+    },
+    {
+      "Sku": "FFB108"
+    },
+    {
+      "Sku": "FFB133"
+    },
+    {
+      "Sku": "FFB100"
+    },
+    {
+      "Sku": "GPT080"
+    },
+    {
+      "Sku": "GPT091"
+    },
+    {
+      "Sku": "FCP019"
+    },
+    {
+      "Sku": "FCP042"
+    },
+    {
+      "Sku": "FAR027"
+    },
+    {
+      "Sku": "FAR028"
+    },
+    {
+      "Sku": "FAP015"
+    },
+    {
+      "Sku": "FAP051"
+    },
+    {
+      "Sku": "DON003"
+    },
+    {
+      "Sku": "DKP098"
+    },
+    {
+      "Sku": "DKP101"
+    },
+    {
+      "Sku": "DKP118"
+    },
+    {
+      "Sku": "FAM002"
+    },
+    {
+      "Sku": "EPP001"
+    },
+    {
+      "Sku": "IPG085"
+    },
+    {
+      "Sku": "IPG094"
+    },
+    {
+      "Sku": "IPG104"
+    },
+    {
+      "Sku": "IPS001"
+    },
+    {
+      "Sku": "IPS004"
+    },
+    {
+      "Sku": "IPS111"
+    },
+    {
+      "Sku": "IPS121"
+    },
+    {
+      "Sku": "LPP008"
+    },
+    {
+      "Sku": "IPS186"
+    },
+    {
+      "Sku": "IPS193"
+    },
+    {
+      "Sku": "HRW113"
+    },
+    {
+      "Sku": "HPC163"
+    },
+    {
+      "Sku": "HRW098"
+    },
+    {
+      "Sku": "HRW099"
+    },
+    {
+      "Sku": "HPC156"
+    },
+    {
+      "Sku": "HPC133"
+    },
+    {
+      "Sku": "HPC147"
+    },
+    {
+      "Sku": "INT054"
+    },
+    {
+      "Sku": "ING042"
+    },
+    {
+      "Sku": "HRW151"
+    },
+    {
+      "Sku": "ING018"
+    },
+    {
+      "Sku": "HRW129"
+    },
+    {
+      "Sku": "IHS-10P-040"
+    },
+    {
+      "Sku": "HCB028"
+    },
+    {
+      "Sku": "HCB017"
+    },
+    {
+      "Sku": "GSP016"
+    },
+    {
+      "Sku": "HCB022"
+    },
+    {
+      "Sku": "HEY002"
+    },
+    {
+      "Sku": "HCT042"
+    },
+    {
+      "Sku": "HCT044"
+    },
+    {
+      "Sku": "HCT024"
+    },
+    {
+      "Sku": "HCB105"
+    },
+    {
+      "Sku": "HMC334"
+    },
+    {
+      "Sku": "HMC047"
+    },
+    {
+      "Sku": "HMC328"
+    },
+    {
+      "Sku": "HMC329"
+    },
+    {
+      "Sku": "HMC310"
+    },
+    {
+      "Sku": "HPC009"
+    },
+    {
+      "Sku": "HPC036"
+    },
+    {
+      "Sku": "HPC128"
+    },
+    {
+      "Sku": "HCB101"
+    },
+    {
+      "Sku": "HCB121"
+    },
+    {
+      "Sku": "HCT018"
+    },
+    {
+      "Sku": "HCB016"
+    },
+    {
+      "Sku": "HCB009"
+    },
+    {
+      "Sku": "GSP017"
+    },
+    {
+      "Sku": "GPT253"
+    },
+    {
+      "Sku": "GPT266"
+    },
+    {
+      "Sku": "GPT271"
+    },
+    {
+      "Sku": "GSP010"
+    },
+    {
+      "Sku": "GSP011"
+    },
+    {
+      "Sku": "GSP012"
+    },
+    {
+      "Sku": "GSP013"
+    },
+    {
+      "Sku": "GSP014"
+    },
+    {
+      "Sku": "HCB044"
+    },
+    {
+      "Sku": "HCB096"
+    },
+    {
+      "Sku": "IHS-10P-051"
+    },
+    {
+      "Sku": "ING027"
+    },
+    {
+      "Sku": "HRW163"
+    },
+    {
+      "Sku": "HRW167"
+    },
+    {
+      "Sku": "HRW208"
+    },
+    {
+      "Sku": "IHP_SDC25B"
+    },
+    {
+      "Sku": "HRW125"
+    },
+    {
+      "Sku": "INT002"
+    },
+    {
+      "Sku": "ING036"
+    },
+    {
+      "Sku": "INT165"
+    },
+    {
+      "Sku": "HPC148"
+    },
+    {
+      "Sku": "HPC150"
+    },
+    {
+      "Sku": "HPC137"
+    },
+    {
+      "Sku": "HPC165"
+    },
+    {
+      "Sku": "HRW121"
+    },
+    {
+      "Sku": "HRW108"
+    },
+    {
+      "Sku": "IPS200"
+    },
+    {
+      "Sku": "IPS167"
+    },
+    {
+      "Sku": "JES001"
+    },
+    {
+      "Sku": "IPS151"
+    },
+    {
+      "Sku": "IPS114"
+    },
+    {
+      "Sku": "IPS015"
+    },
+    {
+      "Sku": "IPS045"
+    },
+    {
+      "Sku": "IPG081"
+    },
+    {
+      "Sku": "EVE055"
+    },
+    {
+      "Sku": "EVE064"
+    },
+    {
+      "Sku": "DWN001"
+    },
+    {
+      "Sku": "DKP137"
+    },
+    {
+      "Sku": "FAP021"
+    },
+    {
+      "Sku": "FCP044"
+    },
+    {
+      "Sku": "FCP034"
+    },
+    {
+      "Sku": "FCP035"
+    },
+    {
+      "Sku": "FCP080"
+    },
+    {
+      "Sku": "GPT140"
+    },
+    {
+      "Sku": "GPR002"
+    },
+    {
+      "Sku": "GPT166"
+    },
+    {
+      "Sku": "GPT169"
+    },
+    {
+      "Sku": "GPT208"
+    },
+    {
+      "Sku": "GPT209"
+    },
+    {
+      "Sku": "GPT210"
+    },
+    {
+      "Sku": "FFB086"
+    },
+    {
+      "Sku": "GPR011"
+    },
+    {
+      "Sku": "FGG089"
+    },
+    {
+      "Sku": "FGG095"
+    },
+    {
+      "Sku": "COP002"
+    },
+    {
+      "Sku": "CBP018"
+    },
+    {
+      "Sku": "BEN032"
+    },
+    {
+      "Sku": "BMP023"
+    },
+    {
+      "Sku": "BMP029"
+    },
+    {
+      "Sku": "DEP004"
+    },
+    {
+      "Sku": "DEP005"
+    },
+    {
+      "Sku": "DEP007"
+    },
+    {
+      "Sku": "DKP017"
+    },
+    {
+      "Sku": "DKP075"
+    },
+    {
+      "Sku": "DAW009"
+    },
+    {
+      "Sku": "DBD002"
+    },
+    {
+      "Sku": "DAW002"
+    },
+    {
+      "Sku": "CSM001"
+    },
+    {
+      "Sku": "CWP008"
+    },
+    {
+      "Sku": "ARC173"
+    },
+    {
+      "Sku": "AVK009"
+    },
+    {
+      "Sku": "AVK119"
+    },
+    {
+      "Sku": "AVK043"
+    },
+    {
+      "Sku": "AVK059"
+    },
+    {
+      "Sku": "ARC163"
+    },
+    {
+      "Sku": "ARC164"
+    },
+    {
+      "Sku": "ARC100"
+    },
+    {
+      "Sku": "ARC070"
+    },
+    {
+      "Sku": "ARC065"
+    },
+    {
+      "Sku": "ARC055"
+    },
+    {
+      "Sku": "ARC030"
+    },
+    {
+      "Sku": "ARC032"
+    },
+    {
+      "Sku": "ARC017"
+    },
+    {
+      "Sku": "PAR703"
+    },
+    {
+      "Sku": "PAR645"
+    },
+    {
+      "Sku": "PAR642"
+    },
+    {
+      "Sku": "PAR620"
+    },
+    {
+      "Sku": "PAR743"
+    },
+    {
+      "Sku": "PAR754"
+    },
+    {
+      "Sku": "PAR758"
+    },
+    {
+      "Sku": "PAR734"
+    },
+    {
+      "Sku": "PAR842"
+    },
+    {
+      "Sku": "PAR820"
+    },
+    {
+      "Sku": "PER066"
+    },
+    {
+      "Sku": "PER053"
+    },
+    {
+      "Sku": "PER151"
+    },
+    {
+      "Sku": "PER174"
+    },
+    {
+      "Sku": "PER116"
+    },
+    {
+      "Sku": "PER128"
+    },
+    {
+      "Sku": "PGN035"
+    },
+    {
+      "Sku": "PGN126"
+    },
+    {
+      "Sku": "PGN117"
+    },
+    {
+      "Sku": "PER221"
+    },
+    {
+      "Sku": "PER217"
+    },
+    {
+      "Sku": "PER210"
+    },
+    {
+      "Sku": "PGN361"
+    },
+    {
+      "Sku": "PGN354"
+    },
+    {
+      "Sku": "PGW081"
+    },
+    {
+      "Sku": "PGW168"
+    },
+    {
+      "Sku": "PGW158"
+    },
+    {
+      "Sku": "PGN469"
+    },
+    {
+      "Sku": "PGW015"
+    },
+    {
+      "Sku": "PGN320"
+    },
+    {
+      "Sku": "PGN310"
+    },
+    {
+      "Sku": "PGN212"
+    },
+    {
+      "Sku": "PGN235"
+    },
+    {
+      "Sku": "PGN237"
+    },
+    {
+      "Sku": "PGN241"
+    },
+    {
+      "Sku": "PGN243"
+    },
+    {
+      "Sku": "PGN247"
+    },
+    {
+      "Sku": "PGN249"
+    },
+    {
+      "Sku": "PGN254"
+    },
+    {
+      "Sku": "PAR402"
+    },
+    {
+      "Sku": "PAR209"
+    },
+    {
+      "Sku": "PAR210"
+    },
+    {
+      "Sku": "PAR141"
+    },
+    {
+      "Sku": "PAR598"
+    },
+    {
+      "Sku": "PAR518"
+    },
+    {
+      "Sku": "PAR483"
+    },
+    {
+      "Sku": "NBN006"
+    },
+    {
+      "Sku": "MPS245"
+    },
+    {
+      "Sku": "MPS266"
+    },
+    {
+      "Sku": "MSP004"
+    },
+    {
+      "Sku": "NBN003"
+    },
+    {
+      "Sku": "NGM032"
+    },
+    {
+      "Sku": "OMP001"
+    },
+    {
+      "Sku": "MPS132"
+    },
+    {
+      "Sku": "MPS088"
+    },
+    {
+      "Sku": "MPS099"
+    },
+    {
+      "Sku": "MPS107"
+    },
+    {
+      "Sku": "MPS050"
+    },
+    {
+      "Sku": "MPS061"
+    },
+    {
+      "Sku": "MPS147"
+    },
+    {
+      "Sku": "MMG006"
+    },
+    {
+      "Sku": "MOO064"
+    },
+    {
+      "Sku": "MAC018"
+    },
+    {
+      "Sku": "MAC005"
+    },
+    {
+      "Sku": "LPP014"
+    },
+    {
+      "Sku": "LPP041"
+    },
+    {
+      "Sku": "LPP034"
+    },
+    {
+      "Sku": "MOU111"
+    },
+    {
+      "Sku": "MOU120"
+    },
+    {
+      "Sku": "MOU131"
+    },
+    {
+      "Sku": "MPP008"
+    },
+    {
+      "Sku": "MPP021"
+    },
+    {
+      "Sku": "RAN028"
+    },
+    {
+      "Sku": "RAN032"
+    },
+    {
+      "Sku": "RAN212"
+    },
+    {
+      "Sku": "QRP011"
+    },
+    {
+      "Sku": "QRP033"
+    },
+    {
+      "Sku": "QRT016"
+    },
+    {
+      "Sku": "QRT033"
+    },
+    {
+      "Sku": "QRT058"
+    },
+    {
+      "Sku": "RAN398"
+    },
+    {
+      "Sku": "RAN404"
+    },
+    {
+      "Sku": "RAN385"
+    },
+    {
+      "Sku": "RAN291"
+    },
+    {
+      "Sku": "QPG003"
+    },
+    {
+      "Sku": "PPP062"
+    },
+    {
+      "Sku": "PPP041"
+    },
+    {
+      "Sku": "PPP020"
+    },
+    {
+      "Sku": "PGW277"
+    },
+    {
+      "Sku": "PGW269"
+    },
+    {
+      "Sku": "PGW281"
+    },
+    {
+      "Sku": "PGW180"
+    },
+    {
+      "Sku": "PGW202"
+    },
+    {
+      "Sku": "PGW210"
+    },
+    {
+      "Sku": "PGW228"
+    },
+    {
+      "Sku": "PGW259"
+    },
+    {
+      "Sku": "PMP013"
+    },
+    {
+      "Sku": "PPP006"
+    },
+    {
+      "Sku": "SIM331"
+    },
+    {
+      "Sku": "SIM366"
+    },
+    {
+      "Sku": "SIM370"
+    },
+    {
+      "Sku": "SIM230"
+    },
+    {
+      "Sku": "SIM299"
+    },
+    {
+      "Sku": "SIM285"
+    },
+    {
+      "Sku": "SIM183"
+    },
+    {
+      "Sku": "SIM147"
+    },
+    {
+      "Sku": "SIM005"
+    },
+    {
+      "Sku": "SIM143"
+    },
+    {
+      "Sku": "SHG007"
+    },
+    {
+      "Sku": "SIM137"
+    },
+    {
+      "Sku": "RAN653"
+    },
+    {
+      "Sku": "RAR008"
+    },
+    {
+      "Sku": "SCH014"
+    },
+    {
+      "Sku": "RAN449"
+    },
+    {
+      "Sku": "RAN444"
+    },
+    {
+      "Sku": "RAN488"
+    },
+    {
+      "Sku": "RAN480"
+    },
+    {
+      "Sku": "WFP096"
+    },
+    {
+      "Sku": "WFP077"
+    },
+    {
+      "Sku": "WFP067"
+    },
+    {
+      "Sku": "WFP014"
+    },
+    {
+      "Sku": "WPC028"
+    },
+    {
+      "Sku": "WFP180"
+    },
+    {
+      "Sku": "WFP159"
+    },
+    {
+      "Sku": "WFP143"
+    },
+    {
+      "Sku": "WFP123"
+    },
+    {
+      "Sku": "WWN844"
+    },
+    {
+      "Sku": "WPC151"
+    },
+    {
+      "Sku": "WPC042"
+    },
+    {
+      "Sku": "WPC048"
+    },
+    {
+      "Sku": "WPC115"
+    },
+    {
+      "Sku": "SIM384"
+    },
+    {
+      "Sku": "SIM385"
+    },
+    {
+      "Sku": "SIM428"
+    },
+    {
+      "Sku": "SMP057"
+    },
+    {
+      "Sku": "SKY023"
+    },
+    {
+      "Sku": "SSS015"
+    },
+    {
+      "Sku": "SSS007"
+    },
+    {
+      "Sku": "SPB017"
+    },
+    {
+      "Sku": "SPB019"
+    },
+    {
+      "Sku": "STL269"
+    },
+    {
+      "Sku": "STL270"
+    },
+    {
+      "Sku": "STL259"
+    },
+    {
+      "Sku": "STL229"
+    },
+    {
+      "Sku": "STL236"
+    },
+    {
+      "Sku": "STL247"
+    },
+    {
+      "Sku": "STL207"
+    },
+    {
+      "Sku": "STL203"
+    },
+    {
+      "Sku": "STL126"
+    },
+    {
+      "Sku": "STL085"
+    },
+    {
+      "Sku": "STL350"
+    },
+    {
+      "Sku": "STL313"
+    },
+    {
+      "Sku": "STL329"
+    },
+    {
+      "Sku": "TEN001"
+    },
+    {
+      "Sku": "UNK062"
+    },
+    {
+      "Sku": "WAC005"
+    },
+    {
+      "Sku": "UWP003"
+    },
+    {
+      "Sku": "WFP020"
+    }
+  ]
+}

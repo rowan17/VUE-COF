@@ -64,21 +64,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $headers .= "Content-Type: text/plain; charset=UTF-8\r\n"; // Use UTF-8 for better character support
     $headers .= "Content-Transfer-Encoding: 8bit\r\n";
 
-    // Send the email
-    // Remove the '@' error suppressor for better debugging during development
-    $mail_sent = mail($to, $subject, $emailMessage, $headers);
+    // --- MailHog Integration (for development/testing) ---
+    // This section will forward the email content to a local MailHog instance.
+    // MailHog typically runs its HTTP API on port 8025.
+    $mailhogApiUrl = 'http://localhost:8025/api/v2/messages';
 
-    // Always set success to true for the frontend response
-    $response['success'] = true;
-    $response['message'] = 'Order data received. You should receive an email confirmation shortly.'; // Default success message
+    // Prepare the data to send to MailHog's API
+    // MailHog's API expects a JSON payload representing the email.
+    $mailhogPayload = [
+        'From' => 'orders@paracay.com', // Must match the From header
+        'To' => explode(',', $to), // Convert comma-separated string to array
+        'Subject' => $subject,
+        'Body' => $emailMessage,
+        'Headers' => [
+            'Content-Type' => 'text/plain; charset=UTF-8',
+            'Content-Transfer-Encoding' => '8bit',
+            'Reply-To' => $customerEmail,
+        ]
+    ];
 
-    if (!$mail_sent) {
-        // If email sending failed, log the error on the server
-        error_log("Mail failed to send to $to. Subject: $subject");
-        // Optionally, you could add a note to the message for the user,
-        // but the requirement is to show the confirmation modal anyway.
-        // $response['message'] .= ' (Note: Email sending failed)';
+    $options = [
+        'http' => [
+            'header'  => "Content-type: application/json\r\n",
+            'method'  => 'POST',
+            'content' => json_encode($mailhogPayload),
+            'ignore_errors' => true // Get response even if MailHog returns an error status
+        ]
+    ];
+    $context  = stream_context_create($options);
+    $result = @file_get_contents($mailhogApiUrl, false, $context);
+
+    // Check if the request to MailHog was successful
+    if ($result === FALSE) {
+        error_log("Failed to connect to MailHog at $mailhogApiUrl. Is MailHog running?");
+        $response['message'] = 'Order data received, but failed to forward to MailHog. Is MailHog running?';
+    } else {
+        $http_response_header_str = implode("\n", $http_response_header);
+        if (strpos($http_response_header_str, 'HTTP/1.1 200 OK') === false && strpos($http_response_header_str, 'HTTP/1.0 200 OK') === false) {
+            error_log("MailHog API returned non-200 status: " . $http_response_header_str);
+            $response['message'] = 'Order data received, but MailHog API returned an error.';
+        } else {
+            $response['message'] = 'Order data received. Email forwarded to MailHog.';
+        }
     }
+
+    $response['success'] = true; // Always report success to the frontend for the modal
 
 } else {
     $response['message'] = 'Invalid request method. Only POST requests are accepted.';
